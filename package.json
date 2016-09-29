@@ -1,0 +1,24 @@
+{
+  "name": "redux-clerk",
+  "version": "0.1.0",
+  "description": "Redux Clerk handles the async CRUD in your Redux App.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GetAmbassador/redux-clerk.git"
+  },
+  "keywords": [
+    "redux",
+    "crud",
+    "data"
+  ],
+  "author": "Ambassador Engineering",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/GetAmbassador/redux-clerk/issues"
+  },
+  "homepage": "https://github.com/GetAmbassador/redux-clerk#readme"
+}
