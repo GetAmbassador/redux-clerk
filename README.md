@@ -20,7 +20,7 @@ Redux Clerk provides action creators for handling CRUD operations.
 
 ```
 import { DataManagerActions } from 'DataManager'
-import axios from '../helpers/axios'
+import axios from 'axios'
 
 const TodosActions = new DataManagerActions({
   eventPrefix: 'TODOS_',
@@ -36,12 +36,12 @@ const TodosActions = new DataManagerActions({
     .catch(response => handleError(response.data))
   },
   updater: (data, handleSuccess, handleError) => {
-    return api.patch(`todos/${data.id}`, data)
+    return axios.patch(`todos/${data.id}`, data)
     .then(response => handleSuccess(response.data))
     .catch(response => handleError(response.data))
   },
   deleter: (id, handleSuccess, handleError) => {
-    return api.delete(`todos/${data.id}`, data)
+    return axios.delete(`todos/${data.id}`, data)
     .then(response => handleSuccess(response.data))
     .catch(response => handleError(response.data))
   }
