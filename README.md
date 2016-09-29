@@ -19,10 +19,10 @@ Redux Clerk provides action creators for handling CRUD operations.
 * createDataset
 
 ```
-import { DataManagerActions } from 'DataManager'
+import { Actions } from 'redux-clerk'
 import axios from 'axios'
 
-const TodosActions = new DataManagerActions({
+const TodosActions = new Actions({
   eventPrefix: 'TODOS_',
   uid: 'uid',
   fetcher: (params, handleSuccess, handleError) => {
@@ -53,9 +53,9 @@ export default TodosActions
 ### Reducer
 
 ```
-import { DataManagerReducer } from 'DataManager'
+import { Reducer } from 'redux-clerk'
 
-const TodosReducer = new DataManagerReducer({
+const TodosReducer = new Reducer({
   eventPrefix: 'TODOS_'
 })
 
@@ -68,9 +68,9 @@ export default TodosReducer
 * all
 
 ```
-import { DataManagerSelectors } from 'DataManager'
+import { Selectors } from 'redux-clerk'
 
-const TodosSelectors = new DataManagerSelectors({
+const TodosSelectors = new Selectors({
   baseSelector: state => state.todos
 })
 
