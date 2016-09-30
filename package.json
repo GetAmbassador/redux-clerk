@@ -2,9 +2,16 @@
   "name": "redux-clerk",
   "version": "0.1.0",
   "description": "Redux Clerk handles the async CRUD in your Redux App.",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "files": [
+    "lib",
+    "src"
+  ],
   "scripts": {
-    "test": "mocha --compilers js:babel-register"
+    "test": "npm run lint && mocha --compilers js:babel-register",
+    "build": "npm run clean && npm run lint && babel src --out-dir lib",
+    "clean": "rimraf dist lib",
+    "lint": "eslint . --ext .js --ext .jsx"
   },
   "repository": {
     "type": "git",

@@ -1,3 +1,5 @@
-export default class Selectors {
+class Selectors {
 
 }
+
+export default Selectors

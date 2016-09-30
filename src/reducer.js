@@ -1,3 +1,5 @@
-export default class Reducer {
+class Reducer {
 
 }
+
+export default Reducer

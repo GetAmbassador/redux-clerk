@@ -1,3 +1,5 @@
-export default class Actions {
+class Actions {
 
 }
+
+export default Actions
