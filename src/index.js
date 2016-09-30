@@ -1,3 +1,13 @@
-export Actions from './Actions'
-export Reducer from './Reducer'
-export Selectors from './Selectors'
+import actions from './actions'
+import reducer from './reducer'
+import selectors from './selectors'
+
+export actions
+export reducer
+export selectors
+
+export default {
+  actions,
+  reducer,
+  selectors
+}

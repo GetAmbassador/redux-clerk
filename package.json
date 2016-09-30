@@ -28,6 +28,9 @@
     "url": "https://github.com/GetAmbassador/redux-clerk/issues"
   },
   "homepage": "https://github.com/GetAmbassador/redux-clerk#readme",
+  "dependencies": {
+    "immutable": "~3.8.1"
+  },
   "devDependencies": {
     "babel-cli": "~6.16.0",
     "babel-core": "~6.16.0",
@@ -42,7 +45,6 @@
     "babel-register": "~6.16.3",
     "chai": "~3.5.0",
     "eslint": "~3.6.1",
-    "immutable": "~3.8.1",
     "install": "~0.8.1",
     "mocha": "~3.1.0",
     "rimraf": "~2.5.4",
