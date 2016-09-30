@@ -1,0 +1,14 @@
+machine:
+
+  timezone:
+    America/New_York # Set the timezone
+
+  node:
+    version: 4.2.4
+
+  environment:
+    NODE_ENV: test
+
+dependencies:
+  pre:
+    - npm install -g npm@3.5.3
