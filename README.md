@@ -76,3 +76,11 @@ const TodosSelectors = new Selectors({
 
 export default TodosSelectors
 ```
+
+## Running Tests
+```
+git clone git@github.com:GetAmbassador/redux-clerk.git
+cd redux-clerk
+npm install
+npm test
+```
