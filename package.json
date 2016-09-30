@@ -11,7 +11,7 @@
     "test": "npm run lint && mocha --compilers js:babel-register",
     "build": "npm run clean && npm run lint && babel src --out-dir lib",
     "clean": "rimraf dist lib",
-    "lint": "eslint . --ext .js --ext .jsx"
+    "lint": "eslint . --ext .js"
   },
   "repository": {
     "type": "git",
@@ -31,7 +31,7 @@
   "devDependencies": {
     "babel-cli": "~6.16.0",
     "babel-core": "~6.16.0",
-    "babel-eslint": "~7.0.0",
+    "babel-eslint": "^7.0.0",
     "babel-plugin-array-includes": "~2.0.3",
     "babel-plugin-transform-class-properties": "~6.16.0",
     "babel-plugin-transform-export-extensions": "~6.8.0",
