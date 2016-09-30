@@ -1,4 +1,4 @@
-# redux-clerk
+# redux-clerk (WIP)
 
 Redux Clerk handles the async CRUD in your Redux App.
 
