@@ -32,13 +32,13 @@ const reducer = (config) => {
 
     switch(action) {
       case createActions.success:
-        return createReducer.success(state)
+        return createReducer.success(state, action)
       case fetchActions.success:
-        return fetchReducer.success(state)
+        return fetchReducer.success(state, action)
       case updateActions.success:
-        return updateReducer.success(state)
+        return updateReducer.success(state, action)
       case deleteActions.success:
-        return deleteReducer.success(state)
+        return deleteReducer.success(state, action)
       default:
         return state
     }
