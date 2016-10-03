@@ -1,5 +1,5 @@
-class Actions {
+const actions {
 
 }
 
-export default Actions
+export default actions

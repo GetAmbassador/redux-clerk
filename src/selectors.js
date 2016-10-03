@@ -1,5 +1,5 @@
-class Selectors {
+const selectors {
 
 }
 
-export default Selectors
+export default Selectoselectorsrs
