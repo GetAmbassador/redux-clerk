@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import generateActionSet from '../utils/generateActionSet'
+import generateActionNames from '../utils/actionNames'
 import { createReducer, fetchReducer, updateReducer, deleteReducer } from '../reducers'
 
 const reducer = (config) => {
@@ -8,10 +8,10 @@ const reducer = (config) => {
   if (!config.uid) throw new Error('clerk.reducer: Expected uid')
 
   // Generate action names for create, fetch, update, delete
-  const createActions = generateActionSet(config.eventPrefix, 'create')
-  const fetchActions = generateActionSet(config.eventPrefix, 'fetch')
-  const updateActions = generateActionSet(config.eventPrefix, 'update')
-  const deleteActions = generateActionSet(config.eventPrefix, 'delete')
+  const createActions = generateActionNames(config.eventPrefix, 'create')
+  const fetchActions = generateActionNames(config.eventPrefix, 'fetch')
+  const updateActions = generateActionNames(config.eventPrefix, 'update')
+  const deleteActions = generateActionNames(config.eventPrefix, 'delete')
 
   const defaultState = Immutable.fromJS({
 
@@ -31,16 +31,11 @@ const reducer = (config) => {
     state = state.merge(defaultState)
 
     switch(action) {
-      case createActions.success:
-        return createReducer.success(state, action)
-      case fetchActions.success:
-        return fetchReducer.success(state, action)
-      case updateActions.success:
-        return updateReducer.success(state, action)
-      case deleteActions.success:
-        return deleteReducer.success(state, action)
-      default:
-        return state
+      case createActions.success: return createReducer.success(state, action)
+      case fetchActions.success: return fetchReducer.success(state, action)
+      case updateActions.success: return updateReducer.success(state, action)
+      case deleteActions.success: return deleteReducer.success(state, action)
+      default: return state
     }
   }
 }
