@@ -1,5 +1,7 @@
 # redux-clerk (WIP)
 
+[![CircleCI](https://circleci.com/gh/GetAmbassador/redux-clerk.svg?style=svg&circle-token=a520f1c555abc4074f1801e49633e4244f9ce36d)](https://circleci.com/gh/GetAmbassador/redux-clerk)
+
 Redux Clerk handles the async CRUD in your Redux App.
 
 * Provides a set of action creators for both async and synchronous actions.
