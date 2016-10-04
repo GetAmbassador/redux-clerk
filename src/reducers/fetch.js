@@ -1,4 +1,3 @@
-import Immutable from 'immutable'
 import normalize from '../utils/normalize'
 
 const success = (state, action) => {

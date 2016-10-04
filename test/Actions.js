@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 
-describe('Actions', () => {
+describe('actions', () => {
   it('should return true', () => {
     expect(true).to.be.true
   })

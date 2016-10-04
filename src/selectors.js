@@ -1,4 +1,4 @@
-const selectors {
+const selectors = () => {
 
 }
 
