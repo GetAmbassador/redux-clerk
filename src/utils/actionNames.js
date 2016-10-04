@@ -7,7 +7,7 @@
  *
  * Ex: generateActionNames('users', 'fetch')
  * {
- *   start: 'USERS_FETCH_START',
+ *   start: 'USERS_FETCH',
  *   success: 'USERS_FETCH_SUCCESS',
  *   error: 'USERS_FETCH_ERROR'
  * }
@@ -16,7 +16,7 @@ const generateActionNames = (prefix, type) => {
 
   // Action types to generate
   const ACTIONS = [
-    'start',
+    '', // base action
     'success',
     'error'
   ]
@@ -24,9 +24,16 @@ const generateActionNames = (prefix, type) => {
   // Generate the full action names
   let actions = {}
   for (var i = 0; i < ACTIONS.length; i++) {
-    const actionName = [prefix, type, ACTIONS[i]].join('_')
+
+    // Create action name
+    const actionNameParts = [prefix, type]
+    if(ACTIONS[i]) actionNameParts.push(ACTIONS[i])
+    const actionName = , actionNameParts].join('_')
+
+    // Add to actions return object
     actions[ACTIONS[i]] = actionName.toUpperCase()
   }
+
   return actions
 }
 

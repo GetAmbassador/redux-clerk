@@ -31,10 +31,10 @@ const reducer = (config) => {
     state = state.merge(defaultState)
 
     switch(action) {
-      case createActions.success: return createReducer.success(state, action)
       case fetchActions.success: return fetchReducer.success(state, action)
-      case updateActions.success: return updateReducer.success(state, action)
-      case deleteActions.success: return deleteReducer.success(state, action)
+      case createActions.start: return createReducer.start(state, action)
+      case updateActions.start: return updateReducer.start(state, action)
+      case deleteActions.start: return deleteReducer.start(state, action)
       default: return state
     }
   }

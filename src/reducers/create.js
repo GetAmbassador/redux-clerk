@@ -1,7 +1,7 @@
-const success = (state, action) => {
+const start = (state, action) => {
   return state.setIn(['raw', action.uid, action.data])
 }
 
 export default {
-  success
+  start
 }
