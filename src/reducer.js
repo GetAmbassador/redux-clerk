@@ -1,11 +1,12 @@
-import Immutable from 'immutable'
-import generateActionNames from '../utils/actionNames'
-import { createReducer, fetchReducer, updateReducer, deleteReducer } from '../reducers'
+import Immutable, { Map } from 'immutable'
+import { generateActionNames } from './utils/actionNames'
+import { createReducer, fetchReducer, updateReducer, deleteReducer } from './reducers'
 
 const reducer = (config) => {
 
+  if (!config) throw new Error('clerk.reducer: Expected config')
   if (!config.eventPrefix) throw new Error('clerk.reducer: Expected eventPrefix')
-  if (!config.uid) throw new Error('clerk.reducer: Expected uid')
+  if (!config.uidField) throw new Error('clerk.reducer: Expected uidField')
 
   // Generate action names for create, fetch, update, delete
   const createActions = generateActionNames(config.eventPrefix, 'create')
@@ -24,13 +25,13 @@ const reducer = (config) => {
   })
 
   // Clerk reducer
-  return (state = {}, action) => {
+  return (state = new Map({}), action) => {
 
     // Extend existing state
     // This comes into play when clerk is used to extend an existing reducer
     state = state.merge(defaultState)
 
-    switch(action) {
+    switch(action.type) {
       case fetchActions.success: return fetchReducer.success(state, action)
       case createActions.start: return createReducer.start(state, action)
       case updateActions.start: return updateReducer.start(state, action)

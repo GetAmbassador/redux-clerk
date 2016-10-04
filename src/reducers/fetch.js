@@ -11,3 +11,7 @@ export const success = (state, action) => {
   // Otherwise we update the single object
   return state.setIn(['raw', action.uid, action.data])
 }
+
+export default {
+  success
+}

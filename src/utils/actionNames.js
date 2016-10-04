@@ -30,7 +30,7 @@ const generateActionName = (prefix, type, action) => {
  *   error: 'USERS_FETCH_ERROR'
  * }
  */
-const generateActionNames = (prefix, type) => {
+export const generateActionNames = (prefix, type) => {
   return {
     start: generateActionName(prefix, type),
     success: generateActionName(prefix, type, 'success'),
