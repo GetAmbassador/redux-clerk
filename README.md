@@ -2,11 +2,16 @@
 
 Redux Clerk handles the async CRUD in your Redux App.
 
+* Provides a set of action creators for both async and synchronous actions.
+* Provides an extendable reducer.
+* Handles derived datasets and provides selectors for computing derived data.
+* Stores minimum possible state.
+
 ## Installation
 
 `npm install redux-clerk`
 
-## Configuration
+## Usage
 
 ### Actions
 Redux Clerk provides action creators for handling CRUD operations.
@@ -19,10 +24,10 @@ Redux Clerk provides action creators for handling CRUD operations.
 * createDataset
 
 ```
-import { Actions } from 'redux-clerk'
+import { actions } from 'redux-clerk'
 import axios from 'axios'
 
-const TodosActions = new Actions({
+const TodosActions = actions({
   eventPrefix: 'TODOS_',
   uid: 'uid',
   fetcher: (params, handleSuccess, handleError) => {
@@ -53,10 +58,11 @@ export default TodosActions
 ### Reducer
 
 ```
-import { Reducer } from 'redux-clerk'
+import { reducer } from 'redux-clerk'
 
-const TodosReducer = new Reducer({
-  eventPrefix: 'TODOS_'
+const TodosReducer = reducer({
+  eventPrefix: 'TODOS_',
+  uidField: 'uid'
 })
 
 export default TodosReducer
@@ -68,9 +74,9 @@ export default TodosReducer
 * all
 
 ```
-import { Selectors } from 'redux-clerk'
+import { selectors } from 'redux-clerk'
 
-const TodosSelectors = new Selectors({
+const TodosSelectors = selectors({
   baseSelector: state => state.todos
 })
 
@@ -84,3 +90,6 @@ cd redux-clerk
 npm install
 npm test
 ```
+
+## License
+MIT
