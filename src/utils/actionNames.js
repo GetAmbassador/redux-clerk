@@ -30,10 +30,12 @@ const generateActionName = (prefix, type, action) => {
  *   error: 'USERS_FETCH_ERROR'
  * }
  */
-export const generateActionNames = (prefix, type) => {
+const generateActionNames = (prefix, type) => {
   return {
     start: generateActionName(prefix, type),
     success: generateActionName(prefix, type, 'success'),
     error: generateActionName(prefix, type, 'error')
   }
 }
+
+export default generateActionNames

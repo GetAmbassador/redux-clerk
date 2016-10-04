@@ -1,7 +1,5 @@
 import { expect } from 'chai'
-import { generateActionNames } from '../../src/utils/actionNames'
-
-console.log(generateActionNames);
+import generateActionNames from '../../src/utils/actionNames'
 
 describe('generateActionNames', () => {
   it('should return generated action names', () => {
