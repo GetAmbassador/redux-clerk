@@ -4,7 +4,7 @@ import reducer from '../src/reducer'
 import * as actionNames from '../src/utils/actionNames'
 import { createReducer, fetchReducer, updateReducer, deleteReducer } from '../src/reducers'
 
-describe('reducer', () => {
+describe('Reducer', () => {
   let generateActionNamesStub,
       fetchReducerSuccessStub,
       createReducerStartStub,
