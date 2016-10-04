@@ -1,7 +1,3 @@
-const start = (state, action) => {
-  return state.setIn(['raw', action.uid, action.data])
-}
-
-export default {
-  start
+export const start = (state, action) => {
+  return state.setIn(['raw', action.data.get(action.uidField)], action.data)
 }
