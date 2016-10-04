@@ -1,5 +1,12 @@
 import normalize from '../utils/normalize'
 
+/**
+ * The success action for the fetch reducer
+ * @param  {Immutable.Map} state - reducer configuration
+ * @param  {Object} action - action object
+ *
+ * @return {Immutable.Map} - updated state
+ */
 export const success = (state, action) => {
 
   // If the returned data is a list we normalize and add each item

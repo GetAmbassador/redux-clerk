@@ -2,6 +2,12 @@ import Immutable, { Map } from 'immutable'
 import { generateActionNames } from './utils/actionNames'
 import { createReducer, fetchReducer, updateReducer, deleteReducer } from './reducers'
 
+/**
+ * Creates a reducer with the provided config
+ * @param  {Object} config - reducer configuration
+ *
+ * @return {Function} - Reducer function
+ */
 const reducer = (config) => {
 
   if (!config) throw new Error('clerk.reducer: Expected config')

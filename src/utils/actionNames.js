@@ -1,6 +1,6 @@
 /**
  * Generates action name for a provided prefix, type and action
- * @param  {String} action name prefix, ex: users
+ * @param  {String} prefix - name prefix, ex: users
  * @param  {String} type - action type, ex: fetch
  * @param  {String} action - base action name, ex: success
  *
