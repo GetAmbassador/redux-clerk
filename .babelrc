@@ -2,9 +2,9 @@
   "presets": ["es2015"],
   "plugins": [
     "array-includes",
-    "transform-object-rest-spread",
     "transform-class-properties",
     "transform-export-extensions",
+    "transform-object-rest-spread",
     "transform-object-assign",
     "babel-polyfill"
   ]
