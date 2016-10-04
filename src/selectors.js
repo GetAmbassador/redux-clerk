@@ -2,4 +2,4 @@ const selectors {
 
 }
 
-export default Selectoselectorsrs
+export default selectors
