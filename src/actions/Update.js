@@ -1,8 +1,8 @@
 import BaseAction from './BaseAction'
 
-export class Create extends BaseAction {
+export class Update extends BaseAction {
   constructor = (type, config) => {
-    super('create', config)
+    super('update', config)
   }
 
   do = data => {

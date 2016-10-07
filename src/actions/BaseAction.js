@@ -6,11 +6,9 @@ class BaseAction {
     this.actionNames = generateActionNames(config.prefix, type)
   }
 
-  dispatcher = (dispatch, actionState, ...args) => {
-    dispatch({
-      type: this.actionNames[actionState],
-      ...args
-    })
+  dispatcher = (dispatch, type, actionData) => {
+    const action = Object.assign({}, { type }, actionData)
+    dispatch(action)
   }
 }
 
