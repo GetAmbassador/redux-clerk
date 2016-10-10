@@ -7,7 +7,7 @@ export class Update extends BaseAction {
 
   do = data => {
     return dispatch => {
-      this.dispatcher(dispatch, 'success', { data })
+      this.success(dispatch, data)
     }
   }
 }

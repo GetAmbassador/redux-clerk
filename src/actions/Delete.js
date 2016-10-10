@@ -7,7 +7,7 @@ export class Delete extends BaseAction {
 
   do = uid => {
     return dispatch => {
-      this.dispatcher(dispatch, 'success', { uid })
+      this.success(dispatch, { uid })
     }
   }
 }
