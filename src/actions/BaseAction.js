@@ -1,13 +1,13 @@
-import { generateActionNames } from './utils/actionNames'
+import { generateActionNames } from '../utils/actionNames'
 
 class BaseAction {
-  constructor = (type, config) => {
-    this.config = config
-    this.actionNames = generateActionNames(config.prefix, type)
+  constructor(type, config) {
+    this.config = Object.assign({}, config)
+    this.actionNames = generateActionNames(config.actionPrefix, type)
   }
 
-  dispatcher = (dispatch, type, actionData) => {
-    const action = Object.assign({}, { type }, actionData)
+  dispatcher = (dispatch, actionName, actionData) => {
+    const action = Object.assign({}, { type: actionName }, actionData)
     dispatch(action)
   }
 }
