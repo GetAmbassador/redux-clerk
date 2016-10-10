@@ -1,7 +1,7 @@
 import BaseAction from './BaseAction'
 
 export class Update extends BaseAction {
-  constructor = (type, config) => {
+  constructor(config) {
     super('update', config)
   }
 

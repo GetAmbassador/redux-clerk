@@ -3,7 +3,6 @@ import sinon from 'sinon'
 import BaseAction from '../../src/actions/BaseAction'
 import * as actionNames from '../../src/utils/actionNames'
 
-
 describe('Actions::BaseAction', () => {
   let generateActionNamesStub
 
@@ -13,7 +12,7 @@ describe('Actions::BaseAction', () => {
   }
 
   const mockActionNames = {
-    success: 'SUCCESS'
+    success: 'TEST_CREATE_SUCCESS'
   }
 
   beforeEach(() => {
@@ -37,13 +36,13 @@ describe('Actions::BaseAction', () => {
     })
   })
 
-  describe('dispatcher', () => {
+  describe('success', () => {
     it('should call provided dispatch function with action object', () => {
-      const action = new BaseAction('test', config)
+      const action = new BaseAction('create', config)
       const dispatch = sinon.spy()
-      action.dispatcher(dispatch, 'TEST_SUCCESS', { other: 'data' })
+      action.success(dispatch, { other: 'data' })
       expect(dispatch.calledOnce).to.be.true
-      expect(dispatch.args[0][0]).to.deep.equal({ type: 'TEST_SUCCESS', other: 'data' })
+      expect(dispatch.args[0][0]).to.deep.equal({ type: 'TEST_CREATE_SUCCESS', other: 'data' })
     })
   })
 })

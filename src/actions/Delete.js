@@ -1,7 +1,7 @@
 import BaseAction from './BaseAction'
 
 export class Delete extends BaseAction {
-  constructor = (type, config) => {
+  constructor(config) {
     super('delete', config)
   }
 
