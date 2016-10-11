@@ -22,11 +22,11 @@ describe('Actions::Delete', () => {
       expect(actionDo).to.be.a('function')
     })
 
-    it('should dispatch success action', () => {
+    it('should dispatch start action', () => {
       const action = new Delete(config)
       action.do(123)(dispatchSpy)
       expect(dispatchSpy.calledOnce).to.be.true
-      expect(dispatchSpy.calledWith({ type: 'TEST_DELETE_SUCCESS', uid: 123 })).to.be.true
+      expect(dispatchSpy.calledWith({ type: 'TEST_DELETE', uid: 123 })).to.be.true
     })
   })
 })

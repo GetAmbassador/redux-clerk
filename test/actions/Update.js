@@ -22,11 +22,11 @@ describe('Actions::Update', () => {
       expect(actionDo).to.be.a('function')
     })
 
-    it('should dispatch success action', () => {
+    it('should dispatch start action', () => {
       const action = new Update(config)
       action.do({ other: 'data' })(dispatchSpy)
       expect(dispatchSpy.calledOnce).to.be.true
-      expect(dispatchSpy.calledWith({ type: 'TEST_UPDATE_SUCCESS', other: 'data' })).to.be.true
+      expect(dispatchSpy.calledWith({ type: 'TEST_UPDATE', other: 'data' })).to.be.true
     })
   })
 })

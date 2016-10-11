@@ -21,7 +21,8 @@ export class Delete extends BaseAction {
    */
   do = uid => {
     return dispatch => {
-      this.success(dispatch, { uid })
+      // Call BaseAction.start with dispatch and the action data
+      this.start(dispatch, { uid })
     }
   }
 }

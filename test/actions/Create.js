@@ -22,11 +22,11 @@ describe('Actions::Create', () => {
       expect(actionDo).to.be.a('function')
     })
 
-    it('should dispatch success action', () => {
+    it('should dispatch start action', () => {
       const action = new Create(config)
       action.do({ other: 'data' })(dispatchSpy)
       expect(dispatchSpy.calledOnce).to.be.true
-      expect(dispatchSpy.calledWith({ type: 'TEST_CREATE_SUCCESS', other: 'data' })).to.be.true
+      expect(dispatchSpy.calledWith({ type: 'TEST_CREATE', other: 'data' })).to.be.true
     })
   })
 })

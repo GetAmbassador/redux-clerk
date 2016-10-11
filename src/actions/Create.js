@@ -21,7 +21,8 @@ export class Create extends BaseAction {
    */
   do = data => {
     return dispatch => {
-      this.success(dispatch, data)
+      // Call BaseAction.start with dispatch and the action data
+      this.start(dispatch, data)
     }
   }
 }

@@ -12,7 +12,7 @@ describe('Actions::BaseAction', () => {
   }
 
   const mockActionNames = {
-    success: 'TEST_CREATE_SUCCESS'
+    start: 'TEST_CREATE'
   }
 
   beforeEach(() => {
@@ -36,13 +36,13 @@ describe('Actions::BaseAction', () => {
     })
   })
 
-  describe('success', () => {
+  describe('start', () => {
     it('should call provided dispatch function with action object', () => {
       const action = new BaseAction('create', config)
       const dispatch = sinon.spy()
-      action.success(dispatch, { other: 'data' })
+      action.start(dispatch, { other: 'data' })
       expect(dispatch.calledOnce).to.be.true
-      expect(dispatch.args[0][0]).to.deep.equal({ type: 'TEST_CREATE_SUCCESS', other: 'data' })
+      expect(dispatch.args[0][0]).to.deep.equal({ type: 'TEST_CREATE', other: 'data' })
     })
   })
 })

@@ -13,14 +13,14 @@ class BaseAction {
   }
 
   /**
-   * Dispatch success action.
+   * Dispatch start action.
    * @param {Function} dispatch - The dispatch function provided by Redux.
    * @param {Object} actionData - Any additional data to be passed with the action.
    *
    * @returns {void}
    */
-  success = (dispatch, actionData) => {
-    const action = Object.assign({}, { type: this.actionNames.success }, actionData)
+  start = (dispatch, actionData) => {
+    const action = Object.assign({}, { type: this.actionNames.start }, actionData)
     dispatch(action)
   }
 }
