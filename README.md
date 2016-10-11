@@ -30,8 +30,8 @@ import { actions } from 'redux-clerk'
 import axios from 'axios'
 
 const TodosActions = actions({
-  eventPrefix: 'TODOS_',
-  uid: 'uid',
+  actionPrefix: 'TODOS_',
+  uidField: 'uid',
   fetcher: (params, handleSuccess, handleError) => {
     return axios.get('todos', { params })
     .then(response => handleSuccess(response.data))
@@ -63,7 +63,7 @@ export default TodosActions
 import { reducer } from 'redux-clerk'
 
 const TodosReducer = reducer({
-  eventPrefix: 'TODOS_',
+  actionPrefix: 'TODOS_',
   uidField: 'uid'
 })
 
