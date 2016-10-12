@@ -1,7 +1,29 @@
 import { expect } from 'chai'
+import actions from '../src/actions'
 
 describe('Actions', () => {
-  it('should return true', () => {
-    expect(true).to.be.true
+  const config = {
+    actionPrefix: 'users',
+    uidField: 'uid'
+  }
+
+  it('should throw exception if config is not provided', () => {
+    expect(actions).to.throw('clerk.actions: Expected config')
+  })
+
+  it('should throw exception if config.eventPrefix is not provided', () => {
+    expect(actions.bind(this, {})).to.throw('clerk.actions: Expected actionPrefix')
+  })
+
+  it('should throw exception if config.uid is not provided', () => {
+    expect(actions.bind(this, { actionPrefix: 'test' })).to.throw('clerk.actions: Expected uidField')
+  })
+
+  it('should return an object with action creators', () => {
+    const actionCreators = actions(config)
+
+    expect(actionCreators.create).to.be.a('function')
+    expect(actionCreators.update).to.be.a('function')
+    expect(actionCreators.delete).to.be.a('function')
   })
 })

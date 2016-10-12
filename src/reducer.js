@@ -11,14 +11,14 @@ import { createReducer, fetchReducer, updateReducer, deleteReducer } from './red
 const reducer = (config) => {
 
   if (!config) throw new Error('clerk.reducer: Expected config')
-  if (!config.eventPrefix) throw new Error('clerk.reducer: Expected eventPrefix')
+  if (!config.actionPrefix) throw new Error('clerk.reducer: Expected actionPrefix')
   if (!config.uidField) throw new Error('clerk.reducer: Expected uidField')
 
   // Generate action names for create, fetch, update, delete
-  const createActions = generateActionNames(config.eventPrefix, 'create')
-  const fetchActions = generateActionNames(config.eventPrefix, 'fetch')
-  const updateActions = generateActionNames(config.eventPrefix, 'update')
-  const deleteActions = generateActionNames(config.eventPrefix, 'delete')
+  const createActions = generateActionNames(config.actionPrefix, 'create')
+  const fetchActions = generateActionNames(config.actionPrefix, 'fetch')
+  const updateActions = generateActionNames(config.actionPrefix, 'update')
+  const deleteActions = generateActionNames(config.actionPrefix, 'delete')
 
   const defaultState = Immutable.fromJS({
 

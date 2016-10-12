@@ -12,7 +12,7 @@ describe('Reducer', () => {
       deleteReducerStartStub
 
   const config = {
-    eventPrefix: 'users',
+    actionPrefix: 'users',
     uidField: 'uid'
   }
 
@@ -53,11 +53,11 @@ describe('Reducer', () => {
   })
 
   it('should throw exception if config.eventPrefix is not provided', () => {
-    expect(reducer.bind(this, {})).to.throw('clerk.reducer: Expected eventPrefix')
+    expect(reducer.bind(this, {})).to.throw('clerk.reducer: Expected actionPrefix')
   })
 
   it('should throw exception if config.uid is not provided', () => {
-    expect(reducer.bind(this, { eventPrefix: 'test' })).to.throw('clerk.reducer: Expected uidField')
+    expect(reducer.bind(this, { actionPrefix: 'test' })).to.throw('clerk.reducer: Expected uidField')
   })
 
   it('should call generateActionNames with config.eventPrefix and each crud action', () => {
