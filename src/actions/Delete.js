@@ -23,6 +23,17 @@ export class Delete extends BaseAction {
     return dispatch => {
       // Call BaseAction.start with dispatch and the action data
       this.start(dispatch, { uid })
+
+      // If config.deleter is provided, call it
+      if(typeof this.config.deleter === 'function') {
+        // Prepare BaseAction.success and BaseAction.error handlers
+        // by currying with dispatch
+        const success = this.success.bind(this, dispatch)
+        const error = this.error.bind(this, dispatch)
+
+        // Call deleter
+        this.config.deleter(uid, success, error)
+      }
     }
   }
 }
