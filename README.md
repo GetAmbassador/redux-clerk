@@ -8,6 +8,7 @@ Redux Clerk handles the async CRUD in your Redux App.
 * Provides an extendable reducer.
 * Handles derived datasets and provides selectors for computing derived data.
 * Stores minimum possible state.
+* Handles optimistic updates to the store.
 
 ## Installation
 
@@ -20,7 +21,7 @@ Redux Clerk provides action creators for handling CRUD operations.
 
 #### Provided Actions
 * fetch
-* insert
+* create
 * update
 * delete
 * createDataset
@@ -31,13 +32,13 @@ import axios from 'axios'
 
 const TodosActions = actions({
   actionPrefix: 'TODOS_',
-  uidField: 'uid',
+  uidField: 'id',
   fetcher: (params, handleSuccess, handleError) => {
     return axios.get('todos', { params })
     .then(response => handleSuccess(response.data))
     .catch(response => handleError(response.data))
   },
-  inserter: (data, handleSuccess, handleError) => {
+  creator: (data, handleSuccess, handleError) => {
     return axios.post('todos', data)
     .then(response => handleSuccess(response.data))
     .catch(response => handleError(response.data))
@@ -48,8 +49,8 @@ const TodosActions = actions({
     .catch(response => handleError(response.data))
   },
   deleter: (id, handleSuccess, handleError) => {
-    return axios.delete(`todos/${data.id}`, data)
-    .then(response => handleSuccess(response.data))
+    return axios.delete(`todos/${id}`, data)
+    .then(response => handleSuccess())
     .catch(response => handleError(response.data))
   }
 })
