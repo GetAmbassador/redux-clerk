@@ -25,7 +25,7 @@ export class Fetch extends BaseAction {
       this.start(dispatch)
 
       // If config.fetcher is provided, call it
-      if(typeof this.config.creator === 'function') {
+      if(typeof this.config.fetcher === 'function') {
         // Prepare BaseAction.success and BaseAction.error handlers
         // by currying with dispatch
         const success = this.success.bind(this, dispatch)

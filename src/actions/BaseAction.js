@@ -21,7 +21,11 @@ class BaseAction {
    * @returns {void}
    */
    _dispatch = (type, dispatch, data) => {
-     const action = Object.assign({}, { type: this.actionNames[type] }, { data })
+     let action = { type: this.actionNames[type] }
+     if(data) {
+       action.data = data
+     }
+
      dispatch(action)
    }
 
