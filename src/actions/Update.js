@@ -32,7 +32,7 @@ export class Update extends BaseAction {
         const error = this.error.bind(this, dispatch)
 
         // Call updater
-        this.config.updater(data, success, error)
+        return this.config.updater(data, success, error)
       }
     }
   }

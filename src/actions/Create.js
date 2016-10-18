@@ -32,7 +32,7 @@ export class Create extends BaseAction {
         const error = this.error.bind(this, dispatch)
 
         // Call creator
-        this.config.creator(data, success, error)
+        return this.config.creator(data, success, error)
       }
     }
   }

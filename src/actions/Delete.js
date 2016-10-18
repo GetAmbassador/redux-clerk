@@ -28,11 +28,11 @@ export class Delete extends BaseAction {
       if(typeof this.config.deleter === 'function') {
         // Prepare BaseAction.success and BaseAction.error handlers
         // by currying with dispatch
-        const success = this.success.bind(this, dispatch)
+        const success = this.success.bind(this, dispatch, { uid })
         const error = this.error.bind(this, dispatch)
 
         // Call deleter
-        this.config.deleter(uid, success, error)
+        return this.config.deleter(uid, success, error)
       }
     }
   }
