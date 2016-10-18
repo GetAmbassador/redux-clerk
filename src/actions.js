@@ -1,6 +1,7 @@
 import { Create } from './actions/Create'
 import { Update } from './actions/Update'
 import { Delete } from './actions/Delete'
+import { Fetch } from './actions/Fetch'
 
 /**
  * Creates a new instance of each CRUD action
@@ -14,11 +15,13 @@ const actions = (config) => {
   if (!config.actionPrefix) throw new Error('clerk.actions: Expected actionPrefix')
   if (!config.uidField) throw new Error('clerk.actions: Expected uidField')
 
+  const fetchAction = new Fetch(config)
   const createAction = new Create(config)
   const updateAction = new Update(config)
   const deleteAction = new Delete(config)
 
   return {
+    fetch: fetchAction.do,
     create: createAction.do,
     update: updateAction.do,
     delete: deleteAction.do
