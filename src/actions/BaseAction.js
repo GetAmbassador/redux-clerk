@@ -32,7 +32,7 @@ class BaseAction {
   /**
    * Dispatch start action.
    * @param {Function} dispatch - The dispatch function provided by Redux.
-   * @param {Object} actionData - Any additional data to be passed with the action.
+   * @param {Object} data - Any additional data to be passed with the action.
    *
    * @returns {void}
    */
@@ -41,7 +41,7 @@ class BaseAction {
   /**
    * Dispatch success action.
    * @param {Function} dispatch - The dispatch function provided by Redux.
-   * @param {Object} actionData - Any additional data to be passed with the action.
+   * @param {Object} data - Any additional data to be passed with the action.
    *
    * @returns {void}
    */
@@ -50,7 +50,7 @@ class BaseAction {
   /**
    * Dispatch error action.
    * @param {Function} dispatch - The dispatch function provided by Redux.
-   * @param {Object} actionData - Any additional data to be passed with the action.
+   * @param {Object} data - Any additional data to be passed with the action.
    *
    * @returns {void}
    */

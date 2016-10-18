@@ -31,7 +31,7 @@ export class Fetch extends BaseAction {
         const success = this.success.bind(this, dispatch)
         const error = this.error.bind(this, dispatch)
 
-        // Call creator
+        // Call fetcher
         return this.config.fetcher(params, success, error)
       }
     }
