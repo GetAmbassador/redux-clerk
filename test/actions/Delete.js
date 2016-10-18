@@ -24,6 +24,11 @@ describe('Actions::Delete', () => {
       return Promise.resolve()
     }
   })
+
+  const configSpy = Object.assign({}, configBase, {
+    deleter: sinon.spy()
+  })
+
   beforeEach(() => {
     dispatchSpy = sinon.spy()
   })
@@ -40,6 +45,13 @@ describe('Actions::Delete', () => {
       action.do(123)(dispatchSpy)
       expect(dispatchSpy.calledOnce).to.be.true
       expect(dispatchSpy.calledWith({ type: 'TEST_DELETE', data: { uid: 123 }})).to.be.true
+    })
+
+    it('should call config.deleter with provided uid', () => {
+      const action = new Delete(configSpy)
+      action.do(123)(dispatchSpy)
+      expect(configSpy.deleter.calledOnce).to.be.true
+      expect(configSpy.deleter.args[0][0]).to.deep.equal(123)
     })
 
     it('should dispatch success action', done => {

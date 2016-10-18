@@ -12,17 +12,21 @@ describe('Actions::Fetch', () => {
   }
 
   const configSuccess = Object.assign({}, configBase, {
-    fetcher: (data, success) => {
+    fetcher: (params, success) => {
       success([{ uid: 123, name: 'test' }])
       return Promise.resolve()
     }
   })
 
   const configError = Object.assign({}, configBase, {
-    fetcher: (data, success, error) => {
+    fetcher: (params, success, error) => {
       error({ error: 'test' })
       return Promise.resolve()
     }
+  })
+
+  const configSpy = Object.assign({}, configBase, {
+    fetcher: sinon.spy()
   })
 
   beforeEach(() => {
@@ -41,6 +45,14 @@ describe('Actions::Fetch', () => {
       action.do()(dispatchSpy)
       expect(dispatchSpy.calledOnce).to.be.true
       expect(dispatchSpy.calledWith({ type: 'TEST_FETCH' })).to.be.true
+    })
+
+    it('should call config.fetcher with provided params', () => {
+      const action = new Fetch(configSpy)
+      const params = { someParam: 'test' }
+      action.do(params)(dispatchSpy)
+      expect(configSpy.fetcher.calledOnce).to.be.true
+      expect(configSpy.fetcher.args[0][0]).to.deep.equal(params)
     })
 
     it('should dispatch success action', done => {

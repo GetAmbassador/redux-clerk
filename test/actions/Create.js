@@ -25,6 +25,10 @@ describe('Actions::Create', () => {
     }
   })
 
+  const configSpy = Object.assign({}, configBase, {
+    creator: sinon.spy()
+  })
+
   beforeEach(() => {
     dispatchSpy = sinon.spy()
   })
@@ -41,6 +45,14 @@ describe('Actions::Create', () => {
       action.do({ other: 'data' })(dispatchSpy)
       expect(dispatchSpy.calledOnce).to.be.true
       expect(dispatchSpy.calledWith({ type: 'TEST_CREATE', data: { other: 'data' }})).to.be.true
+    })
+
+    it('should call config.creator with provided data', () => {
+      const action = new Create(configSpy)
+      const data = { name: 'test' }
+      action.do(data)(dispatchSpy)
+      expect(configSpy.creator.calledOnce).to.be.true
+      expect(configSpy.creator.args[0][0]).to.deep.equal(data)
     })
 
     it('should dispatch success action', done => {

@@ -25,6 +25,10 @@ describe('Actions::Update', () => {
     }
   })
 
+  const configSpy = Object.assign({}, configBase, {
+    updater: sinon.spy()
+  })
+
   beforeEach(() => {
     dispatchSpy = sinon.spy()
   })
@@ -50,6 +54,14 @@ describe('Actions::Update', () => {
         expect(dispatchSpy.secondCall.calledWith({ type: 'TEST_UPDATE_SUCCESS', data: { uid: 123, name: 'test' }})).to.be.true
         done()
       })
+    })
+
+    it('should call config.updater with provided data', () => {
+      const action = new Update(configSpy)
+      const data = { name: 'test' }
+      action.do(data)(dispatchSpy)
+      expect(configSpy.updater.calledOnce).to.be.true
+      expect(configSpy.updater.args[0][0]).to.deep.equal(data)
     })
 
     it('should dispatch error action', done => {
