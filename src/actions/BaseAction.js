@@ -13,16 +13,48 @@ class BaseAction {
   }
 
   /**
-   * Dispatch start action.
+   * Base action dispatcher.
+   * @param {Function} type - start, success or error.
    * @param {Function} dispatch - The dispatch function provided by Redux.
-   * @param {Object} actionData - Any additional data to be passed with the action.
+   * @param {Object} data - Any additional data to be passed with the action.
    *
    * @returns {void}
    */
-  start = (dispatch, actionData) => {
-    const action = Object.assign({}, { type: this.actionNames.start }, actionData)
-    dispatch(action)
-  }
+   _dispatch = (type, dispatch, data) => {
+     let action = { type: this.actionNames[type] }
+     if(data) {
+       action.data = data
+     }
+
+     dispatch(action)
+   }
+
+  /**
+   * Dispatch start action.
+   * @param {Function} dispatch - The dispatch function provided by Redux.
+   * @param {Object} data - Any additional data to be passed with the action.
+   *
+   * @returns {void}
+   */
+  start = this._dispatch.bind(this, 'start')
+
+  /**
+   * Dispatch success action.
+   * @param {Function} dispatch - The dispatch function provided by Redux.
+   * @param {Object} data - Any additional data to be passed with the action.
+   *
+   * @returns {void}
+   */
+  success = this._dispatch.bind(this, 'success')
+
+  /**
+   * Dispatch error action.
+   * @param {Function} dispatch - The dispatch function provided by Redux.
+   * @param {Object} data - Any additional data to be passed with the action.
+   *
+   * @returns {void}
+   */
+  error = this._dispatch.bind(this, 'error')
 }
 
 export default BaseAction

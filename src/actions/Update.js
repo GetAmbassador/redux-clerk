@@ -23,6 +23,17 @@ export class Update extends BaseAction {
     return dispatch => {
       // Call BaseAction.start with dispatch and the action data
       this.start(dispatch, data)
+
+      // If config.updater is provided, call it
+      if(typeof this.config.updater === 'function') {
+        // Prepare BaseAction.success and BaseAction.error handlers
+        // by currying with dispatch
+        const success = this.success.bind(this, dispatch)
+        const error = this.error.bind(this, dispatch)
+
+        // Call updater
+        return this.config.updater(data, success, error)
+      }
     }
   }
 }

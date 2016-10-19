@@ -12,7 +12,9 @@ describe('Actions::BaseAction', () => {
   }
 
   const mockActionNames = {
-    start: 'TEST_CREATE'
+    start: 'TEST_CREATE',
+    success: 'TEST_CREATE_SUCCESS',
+    error: 'TEST_CREATE_ERROR'
   }
 
   beforeEach(() => {
@@ -42,7 +44,27 @@ describe('Actions::BaseAction', () => {
       const dispatch = sinon.spy()
       action.start(dispatch, { other: 'data' })
       expect(dispatch.calledOnce).to.be.true
-      expect(dispatch.args[0][0]).to.deep.equal({ type: 'TEST_CREATE', other: 'data' })
+      expect(dispatch.args[0][0]).to.deep.equal({ type: 'TEST_CREATE', data: { other: 'data' }})
+    })
+  })
+
+  describe('success', () => {
+    it('should call provided dispatch function with action object', () => {
+      const action = new BaseAction('create', config)
+      const dispatch = sinon.spy()
+      action.success(dispatch, { other: 'data' })
+      expect(dispatch.calledOnce).to.be.true
+      expect(dispatch.args[0][0]).to.deep.equal({ type: 'TEST_CREATE_SUCCESS', data: { other: 'data' }})
+    })
+  })
+
+  describe('error', () => {
+    it('should call provided dispatch function with action object', () => {
+      const action = new BaseAction('create', config)
+      const dispatch = sinon.spy()
+      action.error(dispatch, { other: 'data' })
+      expect(dispatch.calledOnce).to.be.true
+      expect(dispatch.args[0][0]).to.deep.equal({ type: 'TEST_CREATE_ERROR', data: { other: 'data' }})
     })
   })
 })
