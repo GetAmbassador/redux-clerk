@@ -19,7 +19,7 @@ export const start = (state, action) => {
  */
 export const success = (state) => {
   // Currently we do nothing on success because
-  // the record is optimisticly deleted in the success action.
+  // the record is optimisticly deleted in the start action.
   // Eventually we'll set a loading state to false
   return state
 }
