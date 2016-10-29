@@ -1,6 +1,18 @@
 import normalize from '../utils/normalize'
 
 /**
+ * The start action for the fetch reducer
+ * @param  {Immutable.Map} state - reducer configuration
+ *
+ * @return {Immutable.Map} - updated state
+ */
+export const success = (state) => {
+  // Currently we do nothing on start
+  // Eventually we'll set a loading state to false
+  return state
+}
+
+/**
  * The success action for the fetch reducer
  * @param  {Immutable.Map} state - reducer configuration
  * @param  {Object} action - action object
@@ -19,6 +31,20 @@ export const success = (state, action) => {
   return state.setIn(['raw', action.uid, action.data])
 }
 
+/**
+ * The error action for the fetch reducer
+ * @param  {Immutable.Map} state - reducer configuration
+ *
+ * @return {Immutable.Map} - updated state
+ */
+export const error = (state) => {
+  // Currently we do nothing on error
+  // Eventually we'll set a loading state to false
+  return state
+}
+
 export default {
-  success
+  start,
+  success,
+  error
 }
