@@ -43,7 +43,7 @@ describe('Reducers::Create', () => {
   })
 
   describe('error', () => {
-    it('should return existing state', () => {
+    it('should remove the created item', () => {
       const previousState = Map({
         raw: Map([[123, Immutable.fromJS({ uid: 123, test: '123' })], [234, Immutable.fromJS({ uid: 234, test: '234' })]])
       })

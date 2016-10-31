@@ -1,4 +1,4 @@
-import Immutable from 'immutable'
+import { Map } from 'immutable'
 
 /**
  * The start action for the update reducer
@@ -8,7 +8,11 @@ import Immutable from 'immutable'
  * @return {Immutable.Map} - updated state
  */
 export const start = (state, action) => {
-  return state.setIn(['raw', action.data.record.get(action.uidField)], Immutable.fromJS(action.data.record))
+
+  // Create updated record tuple
+  // We have to create a tuple here in order to preserve the Integer typped keys
+  const updatedRecord = Map([[action.data.get(action.uidField), action.data]])
+  return state.set('raw', state.get('raw').merge(updatedRecord))
 }
 
 /**
@@ -26,14 +30,18 @@ export const success = (state) => {
 
 /**
  * The error action for the update reducer
+ * Reverts store change on failure
  * @param  {Immutable.Map} state - reducer configuration
  * @param  {Object} action - action object
  *
  * @return {Immutable.Map} - updated state
  */
 export const error = (state, action) => {
-  // Remove the added record on error because the request failed
-  return state.removeIn(['raw', action.data.updated.get(action.uidField)])
+
+  // Create reverted record tuple
+  // We have to create a tuple here in order to preserve the Integer typped keys
+  const updatedRecord = Map([[action.updated.get(action.uidField), action.updated]])
+  return state.set('raw', state.get('raw').merge(updatedRecord))
 }
 
 export default {
