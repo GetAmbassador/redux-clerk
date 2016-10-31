@@ -6,7 +6,7 @@ import normalize from '../utils/normalize'
  *
  * @return {Immutable.Map} - updated state
  */
-export const success = (state) => {
+export const start = (state) => {
   // Currently we do nothing on start
   // Eventually we'll set a loading state to false
   return state
