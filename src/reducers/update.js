@@ -10,7 +10,7 @@ import { Map } from 'immutable'
 export const start = (state, action) => {
 
   // Create updated record tuple
-  // We have to create a tuple here in order to preserve the Integer typped keys
+  // We have to create a tuple here in order to preserve the Integer typed keys
   const updatedRecord = Map([[action.data.get(action.uidField), action.data]])
   return state.set('raw', state.get('raw').merge(updatedRecord))
 }
