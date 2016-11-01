@@ -8,7 +8,7 @@ import normalize from '../utils/normalize'
  */
 export const start = (state) => {
   // Currently we do nothing on start
-  // Eventually we'll set a loading state to false
+  // Eventually we'll set a loading state to true
   return state
 }
 
