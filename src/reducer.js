@@ -38,10 +38,18 @@ const reducer = (config) => {
     state = state.merge(defaultState)
 
     switch(action.type) {
+      case fetchActions.start: return fetchReducer.start(state, action)
       case fetchActions.success: return fetchReducer.success(state, action)
+      case fetchActions.error: return fetchReducer.error(state, action)
       case createActions.start: return createReducer.start(state, action)
+      case createActions.success: return createReducer.success(state, action)
+      case createActions.error: return createReducer.error(state, action)
       case updateActions.start: return updateReducer.start(state, action)
+      case updateActions.success: return updateReducer.success(state, action)
+      case updateActions.error: return updateReducer.error(state, action)
       case deleteActions.start: return deleteReducer.start(state, action)
+      case deleteActions.success: return deleteReducer.success(state, action)
+      case deleteActions.error: return deleteReducer.error(state, action)
       default: return state
     }
   }
