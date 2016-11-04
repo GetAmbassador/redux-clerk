@@ -21,15 +21,18 @@ export class Delete extends BaseAction {
    */
   do = uid => {
     return dispatch => {
+      // Merge uidField into action data
+      const data = { uid, uidField: this.config.uidField }
+
       // Call BaseAction.start with dispatch and the action data
-      this.start(dispatch, { uid })
+      this.start(dispatch, data)
 
       // If config.deleter is provided, call it
       if(typeof this.config.deleter === 'function') {
         // Prepare BaseAction.success and BaseAction.error handlers
         // by currying with dispatch
-        const success = this.success.bind(this, dispatch, { uid })
-        const error = this.error.bind(this, dispatch)
+        const success = this.success.bind(this, dispatch, data)
+        const error = this.error.bind(this, dispatch, data)
 
         // Call deleter
         return this.config.deleter(uid, success, error)
