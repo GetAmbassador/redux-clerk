@@ -149,6 +149,28 @@ describe('Reducer', () => {
     expect(createReducerStartStub.args[0][1]).to.deep.equal(action)
   })
 
+  it('should call createReducer.success on USERS_CREATE_SUCCESS', () => {
+    const action = {
+      type: 'USERS_CREATE_SUCCESS'
+    }
+    reducer(config)(undefined, action)
+
+    expect(createReducerSuccessStub.calledOnce).to.be.true
+    expect(createReducerSuccessStub.args[0][0].toJS()).to.deep.equal(defaultState)
+    expect(createReducerSuccessStub.args[0][1]).to.deep.equal(action)
+  })
+
+  it('should call createReducer.error on USERS_CREATE_ERROR', () => {
+    const action = {
+      type: 'USERS_CREATE_ERROR'
+    }
+    reducer(config)(undefined, action)
+
+    expect(createReducerErrorStub.calledOnce).to.be.true
+    expect(createReducerErrorStub.args[0][0].toJS()).to.deep.equal(defaultState)
+    expect(createReducerErrorStub.args[0][1]).to.deep.equal(action)
+  })
+
   it('should call updateReducer.start on USERS_UPDATE', () => {
     const action = {
       type: 'USERS_UPDATE'
@@ -160,6 +182,28 @@ describe('Reducer', () => {
     expect(updateReducerStartStub.args[0][1]).to.deep.equal(action)
   })
 
+  it('should call updateReducer.success on USERS_UPDATE_SUCCESS', () => {
+    const action = {
+      type: 'USERS_UPDATE_SUCCESS'
+    }
+    reducer(config)(undefined, action)
+
+    expect(updateReducerSuccessStub.calledOnce).to.be.true
+    expect(updateReducerSuccessStub.args[0][0].toJS()).to.deep.equal(defaultState)
+    expect(updateReducerSuccessStub.args[0][1]).to.deep.equal(action)
+  })
+
+  it('should call updateReducer.error on USERS_UPDATE_ERROR', () => {
+    const action = {
+      type: 'USERS_UPDATE_ERROR'
+    }
+    reducer(config)(undefined, action)
+
+    expect(updateReducerErrorStub.calledOnce).to.be.true
+    expect(updateReducerErrorStub.args[0][0].toJS()).to.deep.equal(defaultState)
+    expect(updateReducerErrorStub.args[0][1]).to.deep.equal(action)
+  })
+
   it('should call deleteReducer.start on USERS_DELETE', () => {
     const action = {
       type: 'USERS_DELETE'
@@ -169,5 +213,27 @@ describe('Reducer', () => {
     expect(deleteReducerStartStub.calledOnce).to.be.true
     expect(deleteReducerStartStub.args[0][0].toJS()).to.deep.equal(defaultState)
     expect(deleteReducerStartStub.args[0][1]).to.deep.equal(action)
+  })
+
+  it('should call deleteReducer.success on USERS_DELETE_SUCCESS', () => {
+    const action = {
+      type: 'USERS_DELETE_SUCCESS'
+    }
+    reducer(config)(undefined, action)
+
+    expect(deleteReducerSuccessStub.calledOnce).to.be.true
+    expect(deleteReducerSuccessStub.args[0][0].toJS()).to.deep.equal(defaultState)
+    expect(deleteReducerSuccessStub.args[0][1]).to.deep.equal(action)
+  })
+
+  it('should call deleteReducer.error on USERS_DELETE_ERROR', () => {
+    const action = {
+      type: 'USERS_DELETE_ERROR'
+    }
+    reducer(config)(undefined, action)
+
+    expect(deleteReducerErrorStub.calledOnce).to.be.true
+    expect(deleteReducerErrorStub.args[0][0].toJS()).to.deep.equal(defaultState)
+    expect(deleteReducerErrorStub.args[0][1]).to.deep.equal(action)
   })
 })
