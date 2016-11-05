@@ -44,7 +44,7 @@ describe('Actions::BaseAction', () => {
       const dispatch = sinon.spy()
       action.start(dispatch, { action: 'data' }, { response: 'data' })
       expect(dispatch.calledOnce).to.be.true
-      expect(dispatch.args[0][0]).to.deep.equal({ type: 'TEST_CREATE', action: 'data', response: 'data' })
+      expect(dispatch.args[0][0]).to.deep.equal({ type: 'TEST_CREATE', action: 'data', responseData: { response: 'data' }})
     })
   })
 
@@ -54,7 +54,7 @@ describe('Actions::BaseAction', () => {
       const dispatch = sinon.spy()
       action.success(dispatch, { action: 'data' }, { response: 'data' })
       expect(dispatch.calledOnce).to.be.true
-      expect(dispatch.args[0][0]).to.deep.equal({ type: 'TEST_CREATE_SUCCESS', action: 'data', response: 'data' })
+      expect(dispatch.args[0][0]).to.deep.equal({ type: 'TEST_CREATE_SUCCESS', action: 'data', responseData: { response: 'data' }})
     })
   })
 
@@ -64,7 +64,7 @@ describe('Actions::BaseAction', () => {
       const dispatch = sinon.spy()
       action.error(dispatch, { action: 'data' }, { response: 'data' })
       expect(dispatch.calledOnce).to.be.true
-      expect(dispatch.args[0][0]).to.deep.equal({ type: 'TEST_CREATE_ERROR', action: 'data', response: 'data' })
+      expect(dispatch.args[0][0]).to.deep.equal({ type: 'TEST_CREATE_ERROR', action: 'data', responseData: { response: 'data' }})
     })
   })
 })

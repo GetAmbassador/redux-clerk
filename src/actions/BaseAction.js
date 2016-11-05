@@ -22,7 +22,13 @@ class BaseAction {
    * @returns {void}
    */
    _dispatch = (type, dispatch, actionData, responseData) => {
-     const action = Object.assign({}, { type: this.actionNames[type] }, actionData, responseData)
+     const action = Object.assign({}, { type: this.actionNames[type] }, actionData)
+
+     // Include response data from async handler if provided
+     if(responseData) {
+       action.responseData = responseData
+     }
+
      dispatch(action)
    }
 
