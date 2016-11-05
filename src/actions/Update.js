@@ -19,8 +19,11 @@ export class Update extends BaseAction {
    *
    * @returns {Function} - Returns the update action thunk.
    */
-  do = data => {
+  do = record => {
     return dispatch => {
+      // Create data object to be dispatched with actions
+      const data = { record, uidField: this.config.uidField }
+
       // Call BaseAction.start with dispatch and the action data
       this.start(dispatch, data)
 

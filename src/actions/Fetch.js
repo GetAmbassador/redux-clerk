@@ -21,15 +21,18 @@ export class Fetch extends BaseAction {
    */
   do = (params) => {
     return dispatch => {
+      // Merge uidField into action data
+      const data = { params, uidField: this.config.uidField }
+
       // Call BaseAction.start with dispatch
-      this.start(dispatch)
+      this.start(dispatch, data)
 
       // If config.fetcher is provided, call it
       if(typeof this.config.fetcher === 'function') {
         // Prepare BaseAction.success and BaseAction.error handlers
         // by currying with dispatch
-        const success = this.success.bind(this, dispatch)
-        const error = this.error.bind(this, dispatch)
+        const success = this.success.bind(this, dispatch, data)
+        const error = this.error.bind(this, dispatch, data)
 
         // Call fetcher
         return this.config.fetcher(params, success, error)
