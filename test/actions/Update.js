@@ -44,14 +44,23 @@ describe('Actions::Update', () => {
       const action = new Update(configBase)
       action.do({ other: 'data' })(dispatchSpy)
       expect(dispatchSpy.calledOnce).to.be.true
-      expect(dispatchSpy.calledWith({ type: 'TEST_UPDATE', data: { other: 'data' }})).to.be.true
+      expect(dispatchSpy.calledWith({
+        type: 'TEST_UPDATE',
+        uidField: configBase.uidField,
+        record: { other: 'data' }
+      })).to.be.true
     })
 
     it('should dispatch success action', done => {
       const action = new Update(configSuccess)
-      action.do({ uid: 'new', name: 'test' })(dispatchSpy).then(() => {
+      action.do({ uid: 123, name: 'test' })(dispatchSpy).then(() => {
         expect(dispatchSpy.calledTwice).to.be.true
-        expect(dispatchSpy.secondCall.calledWith({ type: 'TEST_UPDATE_SUCCESS', data: { uid: 123, name: 'test' }})).to.be.true
+        expect(dispatchSpy.secondCall.calledWith({
+          type: 'TEST_UPDATE_SUCCESS',
+          uidField: configBase.uidField,
+          record: { uid: 123, name: 'test' },
+          responseData: { uid: 123, name: 'test' }
+        })).to.be.true
         done()
       })
     })
@@ -66,9 +75,14 @@ describe('Actions::Update', () => {
 
     it('should dispatch error action', done => {
       const action = new Update(configError)
-      action.do({ uid: 'new', name: 'test' })(dispatchSpy).then(() => {
+      action.do({ uid: 123, name: 'test' })(dispatchSpy).then(() => {
         expect(dispatchSpy.calledTwice).to.be.true
-        expect(dispatchSpy.secondCall.calledWith({ type: 'TEST_UPDATE_ERROR', data: { error: 'test' }})).to.be.true
+        expect(dispatchSpy.secondCall.calledWith({
+          type: 'TEST_UPDATE_ERROR',
+          uidField: configBase.uidField,
+          record: { uid: 123, name: 'test' },
+          responseData: { error: 'test' }
+        })).to.be.true
         done()
       })
     })

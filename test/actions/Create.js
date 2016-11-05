@@ -44,7 +44,11 @@ describe('Actions::Create', () => {
       const action = new Create(configBase)
       action.do({ other: 'data' })(dispatchSpy)
       expect(dispatchSpy.calledOnce).to.be.true
-      expect(dispatchSpy.calledWith({ type: 'TEST_CREATE', created: { other: 'data' }, uidField: configBase.uidField })).to.be.true
+      expect(dispatchSpy.calledWith({
+        type: 'TEST_CREATE',
+        created: { other: 'data' },
+        uidField: configBase.uidField
+      })).to.be.true
     })
 
     it('should call config.creator with provided data', () => {
@@ -59,7 +63,12 @@ describe('Actions::Create', () => {
       const action = new Create(configSuccess)
       action.do({ uid: 'new', name: 'test' })(dispatchSpy).then(() => {
         expect(dispatchSpy.calledTwice).to.be.true
-        expect(dispatchSpy.secondCall.calledWith({ type: 'TEST_CREATE_SUCCESS', created: { uid: 'new', name: 'test' }, uidField: configBase.uidField, responseData: { uid: 123, name: 'test' }})).to.be.true
+        expect(dispatchSpy.secondCall.calledWith({
+          type: 'TEST_CREATE_SUCCESS',
+          created: { uid: 'new', name: 'test' },
+          uidField: configBase.uidField,
+          responseData: { uid: 123, name: 'test' }
+        })).to.be.true
         done()
       })
     })
@@ -68,7 +77,12 @@ describe('Actions::Create', () => {
       const action = new Create(configError)
       action.do({ uid: 'new', name: 'test' })(dispatchSpy).then(() => {
         expect(dispatchSpy.calledTwice).to.be.true
-        expect(dispatchSpy.secondCall.calledWith({ type: 'TEST_CREATE_ERROR', created: { uid: 'new', name: 'test' }, uidField: configBase.uidField, responseData: { error: 'test' }})).to.be.true
+        expect(dispatchSpy.secondCall.calledWith({
+          type: 'TEST_CREATE_ERROR',
+          created: { uid: 'new', name: 'test' },
+          uidField: configBase.uidField,
+          responseData: { error: 'test' }
+        })).to.be.true
         done()
       })
     })

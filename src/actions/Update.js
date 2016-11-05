@@ -15,7 +15,7 @@ export class Update extends BaseAction {
 
   /**
    * Generate an action creator with the provided data.
-   * @param {Object} record - item/record being updated.
+   * @param {Object} record - item being updated.
    *
    * @returns {Function} - Returns the update action thunk.
    */
@@ -31,11 +31,11 @@ export class Update extends BaseAction {
       if(typeof this.config.updater === 'function') {
         // Prepare BaseAction.success and BaseAction.error handlers
         // by currying with dispatch
-        const success = this.success.bind(this, dispatch)
-        const error = this.error.bind(this, dispatch)
+        const success = this.success.bind(this, dispatch, data)
+        const error = this.error.bind(this, dispatch, data)
 
         // Call updater
-        return this.config.updater(data, success, error)
+        return this.config.updater(record, success, error)
       }
     }
   }
