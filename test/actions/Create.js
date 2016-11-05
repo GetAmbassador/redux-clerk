@@ -59,7 +59,6 @@ describe('Actions::Create', () => {
       const action = new Create(configSuccess)
       action.do({ uid: 'new', name: 'test' })(dispatchSpy).then(() => {
         expect(dispatchSpy.calledTwice).to.be.true
-        console.log(dispatchSpy.secondCall.args[0]);
         expect(dispatchSpy.secondCall.calledWith({ type: 'TEST_CREATE_SUCCESS', created: { uid: 'new', name: 'test' }, uidField: configBase.uidField, responseData: { uid: 123, name: 'test' }})).to.be.true
         done()
       })

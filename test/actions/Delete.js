@@ -44,7 +44,7 @@ describe('Actions::Delete', () => {
       const action = new Delete(configBase)
       action.do(123)(dispatchSpy)
       expect(dispatchSpy.calledOnce).to.be.true
-      expect(dispatchSpy.calledWith({ type: 'TEST_DELETE', data: { uid: 123 }})).to.be.true
+      expect(dispatchSpy.calledWith({ type: 'TEST_DELETE', uid: 123, uidField: configBase.uidField })).to.be.true
     })
 
     it('should call config.deleter with provided uid', () => {
@@ -58,7 +58,7 @@ describe('Actions::Delete', () => {
       const action = new Delete(configSuccess)
       action.do(123)(dispatchSpy).then(() => {
         expect(dispatchSpy.calledTwice).to.be.true
-        expect(dispatchSpy.secondCall.calledWith({ type: 'TEST_DELETE_SUCCESS', data: { uid: 123 }})).to.be.true
+        expect(dispatchSpy.secondCall.calledWith({ type: 'TEST_DELETE_SUCCESS', uid: 123, uidField: configBase.uidField })).to.be.true
         done()
       })
     })
@@ -67,7 +67,7 @@ describe('Actions::Delete', () => {
       const action = new Delete(configError)
       action.do(123)(dispatchSpy).then(() => {
         expect(dispatchSpy.calledTwice).to.be.true
-        expect(dispatchSpy.secondCall.calledWith({ type: 'TEST_DELETE_ERROR', data: { error: 'test' }})).to.be.true
+        expect(dispatchSpy.secondCall.calledWith({ type: 'TEST_DELETE_ERROR', uid: 123, uidField: configBase.uidField, responseData: { error: 'test' }})).to.be.true
         done()
       })
     })
