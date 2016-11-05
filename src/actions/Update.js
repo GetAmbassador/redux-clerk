@@ -15,7 +15,7 @@ export class Update extends BaseAction {
 
   /**
    * Generate an action creator with the provided data.
-   * @param {String} data - Additional data to be passed with the action.
+   * @param {Object} record - item/record being updated.
    *
    * @returns {Function} - Returns the update action thunk.
    */
