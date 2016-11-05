@@ -22,7 +22,12 @@ export class Fetch extends BaseAction {
   do = (params) => {
     return dispatch => {
       // Merge uidField into action data
-      const data = { params, uidField: this.config.uidField }
+      const data = { uidField: this.config.uidField }
+
+      // Add params to action data
+      if(params) {
+        data.params = params
+      }
 
       // Call BaseAction.start with dispatch
       this.start(dispatch, data)

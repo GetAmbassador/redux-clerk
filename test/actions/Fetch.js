@@ -44,7 +44,7 @@ describe('Actions::Fetch', () => {
       const action = new Fetch(configBase)
       action.do()(dispatchSpy)
       expect(dispatchSpy.calledOnce).to.be.true
-      expect(dispatchSpy.calledWith({ type: 'TEST_FETCH' })).to.be.true
+      expect(dispatchSpy.calledWith({ type: 'TEST_FETCH', uidField: configBase.uidField })).to.be.true
     })
 
     it('should call config.fetcher with provided params', () => {
@@ -59,7 +59,7 @@ describe('Actions::Fetch', () => {
       const action = new Fetch(configSuccess)
       action.do()(dispatchSpy).then(() => {
         expect(dispatchSpy.calledTwice).to.be.true
-        expect(dispatchSpy.secondCall.calledWith({ type: 'TEST_FETCH_SUCCESS', data: [{ uid: 123, name: 'test' }]})).to.be.true
+        expect(dispatchSpy.secondCall.calledWith({ type: 'TEST_FETCH_SUCCESS', uidField: configBase.uidField, responseData: [{ uid: 123, name: 'test' }]})).to.be.true
         done()
       })
     })
@@ -68,7 +68,7 @@ describe('Actions::Fetch', () => {
       const action = new Fetch(configError)
       action.do()(dispatchSpy).then(() => {
         expect(dispatchSpy.calledTwice).to.be.true
-        expect(dispatchSpy.secondCall.calledWith({ type: 'TEST_FETCH_ERROR', data: { error: 'test' }})).to.be.true
+        expect(dispatchSpy.secondCall.calledWith({ type: 'TEST_FETCH_ERROR', uidField: configBase.uidField, responseData: { error: 'test' }})).to.be.true
         done()
       })
     })
