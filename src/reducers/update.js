@@ -57,7 +57,14 @@ export const error = (state, action) => {
   // Create reverted record tuple
   // We have to create a tuple here in order to preserve the Integer typped keys
   const updatedRecord = Map([[uid, state.getIn(['pendingUpdate', uid])]])
-  return state.set('raw', state.get('raw').merge(updatedRecord))
+  return state.withMutations(map => {
+
+    // Revert changes
+    map.set('raw', state.get('raw').merge(updatedRecord))
+
+    // Remove the item pending update
+    map.deleteIn(['pendingUpdate', uid])
+  })
 }
 
 export default {
