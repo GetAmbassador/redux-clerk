@@ -4,9 +4,10 @@ import { start, success, error } from '../../src/reducers/delete'
 
 describe('Reducers::Delete', () => {
   describe('start', () => {
-    it('should remove provided uid from state', () => {
+    it('should move provided uid from raw to pendingDelete', () => {
       const previousState = Map({
-        raw: Map([[123, Immutable.fromJS({ uid: 123, test: '123' })], [234, Immutable.fromJS({ uid: 234, test: '234' })]])
+        raw: Map([[123, Immutable.fromJS({ uid: 123, test: '123' })], [234, Immutable.fromJS({ uid: 234, test: '234' })]]),
+        pendingDelete: Map({})
       })
 
       const action = {
@@ -16,6 +17,9 @@ describe('Reducers::Delete', () => {
       const expectedResult = {
         raw: {
           123: { uid: 123, test: '123' }
+        },
+        pendingDelete: {
+          234: { uid: 234, test: '234' }
         }
       }
 
@@ -24,38 +28,44 @@ describe('Reducers::Delete', () => {
   })
 
   describe('success', () => {
-    it('should return existing state', () => {
+    it('should remove the provided item from pendingDelete', () => {
       const previousState = Map({
-        raw: Map([[123, Immutable.fromJS({ uid: 123, test: '123' })], [234, Immutable.fromJS({ uid: 234, test: '234' })]])
+        raw: Map([[123, Immutable.fromJS({ uid: 123, test: '123' })]]),
+        pendingDelete: Map([[234, Immutable.fromJS({ uid: 234, test: '234' })]])
       })
+
+      const action = {
+        uid: 234
+      }
 
       const expectedResult = {
         raw: {
-          123: { uid: 123, test: '123' },
-          234: { uid: 234, test: '234' }
-        }
+          123: { uid: 123, test: '123' }
+        },
+        pendingDelete: {}
       }
 
-      expect(success(previousState).toJS()).to.deep.equal(expectedResult)
+      expect(success(previousState, action).toJS()).to.deep.equal(expectedResult)
     })
   })
 
   describe('error', () => {
     it('should re-add the deleted item', () => {
       const previousState = Map({
-        raw: Map([[123, Immutable.fromJS({ uid: 123, test: '123' })]])
+        raw: Map([[123, Immutable.fromJS({ uid: 123, test: '123' })]]),
+        pendingDelete: Map([[234, Immutable.fromJS({ uid: 234, test: '234' })]])
       })
 
       const action = {
-        deleted: Immutable.fromJS({ uid: 234, test: '234' }),
-        uidField: 'uid'
+        uid: 234
       }
 
       const expectedResult = {
         raw: {
           123: { uid: 123, test: '123' },
           234: { uid: 234, test: '234' }
-        }
+        },
+        pendingDelete: {}
       }
 
       expect(error(previousState, action).toJS()).to.deep.equal(expectedResult)

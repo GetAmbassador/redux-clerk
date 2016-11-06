@@ -24,6 +24,7 @@ export const start = (state, action) => {
 /**
  * The success action for the delete reducer
  * @param  {Immutable.Map} state - current reducer state
+ * @param  {Object} action - action object
  *
  * @return {Immutable.Map} - updated state
  */
@@ -44,7 +45,13 @@ export const error = (state, action) => {
   // Create reverted record tuple
   // We have to create a tuple here in order to preserve the Integer typed keys
   const deletedRecord = Map([[action.uid, state.getIn(['pendingDelete', action.uid])]])
-  return state.set('raw', state.get('raw').merge(deletedRecord))
+  return state.withMutations(map => {
+    // Remove the item pending delete
+    map.deleteIn(['pendingDelete', action.uid])
+
+    // Re-add the deleted items
+    map.set('raw', state.get('raw').merge(deletedRecord))
+  })
 }
 
 export default {

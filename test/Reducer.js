@@ -25,7 +25,9 @@ describe('Reducer', () => {
   }
 
   const defaultState = {
-    raw: {}
+    raw: {},
+    pendingDelete: {},
+    pendingUpdate: {}
   }
 
   beforeEach(() => {
