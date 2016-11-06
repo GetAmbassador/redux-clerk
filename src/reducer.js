@@ -27,7 +27,13 @@ const reducer = (config) => {
     //   123: { ... },
     //   234: { ... }
     // }
-    raw: {}
+    raw: {},
+
+    // pendingDelete: Contains items that are pending deletion
+    pendingDelete: {},
+
+    // pendingUpdate: Contains items that are pending deletion
+    pendingUpdate: {}
   })
 
   // Clerk reducer
