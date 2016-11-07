@@ -32,7 +32,7 @@ const reducer = (config) => {
     // pendingDelete: Contains items that are pending deletion
     pendingDelete: {},
 
-    // pendingUpdate: Contains items that are pending deletion
+    // pendingUpdate: Contains items that are pending update
     pendingUpdate: {}
   })
 
