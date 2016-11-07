@@ -4,19 +4,23 @@ import { start, success, error } from '../../src/reducers/update'
 
 describe('Reducers::Update', () => {
   describe('start', () => {
-    it('should update data in state', () => {
+    it('should update data in state and store previous version in pendingUpdate', () => {
       const previousState = Map({
-        raw: Map([[123, Immutable.fromJS({ uid: 123, test: '123' })]])
+        raw: Map([[123, Immutable.fromJS({ uid: 123, test: '123' })]]),
+        pendingUpdate: Map({})
       })
 
       const action = {
-        data: Immutable.fromJS({ uid: 123, test: 'name' }),
+        record: Immutable.fromJS({ uid: 123, test: 'name' }),
         uidField: 'uid'
       }
 
       const expectedResult = {
         raw: {
           123: { uid: 123, test: 'name' }
+        },
+        pendingUpdate: {
+          123: { uid: 123, test: '123' }
         }
       }
 
@@ -25,30 +29,14 @@ describe('Reducers::Update', () => {
   })
 
   describe('success', () => {
-    it('should return existing state', () => {
+    it('should remove the previous version from pendingUpdate', () => {
       const previousState = Map({
-        raw: Map([[123, Immutable.fromJS({ uid: 123, test: '123' })], [234, Immutable.fromJS({ uid: 234, test: '234' })]])
-      })
-
-      const expectedResult = {
-        raw: {
-          123: { uid: 123, test: '123' },
-          234: { uid: 234, test: '234' }
-        }
-      }
-
-      expect(success(previousState).toJS()).to.deep.equal(expectedResult)
-    })
-  })
-
-  describe('error', () => {
-    it('should revert the update', () => {
-      const previousState = Map({
-        raw: Map([[123, Immutable.fromJS({ uid: 123, test: 'name' })], [234, Immutable.fromJS({ uid: 234, test: '234' })]])
+        raw: Map([[123, Immutable.fromJS({ uid: 123, test: '123' })], [234, Immutable.fromJS({ uid: 234, test: '234' })]]),
+        pendingUpdate: Map([[123, Immutable.fromJS({ uid: 123, test: '123' })]])
       })
 
       const action = {
-        updated: Immutable.fromJS({ uid: 123, test: '123' }),
+        record: Immutable.fromJS({ uid: 123, test: 'name' }),
         uidField: 'uid'
       }
 
@@ -56,7 +44,32 @@ describe('Reducers::Update', () => {
         raw: {
           123: { uid: 123, test: '123' },
           234: { uid: 234, test: '234' }
-        }
+        },
+        pendingUpdate: {}
+      }
+
+      expect(success(previousState, action).toJS()).to.deep.equal(expectedResult)
+    })
+  })
+
+  describe('error', () => {
+    it('should revert the update', () => {
+      const previousState = Map({
+        raw: Map([[123, Immutable.fromJS({ uid: 123, test: 'name' })], [234, Immutable.fromJS({ uid: 234, test: '234' })]]),
+        pendingUpdate: Map([[123, Immutable.fromJS({ uid: 123, test: '123' })]])
+      })
+
+      const action = {
+        record: Immutable.fromJS({ uid: 123, test: '123' }),
+        uidField: 'uid'
+      }
+
+      const expectedResult = {
+        raw: {
+          123: { uid: 123, test: '123' },
+          234: { uid: 234, test: '234' }
+        },
+        pendingUpdate: {}
       }
 
       expect(error(previousState, action).toJS()).to.deep.equal(expectedResult)

@@ -15,24 +15,27 @@ export class Create extends BaseAction {
 
   /**
    * Generate an action creator with the provided data.
-   * @param {Object} data - Additional data to be passed with the action.
+   * @param {Object} record - Record to be created.
    *
    * @returns {Function} - Returns the create action thunk.
    */
-  do = data => {
+  do = record => {
     return dispatch => {
+      // Create data object to be dispatched with actions
+      const data = { created: record, uidField: this.config.uidField }
+
       // Call BaseAction.start with dispatch and the action data
       this.start(dispatch, data)
 
       // If config.creator is provided, call it
       if(typeof this.config.creator === 'function') {
         // Prepare BaseAction.success and BaseAction.error handlers
-        // by currying with dispatch
-        const success = this.success.bind(this, dispatch)
-        const error = this.error.bind(this, dispatch)
+        // by currying with dispatch and action data
+        const success = this.success.bind(this, dispatch, data)
+        const error = this.error.bind(this, dispatch, data)
 
         // Call creator
-        return this.config.creator(data, success, error)
+        return this.config.creator(record, success, error)
       }
     }
   }

@@ -2,7 +2,7 @@ import normalize from '../utils/normalize'
 
 /**
  * The start action for the fetch reducer
- * @param  {Immutable.Map} state - reducer configuration
+ * @param  {Immutable.Map} state - current reducer state
  *
  * @return {Immutable.Map} - updated state
  */
@@ -14,7 +14,7 @@ export const start = (state) => {
 
 /**
  * The success action for the fetch reducer
- * @param  {Immutable.Map} state - reducer configuration
+ * @param  {Immutable.Map} state - current reducer state
  * @param  {Object} action - action object
  *
  * @return {Immutable.Map} - updated state
@@ -33,7 +33,7 @@ export const success = (state, action) => {
 
 /**
  * The error action for the fetch reducer
- * @param  {Immutable.Map} state - reducer configuration
+ * @param  {Immutable.Map} state - current reducer state
  *
  * @return {Immutable.Map} - updated state
  */

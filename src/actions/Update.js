@@ -15,12 +15,15 @@ export class Update extends BaseAction {
 
   /**
    * Generate an action creator with the provided data.
-   * @param {String} data - Additional data to be passed with the action.
+   * @param {Object} record - item being updated.
    *
    * @returns {Function} - Returns the update action thunk.
    */
-  do = data => {
+  do = record => {
     return dispatch => {
+      // Create data object to be dispatched with actions
+      const data = { record, uidField: this.config.uidField }
+
       // Call BaseAction.start with dispatch and the action data
       this.start(dispatch, data)
 
@@ -28,11 +31,11 @@ export class Update extends BaseAction {
       if(typeof this.config.updater === 'function') {
         // Prepare BaseAction.success and BaseAction.error handlers
         // by currying with dispatch
-        const success = this.success.bind(this, dispatch)
-        const error = this.error.bind(this, dispatch)
+        const success = this.success.bind(this, dispatch, data)
+        const error = this.error.bind(this, dispatch, data)
 
         // Call updater
-        return this.config.updater(data, success, error)
+        return this.config.updater(record, success, error)
       }
     }
   }

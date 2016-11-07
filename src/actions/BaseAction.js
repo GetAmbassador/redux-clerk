@@ -16,14 +16,17 @@ class BaseAction {
    * Base action dispatcher.
    * @param {Function} type - start, success or error.
    * @param {Function} dispatch - The dispatch function provided by Redux.
-   * @param {Object} data - Any additional data to be passed with the action.
+   * @param {Object} actionData - Data to the original action.
+   * @param {Object} responseData - Data from the async request handlers (creator, deleter, updater, fetcher).
    *
    * @returns {void}
    */
-   _dispatch = (type, dispatch, data) => {
-     let action = { type: this.actionNames[type] }
-     if(data) {
-       action.data = data
+   _dispatch = (type, dispatch, actionData, responseData) => {
+     const action = Object.assign({}, { type: this.actionNames[type] }, actionData)
+
+     // Include response data from async handler if provided
+     if(responseData) {
+       action.responseData = responseData
      }
 
      dispatch(action)

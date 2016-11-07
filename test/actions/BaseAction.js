@@ -39,12 +39,12 @@ describe('Actions::BaseAction', () => {
   })
 
   describe('start', () => {
-    it('should call provided dispatch function with action object', () => {
+    it('should call provided dispatch function with action data and response data', () => {
       const action = new BaseAction('create', config)
       const dispatch = sinon.spy()
-      action.start(dispatch, { other: 'data' })
+      action.start(dispatch, { action: 'data' }, { response: 'data' })
       expect(dispatch.calledOnce).to.be.true
-      expect(dispatch.args[0][0]).to.deep.equal({ type: 'TEST_CREATE', data: { other: 'data' }})
+      expect(dispatch.args[0][0]).to.deep.equal({ type: 'TEST_CREATE', action: 'data', responseData: { response: 'data' }})
     })
   })
 
@@ -52,9 +52,9 @@ describe('Actions::BaseAction', () => {
     it('should call provided dispatch function with action object', () => {
       const action = new BaseAction('create', config)
       const dispatch = sinon.spy()
-      action.success(dispatch, { other: 'data' })
+      action.success(dispatch, { action: 'data' }, { response: 'data' })
       expect(dispatch.calledOnce).to.be.true
-      expect(dispatch.args[0][0]).to.deep.equal({ type: 'TEST_CREATE_SUCCESS', data: { other: 'data' }})
+      expect(dispatch.args[0][0]).to.deep.equal({ type: 'TEST_CREATE_SUCCESS', action: 'data', responseData: { response: 'data' }})
     })
   })
 
@@ -62,9 +62,9 @@ describe('Actions::BaseAction', () => {
     it('should call provided dispatch function with action object', () => {
       const action = new BaseAction('create', config)
       const dispatch = sinon.spy()
-      action.error(dispatch, { other: 'data' })
+      action.error(dispatch, { action: 'data' }, { response: 'data' })
       expect(dispatch.calledOnce).to.be.true
-      expect(dispatch.args[0][0]).to.deep.equal({ type: 'TEST_CREATE_ERROR', data: { other: 'data' }})
+      expect(dispatch.args[0][0]).to.deep.equal({ type: 'TEST_CREATE_ERROR', action: 'data', responseData: { response: 'data' }})
     })
   })
 })
