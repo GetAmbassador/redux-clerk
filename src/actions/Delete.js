@@ -6,7 +6,7 @@ import BaseAction from './BaseAction'
  */
 export class Delete extends BaseAction {
   /**
-   * Create an instant of the delete action.
+   * Create an instance of the delete action.
    * @param {Object} config - The configuration for the action.
    */
   constructor(config) {

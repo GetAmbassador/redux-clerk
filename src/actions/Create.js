@@ -6,7 +6,7 @@ import BaseAction from './BaseAction'
  */
 export class Create extends BaseAction {
   /**
-   * Create an instant of the Create action.
+   * Create an instance of the Create action.
    * @param {Object} config - The configuration for the action.
    */
   constructor(config) {

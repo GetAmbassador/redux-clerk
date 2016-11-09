@@ -6,7 +6,7 @@ import BaseAction from './BaseAction'
  */
 export class Fetch extends BaseAction {
   /**
-   * Create an instant of the Fetch action.
+   * Create an instance of the Fetch action.
    * @param {Object} config - The configuration for the action.
    */
   constructor(config) {

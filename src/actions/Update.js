@@ -6,7 +6,7 @@ import BaseAction from './BaseAction'
  */
 export class Update extends BaseAction {
   /**
-   * Create an instant of the update action.
+   * Create an instance of the update action.
    * @param {Object} config - The configuration for the action.
    */
   constructor(config) {
