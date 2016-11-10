@@ -29,7 +29,7 @@ export class Create extends BaseAction {
 
       // Create data object to be dispatched with actions
       const { uidField } = this.config
-      const data = { instance, created: record, uidField }
+      const data = { instance, record, uidField }
 
       // Call BaseAction.start with dispatch and the action data
       this.start(dispatch, data)

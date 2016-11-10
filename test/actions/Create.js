@@ -47,7 +47,7 @@ describe('Actions::Create', () => {
       expect(dispatchSpy.calledWith({
         type: 'TEST_CREATE',
         instance: 'users',
-        created: { other: 'data' },
+        record: { other: 'data' },
         uidField: configBase.uidField
       })).to.be.true
     })
@@ -67,7 +67,7 @@ describe('Actions::Create', () => {
         expect(dispatchSpy.secondCall.calledWith({
           type: 'TEST_CREATE_SUCCESS',
           instance: 'users',
-          created: { uid: 'new', name: 'test' },
+          record: { uid: 'new', name: 'test' },
           uidField: configBase.uidField,
           responseData: { uid: 123, name: 'test' }
         })).to.be.true
@@ -82,7 +82,7 @@ describe('Actions::Create', () => {
         expect(dispatchSpy.secondCall.calledWith({
           type: 'TEST_CREATE_ERROR',
           instance: 'users',
-          created: { uid: 'new', name: 'test' },
+          record: { uid: 'new', name: 'test' },
           uidField: configBase.uidField,
           responseData: { error: 'test' }
         })).to.be.true

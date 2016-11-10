@@ -11,7 +11,7 @@ export const start = (state, action) => {
 
   // Create new record tuple
   // We have to create a tuple here in order to preserve the Integer typed keys
-  const newRecord = Map([[action.data.get(action.uidField), action.data]])
+  const newRecord = Map([[action.record.get(action.uidField), action.record]])
   return state.set('raw', state.get('raw').merge(newRecord))
 }
 
@@ -38,7 +38,7 @@ export const success = (state) => {
 export const error = (state, action) => {
 
   // Remove the added record on error because the request failed
-  return state.removeIn(['raw', action.created.get(action.uidField)])
+  return state.removeIn(['raw', action.record.get(action.uidField)])
 }
 
 export default {
