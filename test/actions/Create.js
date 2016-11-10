@@ -36,16 +36,17 @@ describe('Actions::Create', () => {
   describe('do', () => {
     it('should return a thunk', () => {
       const action = new Create(configBase)
-      const actionDo = action.do({ uid: 'new', name: 'test' })
+      const actionDo = action.do('users', { uid: 'new', name: 'test' })
       expect(actionDo).to.be.a('function')
     })
 
     it('should dispatch start action', () => {
       const action = new Create(configBase)
-      action.do({ other: 'data' })(dispatchSpy)
+      action.do('users', { other: 'data' })(dispatchSpy)
       expect(dispatchSpy.calledOnce).to.be.true
       expect(dispatchSpy.calledWith({
         type: 'TEST_CREATE',
+        instance: 'users',
         created: { other: 'data' },
         uidField: configBase.uidField
       })).to.be.true
@@ -54,17 +55,18 @@ describe('Actions::Create', () => {
     it('should call config.creator with provided data', () => {
       const action = new Create(configSpy)
       const data = { name: 'test' }
-      action.do(data)(dispatchSpy)
+      action.do('users', data)(dispatchSpy)
       expect(configSpy.creator.calledOnce).to.be.true
       expect(configSpy.creator.args[0][0]).to.deep.equal(data)
     })
 
     it('should dispatch success action', done => {
       const action = new Create(configSuccess)
-      action.do({ uid: 'new', name: 'test' })(dispatchSpy).then(() => {
+      action.do('users', { uid: 'new', name: 'test' })(dispatchSpy).then(() => {
         expect(dispatchSpy.calledTwice).to.be.true
         expect(dispatchSpy.secondCall.calledWith({
           type: 'TEST_CREATE_SUCCESS',
+          instance: 'users',
           created: { uid: 'new', name: 'test' },
           uidField: configBase.uidField,
           responseData: { uid: 123, name: 'test' }
@@ -75,10 +77,11 @@ describe('Actions::Create', () => {
 
     it('should dispatch error action', done => {
       const action = new Create(configError)
-      action.do({ uid: 'new', name: 'test' })(dispatchSpy).then(() => {
+      action.do('users', { uid: 'new', name: 'test' })(dispatchSpy).then(() => {
         expect(dispatchSpy.calledTwice).to.be.true
         expect(dispatchSpy.secondCall.calledWith({
           type: 'TEST_CREATE_ERROR',
+          instance: 'users',
           created: { uid: 'new', name: 'test' },
           uidField: configBase.uidField,
           responseData: { error: 'test' }

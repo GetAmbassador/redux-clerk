@@ -15,21 +15,17 @@ export class Update extends BaseAction {
 
   /**
    * Generate an action creator with the provided data.
-   * @param {String} instance - Instance key where changes should be applied
    * @param {Object} record - item being updated.
    *
    * @returns {Function} - Returns the update action thunk.
    */
-  do = (instance = this.config.defaultInstance, record) => {
-
-    // Validate instance key
-    this.validateInstance(instance)
+  do = (record) => {
 
     return dispatch => {
 
       // Create data object to be dispatched with actions
       const { uidField } = this.config
-      const data = { instance, record, uidField }
+      const data = { record, uidField }
 
       // Call BaseAction.start with dispatch and the action data
       this.start(dispatch, data)

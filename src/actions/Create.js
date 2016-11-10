@@ -20,7 +20,7 @@ export class Create extends BaseAction {
    *
    * @returns {Function} - Returns the create action thunk.
    */
-  do = (instance = this.config.defaultInstance, record) => {
+  do = (instance, record) => {
 
     // Validate instance key
     this.validateInstance(instance)

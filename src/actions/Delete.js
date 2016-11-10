@@ -20,7 +20,7 @@ export class Delete extends BaseAction {
    *
    * @returns {Function} - Returns the delete action thunk.
    */
-  do = (instance = this.config.defaultInstance, uid) => {
+  do = (instance, uid) => {
 
     // Validate instance key
     this.validateInstance(instance)

@@ -28,7 +28,11 @@ describe('Actions::BaseAction', () => {
   describe('constructor', () => {
     it('should set local configuration', () => {
       const action = new BaseAction('test', config)
-      expect(action.config).to.deep.equal(config)
+      expect(action.config).to.deep.equal({
+        actionPrefix: 'test',
+        uidField: 'uid',
+        type: 'test'
+      })
     })
 
     it('should set actionNames', () => {

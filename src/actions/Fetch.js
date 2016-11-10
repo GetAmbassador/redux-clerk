@@ -20,7 +20,7 @@ export class Fetch extends BaseAction {
    *
    * @returns {Function} - Returns the fetch action thunk.
    */
-  do = (instance = this.config.defaultInstance, params = null) => {
+  do = (instance, params = null) => {
 
     // Validate instance key
     this.validateInstance(instance)
@@ -29,7 +29,7 @@ export class Fetch extends BaseAction {
 
       // Create data object to be dispatched with actions
       const { uidField } = this.config
-      const data = { instance, params, uidField }
+      const data = { instance, uidField }
 
       // Call BaseAction.start with dispatch
       this.start(dispatch, data)

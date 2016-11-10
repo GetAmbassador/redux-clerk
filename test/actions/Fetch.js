@@ -36,16 +36,17 @@ describe('Actions::Fetch', () => {
   describe('do', () => {
     it('should return a thunk', () => {
       const action = new Fetch(configBase)
-      const actionDo = action.do()
+      const actionDo = action.do('users')
       expect(actionDo).to.be.a('function')
     })
 
     it('should dispatch start action', () => {
       const action = new Fetch(configBase)
-      action.do()(dispatchSpy)
+      action.do('users')(dispatchSpy)
       expect(dispatchSpy.calledOnce).to.be.true
       expect(dispatchSpy.calledWith({
         type: 'TEST_FETCH',
+        instance: 'users',
         uidField: configBase.uidField
       })).to.be.true
     })
@@ -53,17 +54,18 @@ describe('Actions::Fetch', () => {
     it('should call config.fetcher with provided params', () => {
       const action = new Fetch(configSpy)
       const params = { someParam: 'test' }
-      action.do(params)(dispatchSpy)
+      action.do('users', params)(dispatchSpy)
       expect(configSpy.fetcher.calledOnce).to.be.true
       expect(configSpy.fetcher.args[0][0]).to.deep.equal(params)
     })
 
     it('should dispatch success action', done => {
       const action = new Fetch(configSuccess)
-      action.do()(dispatchSpy).then(() => {
+      action.do('users')(dispatchSpy).then(() => {
         expect(dispatchSpy.calledTwice).to.be.true
         expect(dispatchSpy.secondCall.calledWith({
           type: 'TEST_FETCH_SUCCESS',
+          instance: 'users',
           uidField: configBase.uidField,
           responseData: [{ uid: 123, name: 'test' }]
         })).to.be.true
@@ -73,10 +75,11 @@ describe('Actions::Fetch', () => {
 
     it('should dispatch error action', done => {
       const action = new Fetch(configError)
-      action.do()(dispatchSpy).then(() => {
+      action.do('users')(dispatchSpy).then(() => {
         expect(dispatchSpy.calledTwice).to.be.true
         expect(dispatchSpy.secondCall.calledWith({
           type: 'TEST_FETCH_ERROR',
+          instance: 'users',
           uidField: configBase.uidField,
           responseData: { error: 'test' }
         })).to.be.true
