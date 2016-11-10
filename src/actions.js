@@ -27,7 +27,7 @@ const actions = (config) => {
     create: createAction.do,
     update: updateAction.do,
     delete: deleteAction.do,
-    createInstance: instanceAction.do
+    createDataset: instanceAction.do
   }
 }
 
