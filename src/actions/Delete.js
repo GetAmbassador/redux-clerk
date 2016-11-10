@@ -20,6 +20,10 @@ export class Delete extends BaseAction {
    * @returns {Function} - Returns the delete action thunk.
    */
   do = (instance = this.config.defaultInstance, uid) => {
+
+    // Validate instance key
+    this.validateInstance(instance)
+
     return dispatch => {
 
       // Create data object to be dispatched with actions

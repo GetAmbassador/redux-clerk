@@ -8,10 +8,11 @@ class BaseAction {
    * @param {Object} config - The configuration for the action.
    */
   constructor(type, config) {
-    const configDefaults = {
-      defaultInstance: 'default'
+    const configBase = {
+      defaultInstance: 'default',
+      type
     }
-    this.config = Object.assign(configDefaults, config)
+    this.config = Object.assign(configBase, config)
     this.actionNames = generateActionNames(config.actionPrefix, type)
   }
 
@@ -34,6 +35,18 @@ class BaseAction {
 
      dispatch(action)
    }
+
+   /**
+    * Validates instance key, throws an exception if instance key is not valid
+    * @param {String} instance - name of the instance
+    *
+    * @returns {void}
+    */
+  validationInstance = instance => {
+    if (!instance) throw new Error(`clerk.${this.config.type}: Expected instance key`)
+    if (typeof instance !== 'string') throw new Error(`clerk.${this.config.type}: Instance key must be a string`)
+    if (instance.test(/([A-Za-z_0-9])+/)) throw new Error(`clerk.${this.config.type}: Instance key can only contain A-Z, a-z, 0-9 or _`)
+  }
 
   /**
    * Dispatch start action.

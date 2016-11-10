@@ -10,7 +10,7 @@ export class Instance extends BaseAction {
    * @param {Object} config - The configuration for the action.
    */
   constructor(config) {
-    super('update', config)
+    super('instance', config)
   }
 
   /**
@@ -19,10 +19,15 @@ export class Instance extends BaseAction {
    *
    * @returns {Function} - Returns the instance action thunk.
    */
-  do = instanceKey => {
+  do = instance => {
+
+    // Validate instance key
+    this.validateInstance(instance)
+
     return dispatch => {
-      // Create data object to be dispatched with actions
-      const data = { instanceKey }
+
+      // Create data object to be dispatched with action
+      const data = { instance }
 
       // Call BaseAction.start with dispatch and the action data
       this.start(dispatch, data)
