@@ -15,6 +15,7 @@ export class Create extends BaseAction {
 
   /**
    * Generate an action creator with the provided data.
+   * @param {String} instance - Instance key where changes should be applied
    * @param {Object} record - Record to be created.
    *
    * @returns {Function} - Returns the create action thunk.

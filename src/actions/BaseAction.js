@@ -42,10 +42,10 @@ class BaseAction {
     *
     * @returns {void}
     */
-  validationInstance = instance => {
+  validateInstance = instance => {
     if (!instance) throw new Error(`clerk.${this.config.type}: Expected instance key`)
     if (typeof instance !== 'string') throw new Error(`clerk.${this.config.type}: Instance key must be a string`)
-    if (instance.test(/([A-Za-z_0-9])+/)) throw new Error(`clerk.${this.config.type}: Instance key can only contain A-Z, a-z, 0-9 or _`)
+    if (!(/([A-Za-z_0-9])+/).test(instance)) throw new Error(`clerk.${this.config.type}: Instance key can only contain A-Z, a-z, 0-9 or _`)
   }
 
   /**

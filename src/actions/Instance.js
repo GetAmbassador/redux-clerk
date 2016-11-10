@@ -15,7 +15,7 @@ export class Instance extends BaseAction {
 
   /**
    * Generate an action creator with the provided data.
-   * @param {Object} instanceKey - key of instance to be created.
+   * @param {Object} instance - key of instance to be created.
    *
    * @returns {Function} - Returns the instance action thunk.
    */

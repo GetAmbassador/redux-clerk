@@ -15,6 +15,7 @@ export class Fetch extends BaseAction {
 
   /**
    * Generate an action creator with the provided data.
+   * @param {String} instance - Instance key where changes should be applied
    * @param {Object} params - Additional params to be passed to the fetcher
    *
    * @returns {Function} - Returns the fetch action thunk.

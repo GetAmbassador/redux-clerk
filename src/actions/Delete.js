@@ -15,6 +15,7 @@ export class Delete extends BaseAction {
 
   /**
    * Generate an action creator with the provided data.
+   * @param {String} instance - Instance key where changes should be applied
    * @param {String} uid - UID of the item to be deleted.
    *
    * @returns {Function} - Returns the delete action thunk.
