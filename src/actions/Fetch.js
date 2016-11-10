@@ -19,15 +19,12 @@ export class Fetch extends BaseAction {
    *
    * @returns {Function} - Returns the fetch action thunk.
    */
-  do = (params) => {
+  do = (instance = this.config.defaultInstance, params = null) => {
     return dispatch => {
-      // Merge uidField into action data
-      const data = { uidField: this.config.uidField }
 
-      // Add params to action data
-      if(params) {
-        data.params = params
-      }
+      // Create data object to be dispatched with actions
+      const { uidField } = this.config
+      const data = { instance, params, uidField }
 
       // Call BaseAction.start with dispatch
       this.start(dispatch, data)

@@ -19,10 +19,12 @@ export class Create extends BaseAction {
    *
    * @returns {Function} - Returns the create action thunk.
    */
-  do = record => {
+  do = (instance = this.config.defaultInstance, record) => {
     return dispatch => {
+
       // Create data object to be dispatched with actions
-      const data = { created: record, uidField: this.config.uidField }
+      const { uidField } = this.config
+      const data = { instance, created: record, uidField }
 
       // Call BaseAction.start with dispatch and the action data
       this.start(dispatch, data)

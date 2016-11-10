@@ -8,7 +8,10 @@ class BaseAction {
    * @param {Object} config - The configuration for the action.
    */
   constructor(type, config) {
-    this.config = Object.assign({}, config)
+    const configDefaults = {
+      defaultInstance: 'default'
+    }
+    this.config = Object.assign(configDefaults, config)
     this.actionNames = generateActionNames(config.actionPrefix, type)
   }
 

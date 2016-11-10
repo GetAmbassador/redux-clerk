@@ -19,10 +19,12 @@ export class Delete extends BaseAction {
    *
    * @returns {Function} - Returns the delete action thunk.
    */
-  do = uid => {
+  do = (instance = this.config.defaultInstance, uid) => {
     return dispatch => {
-      // Merge uidField into action data
-      const data = { uid, uidField: this.config.uidField }
+
+      // Create data object to be dispatched with actions
+      const { uidField } = this.config
+      const data = { instance, uid, uidField }
 
       // Call BaseAction.start with dispatch and the action data
       this.start(dispatch, data)
