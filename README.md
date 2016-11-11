@@ -89,12 +89,12 @@ export default TodosSelectors
 ```
 
 ## Normalization and Derived Datasets
-In order maintain minimum possible state redux-clerk will normalize the data returned from the fetcher and allow subsets of that data to be created.
+In order to maintain minimum possible state redux-clerk will normalize the data returned from the fetcher and allow subsets of that data to be created.
 
 ### How does redux-clerk know how to normalize my data?
-Redux-clerk takes the configured `uidField` to build a key/val Immutable Map.
+Redux-clerk builds key/value pairs using the configured `uidField` as the key and the data object as the value.
 
-For example, your fetcher may return an array in the following format:
+For example, your fetch response may be an array in the following format:
 ```
 [
   { uid: 11, name: 'Test 1' },
@@ -112,7 +112,7 @@ The array will be normalized into the following format:
 }
 ```
 
-### How do I maintain the sort order of the fetcher response?
+### How do I maintain the sort order of the fetch response?
 The fetch action creator requires a dataset key to be provided. Ex: `fetch('companyTypeahead')`
 
 Redux-clerk will store an array of UIDs from the fetch response. Your state would then look like this:
@@ -132,7 +132,7 @@ Redux-clerk will store an array of UIDs from the fetch response. Your state woul
 ```
 
 ### How do I recompute the derived companyTypeahead dataset?
-Redux-clerk provides a selector which will provide the recomputed data.
+Redux-clerk provides a selector which will provide the computed data.
 
 For example the TodosSelectors above will provide a `dataset` selector which takes a dataset key and returns the computed data.
 ```
