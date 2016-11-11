@@ -28,13 +28,41 @@ describe('Actions::BaseAction', () => {
   describe('constructor', () => {
     it('should set local configuration', () => {
       const action = new BaseAction('test', config)
-      expect(action.config).to.deep.equal(config)
+      expect(action.config).to.deep.equal({
+        actionPrefix: 'test',
+        uidField: 'uid',
+        type: 'test'
+      })
     })
 
     it('should set actionNames', () => {
       const action = new BaseAction('test', config)
       expect(generateActionNamesStub.calledOnce).to.be.true
       expect(action.actionNames).to.deep.equal(mockActionNames)
+    })
+  })
+
+  describe('validateInstance', () => {
+    it('should throw an exception if instance key is not provided', () => {
+      const action = new BaseAction('create', config)
+      expect(action.validateInstance).to.throw('clerk.create: Expected instance key')
+    })
+
+    it('should throw an exception if instance key is not a string', () => {
+      const action = new BaseAction('create', config)
+      expect(action.validateInstance.bind(null, {})).to.throw('clerk.create: Instance key must be a string')
+    })
+
+    it('should throw an exception if instance key is not valid', () => {
+      const action = new BaseAction('create', config)
+      expect(action.validateInstance.bind(null, 'invalid key')).to.throw('clerk.create: Instance key can only contain A-Z, a-z, 0-9 or _')
+    })
+
+    it('should not throw an exception if instance key is valid', () => {
+      const action = new BaseAction('create', config)
+      expect(action.validateInstance.bind(null, 'validKey')).to.not.throw('clerk.create: Instance key can only contain A-Z, a-z, 0-9 or _')
+      expect(action.validateInstance.bind(null, 'valid1')).to.not.throw('clerk.create: Instance key can only contain A-Z, a-z, 0-9 or _')
+      expect(action.validateInstance.bind(null, 'valid_key')).to.not.throw('clerk.create: Instance key can only contain A-Z, a-z, 0-9 or _')
     })
   })
 

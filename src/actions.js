@@ -2,6 +2,7 @@ import { Create } from './actions/Create'
 import { Update } from './actions/Update'
 import { Delete } from './actions/Delete'
 import { Fetch } from './actions/Fetch'
+import { Instance } from './actions/Instance'
 
 /**
  * Creates a new instance of each CRUD action
@@ -19,12 +20,14 @@ const actions = (config) => {
   const createAction = new Create(config)
   const updateAction = new Update(config)
   const deleteAction = new Delete(config)
+  const instanceAction = new Instance(config)
 
   return {
     fetch: fetchAction.do,
     create: createAction.do,
     update: updateAction.do,
-    delete: deleteAction.do
+    delete: deleteAction.do,
+    createDataset: instanceAction.do
   }
 }
 

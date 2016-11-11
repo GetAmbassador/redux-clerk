@@ -25,5 +25,7 @@ describe('Actions', () => {
     expect(actionCreators.create).to.be.a('function')
     expect(actionCreators.update).to.be.a('function')
     expect(actionCreators.delete).to.be.a('function')
+    expect(actionCreators.fetch).to.be.a('function')
+    expect(actionCreators.createDataset).to.be.a('function')
   })
 })

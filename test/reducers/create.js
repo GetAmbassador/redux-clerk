@@ -10,7 +10,7 @@ describe('Reducers::Create', () => {
       })
 
       const action = {
-        data: Immutable.fromJS({ uid: 234, test: '234' }),
+        record: Immutable.fromJS({ uid: 234, test: '234' }),
         uidField: 'uid'
       }
 
@@ -49,7 +49,7 @@ describe('Reducers::Create', () => {
       })
 
       const action = {
-        created: Immutable.fromJS({ uid: 234, test: '234' }),
+        record: Immutable.fromJS({ uid: 234, test: '234' }),
         uidField: 'uid'
       }
 

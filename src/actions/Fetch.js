@@ -6,7 +6,7 @@ import BaseAction from './BaseAction'
  */
 export class Fetch extends BaseAction {
   /**
-   * Create an instant of the Fetch action.
+   * Create an instance of the Fetch action.
    * @param {Object} config - The configuration for the action.
    */
   constructor(config) {
@@ -15,19 +15,21 @@ export class Fetch extends BaseAction {
 
   /**
    * Generate an action creator with the provided data.
+   * @param {String} instance - Instance key where changes should be applied
    * @param {Object} params - Additional params to be passed to the fetcher
    *
    * @returns {Function} - Returns the fetch action thunk.
    */
-  do = (params) => {
-    return dispatch => {
-      // Merge uidField into action data
-      const data = { uidField: this.config.uidField }
+  do = (instance, params = null) => {
 
-      // Add params to action data
-      if(params) {
-        data.params = params
-      }
+    // Validate instance key
+    this.validateInstance(instance)
+
+    return dispatch => {
+
+      // Create data object to be dispatched with actions
+      const { uidField } = this.config
+      const data = { instance, uidField }
 
       // Call BaseAction.start with dispatch
       this.start(dispatch, data)

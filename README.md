@@ -19,13 +19,6 @@ Redux Clerk handles the async CRUD in your Redux App.
 ### Actions
 Redux Clerk provides action creators for handling CRUD operations.
 
-#### Provided Actions
-* fetch
-* create
-* update
-* delete
-* createDataset
-
 ```
 import { actions } from 'redux-clerk'
 import axios from 'axios'
@@ -58,7 +51,15 @@ const TodosActions = actions({
 export default TodosActions
 ```
 
+#### Provided Action Creators
+* fetch
+* create
+* update
+* delete
+* createDataset
+
 ### Reducer
+The reducer will handle all actions dispatched by the action creators noted above.
 
 ```
 import { reducer } from 'redux-clerk'
@@ -75,6 +76,7 @@ export default TodosReducer
 
 #### Provided Selectors
 * all
+* dataset
 
 ```
 import { selectors } from 'redux-clerk'
@@ -84,6 +86,69 @@ const TodosSelectors = selectors({
 })
 
 export default TodosSelectors
+```
+
+## Normalization and Derived Datasets
+In order to maintain minimum possible state redux-clerk will normalize the data returned from the fetcher and allow subsets of that data to be created.
+
+### How does redux-clerk know how to normalize my data?
+Redux-clerk builds key/value pairs using the configured `uidField` as the key and the data object as the value.
+
+For example, your fetch response may be an array in the following format:
+```
+[
+  { uid: 11, name: 'Test 1' },
+  { uid: 22, name: 'Test 2' },
+  { uid: 33, name: 'Test 3' }
+]
+```
+
+The array will be normalized into the following format:
+```
+{
+  11: { uid: 11, name: 'Test 1' },
+  22: { uid: 22, name: 'Test 2' },
+  33: { uid: 33, name: 'Test 3' }
+}
+```
+
+### How do I maintain the sort order of the fetch response?
+The fetch action creator requires a dataset key to be provided. Ex: `fetch('companyTypeahead')`
+
+Redux-clerk will store an array of UIDs from the fetch response. Your state would then look like this:
+
+```
+{
+  // Normalized source data
+  raw: {
+    11: { uid: 11, name: 'Test 1' },
+    22: { uid: 22, name: 'Test 2' },
+    33: { uid: 33, name: 'Test 3' }
+  },
+
+  // companyTypeahead dataset
+  companyTypeahead: [22,11,33]
+}
+```
+
+### How do I recompute the derived companyTypeahead dataset?
+Redux-clerk provides a selector which will provide the computed data.
+
+For example the TodosSelectors above will provide a `dataset` selector which takes a dataset key and returns the computed data.
+```
+mapStateToProps = state => {
+  return {
+    companyTypeaheadData: dataset(state, 'companyTypeahead')
+  }
+}
+
+// props.companyTypeaheadData will then be set to:
+[
+  { uid: 22, name: 'Test 2' },
+  { uid: 11, name: 'Test 1' },
+  { uid: 33, name: 'Test 3' }
+]
+
 ```
 
 ## Running Tests

@@ -6,7 +6,7 @@ import BaseAction from './BaseAction'
  */
 export class Delete extends BaseAction {
   /**
-   * Create an instant of the delete action.
+   * Create an instance of the delete action.
    * @param {Object} config - The configuration for the action.
    */
   constructor(config) {
@@ -15,14 +15,21 @@ export class Delete extends BaseAction {
 
   /**
    * Generate an action creator with the provided data.
+   * @param {String} instance - Instance key where changes should be applied
    * @param {String} uid - UID of the item to be deleted.
    *
    * @returns {Function} - Returns the delete action thunk.
    */
-  do = uid => {
+  do = (instance, uid) => {
+
+    // Validate instance key
+    this.validateInstance(instance)
+
     return dispatch => {
-      // Merge uidField into action data
-      const data = { uid, uidField: this.config.uidField }
+
+      // Create data object to be dispatched with actions
+      const { uidField } = this.config
+      const data = { instance, uid, uidField }
 
       // Call BaseAction.start with dispatch and the action data
       this.start(dispatch, data)

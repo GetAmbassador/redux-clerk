@@ -6,7 +6,7 @@ import BaseAction from './BaseAction'
  */
 export class Create extends BaseAction {
   /**
-   * Create an instant of the Create action.
+   * Create an instance of the Create action.
    * @param {Object} config - The configuration for the action.
    */
   constructor(config) {
@@ -15,14 +15,21 @@ export class Create extends BaseAction {
 
   /**
    * Generate an action creator with the provided data.
+   * @param {String} instance - Instance key where changes should be applied
    * @param {Object} record - Record to be created.
    *
    * @returns {Function} - Returns the create action thunk.
    */
-  do = record => {
+  do = (instance, record) => {
+
+    // Validate instance key
+    this.validateInstance(instance)
+
     return dispatch => {
+
       // Create data object to be dispatched with actions
-      const data = { created: record, uidField: this.config.uidField }
+      const { uidField } = this.config
+      const data = { instance, record, uidField }
 
       // Call BaseAction.start with dispatch and the action data
       this.start(dispatch, data)

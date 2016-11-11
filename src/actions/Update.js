@@ -6,7 +6,7 @@ import BaseAction from './BaseAction'
  */
 export class Update extends BaseAction {
   /**
-   * Create an instant of the update action.
+   * Create an instance of the update action.
    * @param {Object} config - The configuration for the action.
    */
   constructor(config) {
@@ -19,10 +19,13 @@ export class Update extends BaseAction {
    *
    * @returns {Function} - Returns the update action thunk.
    */
-  do = record => {
+  do = (record) => {
+
     return dispatch => {
+
       // Create data object to be dispatched with actions
-      const data = { record, uidField: this.config.uidField }
+      const { uidField } = this.config
+      const data = { record, uidField }
 
       // Call BaseAction.start with dispatch and the action data
       this.start(dispatch, data)
