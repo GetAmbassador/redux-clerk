@@ -9,10 +9,22 @@ import { Map } from 'immutable'
  */
 export const start = (state, action) => {
 
+  // Get temporary uid from new record
+  const uid = action.record.get(action.uidField)
+
   // Create new record tuple
   // We have to create a tuple here in order to preserve the Integer typed keys
-  const newRecord = Map([[action.record.get(action.uidField), action.record]])
-  return state.set('raw', state.get('raw').merge(newRecord))
+  const newRecord = Map([[uid, action.record]])
+
+  // Update state
+  return state.withMutations(map => {
+
+    // Add full object to raw
+    map.set('raw', state.get('raw').merge(newRecord))
+
+    // Add uid to provided instance
+    map.setIn(['instances', action.instance, 'data'], map.getIn(['instances', action.instance, 'data']).insert(0, uid))
+  })
 }
 
 /**

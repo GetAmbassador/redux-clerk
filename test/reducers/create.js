@@ -5,12 +5,16 @@ import { start, success, error } from '../../src/reducers/create'
 describe('Reducers::Create', () => {
   describe('start', () => {
     it('should update data in state', () => {
-      const previousState = Map({
-        raw: Map([[123, Immutable.fromJS({ uid: 123, test: '123' })]])
+      const previousState = Immutable.fromJS({
+        raw: Map([[123, Immutable.fromJS({ uid: 123, test: '123' })]]),
+        instances: {
+          test1: { data: [123] }
+        }
       })
 
       const action = {
         record: Immutable.fromJS({ uid: 234, test: '234' }),
+        instance: 'test1',
         uidField: 'uid'
       }
 
@@ -18,6 +22,9 @@ describe('Reducers::Create', () => {
         raw: {
           123: { uid: 123, test: '123' },
           234: { uid: 234, test: '234' }
+        },
+        instances: {
+          test1: { data: [234, 123] }
         }
       }
 
