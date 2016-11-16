@@ -33,19 +33,36 @@ describe('Reducers::Create', () => {
   })
 
   describe('success', () => {
-    it('should return existing state', () => {
-      const previousState = Map({
-        raw: Map([[123, Immutable.fromJS({ uid: 123, test: '123' })], [234, Immutable.fromJS({ uid: 234, test: '234' })]])
+    it('should replace the temporary uid with the permanent uid', () => {
+      const previousState = Immutable.fromJS({
+        raw: Map([['temp123', Immutable.fromJS({ uid: 'temp123', test: '123' })], [234, Immutable.fromJS({ uid: 234, test: '234' })]]),
+        instances: {
+          test1: {
+            data: ['temp123', 234]
+          }
+        }
       })
+
+      const action = {
+        record: Immutable.fromJS({ uid: 'temp123', test: '123' }),
+        responseData: { uid: 123, test: '123' },
+        instance: 'test1',
+        uidField: 'uid'
+      }
 
       const expectedResult = {
         raw: {
           123: { uid: 123, test: '123' },
           234: { uid: 234, test: '234' }
+        },
+        instances: {
+          test1: {
+            data: [123, 234]
+          }
         }
       }
 
-      expect(success(previousState).toJS()).to.deep.equal(expectedResult)
+      expect(success(previousState, action).toJS()).to.deep.equal(expectedResult)
     })
   })
 
