@@ -52,7 +52,7 @@ export const success = (state, action) => {
     map.removeIn(['raw', temporaryUid])
 
     // Remove temporary uid from instance array
-    const temporaryUidIndex = map.getIn(['instances', action.instance, 'data']).findIndex(uid => uid===temporaryUid)
+    const temporaryUidIndex = map.getIn(['instances', action.instance, 'data']).findIndex(uid => uid === temporaryUid)
     map.removeIn(['instances', action.instance, 'data', temporaryUidIndex])
   })
 }
@@ -66,8 +66,17 @@ export const success = (state, action) => {
  */
 export const error = (state, action) => {
 
-  // Remove the added record on error because the request failed
-  return state.removeIn(['raw', action.record.get(action.uidField)])
+  // Update state
+  return state.withMutations(map => {
+
+    // Remove the added record on error because the request failed
+    map.removeIn(['raw', action.record.get(action.uidField)])
+
+    // Remove temporary uid from instance array
+    const temporaryUid = action.record.get(action.uidField)
+    const temporaryUidIndex = map.getIn(['instances', action.instance, 'data']).findIndex(uid => uid === temporaryUid)
+    map.removeIn(['instances', action.instance, 'data', temporaryUidIndex])
+  })
 }
 
 export default {

@@ -68,18 +68,29 @@ describe('Reducers::Create', () => {
 
   describe('error', () => {
     it('should remove the created item', () => {
-      const previousState = Map({
-        raw: Map([[123, Immutable.fromJS({ uid: 123, test: '123' })], [234, Immutable.fromJS({ uid: 234, test: '234' })]])
+      const previousState = Immutable.fromJS({
+        raw: Map([['temp123', Immutable.fromJS({ uid: 'temp123', test: '123' })], [234, Immutable.fromJS({ uid: 234, test: '234' })]]),
+        instances: {
+          test1: {
+            data: ['temp123', 234]
+          }
+        }
       })
 
       const action = {
-        record: Immutable.fromJS({ uid: 234, test: '234' }),
+        record: Immutable.fromJS({ uid: 'temp123', test: '123' }),
+        instance: 'test1',
         uidField: 'uid'
       }
 
       const expectedResult = {
         raw: {
-          123: { uid: 123, test: '123' }
+          234: { uid: 234, test: '234' }
+        },
+        instances: {
+          test1: {
+            data: [234]
+          }
         }
       }
 
