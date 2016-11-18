@@ -75,7 +75,6 @@ export default TodosReducer
 ### Selectors
 
 #### Provided Selectors
-* all
 * dataset
 
 ```
