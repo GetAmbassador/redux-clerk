@@ -9,15 +9,20 @@ import { Map } from 'immutable'
  */
 export const start = (state, action) => {
 
-  // Get item that is being deleted
-  const itemPendingDelete = Map([[action.uid, state.getIn(['raw', action.uid])]])
-
   return state.withMutations(map => {
     // Optimistically delete the item
     map.deleteIn(['raw', action.uid])
 
+    // Remove uid from instance array
+    const uidIndex = map.getIn(['instances', action.instance, 'data']).findIndex(uid => uid === action.uid)
+    map.removeIn(['instances', action.instance, 'data', uidIndex])
+
+    // Get item that is being deleted
+    const itemPendingDeleteData = Map({ index: uidIndex, data: state.getIn(['raw', action.uid]) })
+    const itemPendingDeleteTuple = Map([[action.uid, itemPendingDeleteData]])
+
     // Saving the item being deleted in case deletion fails
-    map.set('pendingDelete', state.get('pendingDelete').merge(itemPendingDelete))
+    map.set('pendingDelete', state.get('pendingDelete').merge(itemPendingDeleteTuple))
   })
 }
 
@@ -44,13 +49,15 @@ export const success = (state, action) => {
 export const error = (state, action) => {
   // Create reverted record tuple
   // We have to create a tuple here in order to preserve the Integer typed keys
-  const deletedRecord = Map([[action.uid, state.getIn(['pendingDelete', action.uid])]])
+  const deletedRecord = state.getIn(['pendingDelete', action.uid])
+  const deletedRecordTuple = Map([[action.uid, deletedRecord.get('data')]])
   return state.withMutations(map => {
     // Remove the item pending delete
     map.deleteIn(['pendingDelete', action.uid])
 
     // Re-add the deleted items
-    map.set('raw', state.get('raw').merge(deletedRecord))
+    map.set('raw', state.get('raw').merge(deletedRecordTuple))
+    map.setIn(['instances', action.instance, 'data'], map.getIn(['instances', action.instance, 'data']).insert(deletedRecord.get('index'), action.uid))
   })
 }
 

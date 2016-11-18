@@ -5,21 +5,32 @@ import { start, success, error } from '../../src/reducers/delete'
 describe('Reducers::Delete', () => {
   describe('start', () => {
     it('should move provided uid from raw to pendingDelete', () => {
-      const previousState = Map({
+      const previousState = Immutable.fromJS({
         raw: Map([[123, Immutable.fromJS({ uid: 123, test: '123' })], [234, Immutable.fromJS({ uid: 234, test: '234' })]]),
+        instances: {
+          test1: {
+            data: [123,234]
+          }
+        },
         pendingDelete: Map({})
       })
 
       const action = {
-        uid: 234
+        uid: 234,
+        instance: 'test1'
       }
 
       const expectedResult = {
         raw: {
           123: { uid: 123, test: '123' }
         },
+        instances: {
+          test1: {
+            data: [123]
+          }
+        },
         pendingDelete: {
-          234: { uid: 234, test: '234' }
+          234: { index: 1, data: { uid: 234, test: '234' }}
         }
       }
 
@@ -31,7 +42,7 @@ describe('Reducers::Delete', () => {
     it('should remove the provided item from pendingDelete', () => {
       const previousState = Map({
         raw: Map([[123, Immutable.fromJS({ uid: 123, test: '123' })]]),
-        pendingDelete: Map([[234, Immutable.fromJS({ uid: 234, test: '234' })]])
+        pendingDelete: Map([[234, Immutable.fromJS({ index: 0, data: { uid: 234, test: '234' }})]])
       })
 
       const action = {
@@ -51,19 +62,30 @@ describe('Reducers::Delete', () => {
 
   describe('error', () => {
     it('should re-add the deleted item', () => {
-      const previousState = Map({
+      const previousState = Immutable.fromJS({
         raw: Map([[123, Immutable.fromJS({ uid: 123, test: '123' })]]),
-        pendingDelete: Map([[234, Immutable.fromJS({ uid: 234, test: '234' })]])
+        instances: {
+          test1: {
+            data: [123]
+          }
+        },
+        pendingDelete: Map([[234, Immutable.fromJS({ index: 1, data: { uid: 234, test: '234' }})]])
       })
 
       const action = {
-        uid: 234
+        uid: 234,
+        instance: 'test1'
       }
 
       const expectedResult = {
         raw: {
           123: { uid: 123, test: '123' },
           234: { uid: 234, test: '234' }
+        },
+        instances: {
+          test1: {
+            data: [123,234]
+          }
         },
         pendingDelete: {}
       }
