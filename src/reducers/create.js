@@ -39,12 +39,12 @@ export const success = (state, action) => {
   // Update state
   return state.withMutations(map => {
 
-    // Add new record to raw using permananet uid
+    // Add new record to raw using permanent uid
     const permanentUid = action.responseData[action.uidField]
     const newRecord = Map([[permanentUid, action.record.set(action.uidField, permanentUid)]])
     map.set('raw', state.get('raw').merge(newRecord))
 
-    // Add new record to instance array using permanaent uid
+    // Add new record to instance array using permanent uid
     map.setIn(['instances', action.instance, 'data'], map.getIn(['instances', action.instance, 'data']).insert(0, permanentUid))
 
     // Remove temporary record from raw
