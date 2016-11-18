@@ -1,11 +1,12 @@
 /**
  * The selector for computing derived datasets
+ * @param  {Object} config - selector configuration
  * @param  {Immutable.Map} state - current reducer state
  * @param  {Object} instance - instance key
  *
- * @return {Immutable.List} - computer
+ * @return {Immutable.List} - computed data
  */
-const datasetSelector = (config, state, instance) => {
+export const datasetSelector = (config, state, instance) => {
 
   // Get redux-clerk data from store
   const baseState = config.baseSelector(state)
@@ -17,5 +18,3 @@ const datasetSelector = (config, state, instance) => {
   // Re-compute data
   return instanceData.map(i => rawData.get(i))
 }
-
-export default datasetSelector
