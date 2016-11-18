@@ -29,6 +29,14 @@ const reducer = (config) => {
     // }
     raw: {},
 
+    // Holds derived subsets of the raw data
+    // Stored as arrays of uids
+    // {
+    //   instance1: { data: [123, 234] },
+    //   instance2: { [234,345,456] }
+    // }
+    instances: {},
+
     // pendingDelete: Contains items that are pending deletion
     pendingDelete: {},
 

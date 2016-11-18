@@ -1,4 +1,5 @@
 import normalize from '../utils/normalize'
+import Immutable from 'immutable'
 
 /**
  * The start action for the fetch reducer
@@ -20,15 +21,20 @@ export const start = (state) => {
  * @return {Immutable.Map} - updated state
  */
 export const success = (state, action) => {
+  return state.withMutations(map => {
 
-  // If the returned data is a list we normalize and add each item
-  if(action.data && action.data.size) {
-    const normalizedData = normalize(action.uidField, action.data)
-    return state.set('raw', state.get('raw').merge(normalizedData))
-  }
+    // If the returned data is an array we normalize and add each item
+    if(action.responseData && action.responseData instanceof Array) {
 
-  // Otherwise we update the single object
-  return state.setIn(['raw', action.uid, action.data])
+      // Merge new raw data with existing raw data
+      const normalizedData = normalize(action.uidField, Immutable.fromJS(action.responseData))
+      map.set('raw', state.get('raw').merge(normalizedData))
+
+      // Update instance array with new data
+      const instanceData = Immutable.fromJS(action.responseData.map(i => i[action.uidField]))
+      map.setIn(['instances', action.instance, 'data'], instanceData)
+    }
+  })
 }
 
 /**

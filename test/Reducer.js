@@ -26,6 +26,7 @@ describe('Reducer', () => {
 
   const defaultState = {
     raw: {},
+    instances: {},
     pendingDelete: {},
     pendingUpdate: {}
   }
