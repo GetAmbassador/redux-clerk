@@ -24,10 +24,13 @@ export const success = (state, action) => {
   return state.withMutations(map => {
 
     // If the returned data is an array we normalize and add each item
-    if(action.responseData && action.responseData.length && action.responseData.length > 0) {
+    if(action.responseData && action.responseData instanceof Array) {
+
+      // Merge new raw data with existing raw data
       const normalizedData = normalize(action.uidField, Immutable.fromJS(action.responseData))
       map.set('raw', state.get('raw').merge(normalizedData))
 
+      // Update instance array with new data
       const instanceData = Immutable.fromJS(action.responseData.map(i => i[action.uidField]))
       map.setIn(['instances', action.instance, 'data'], instanceData)
     }
