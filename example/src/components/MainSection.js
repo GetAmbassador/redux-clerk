@@ -6,8 +6,8 @@ import { SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE } from '../constants/TodoFilters'
 
 const TODO_FILTERS = {
   [SHOW_ALL]: () => true,
-  [SHOW_ACTIVE]: todo => !todo.completed,
-  [SHOW_COMPLETED]: todo => todo.completed
+  [SHOW_ACTIVE]: todo => !todo.get('completed'),
+  [SHOW_COMPLETED]: todo => todo.get('completed')
 }
 
 export default class MainSection extends Component {
@@ -28,11 +28,11 @@ export default class MainSection extends Component {
 
   renderToggleAll(completedCount) {
     const { todos, actions } = this.props
-    if (todos.length > 0) {
+    if (todos.size > 0) {
       return (
         <input className="toggle-all"
                type="checkbox"
-               checked={completedCount === todos.length}
+               checked={completedCount === todos.size}
                onChange={actions.completeAll} />
       )
     }
@@ -41,9 +41,9 @@ export default class MainSection extends Component {
   renderFooter(completedCount) {
     const { todos } = this.props
     const { filter } = this.state
-    const activeCount = todos.length - completedCount
+    const activeCount = todos.size - completedCount
 
-    if (todos.length) {
+    if (todos.size) {
       return (
         <Footer completedCount={completedCount}
                 activeCount={activeCount}
@@ -60,7 +60,7 @@ export default class MainSection extends Component {
 
     const filteredTodos = todos.filter(TODO_FILTERS[filter])
     const completedCount = todos.reduce((count, todo) =>
-      todo.completed ? count + 1 : count,
+      todo.get('completed') ? count + 1 : count,
       0
     )
 
