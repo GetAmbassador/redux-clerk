@@ -52,7 +52,10 @@ const reducer = (config) => {
 
     // Extend existing state
     // This comes into play when clerk is used to extend an existing reducer
-    state = state.merge(defaultState)
+    // We use mergeWith so that our default state doesn't blow away any exiting values
+    state = state.mergeWith(a => {
+      return a
+    }, defaultState)
 
     switch(action.type) {
       case fetchActions.start: return fetchReducer.start(state, action)

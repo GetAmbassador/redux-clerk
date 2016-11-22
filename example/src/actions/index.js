@@ -18,7 +18,7 @@ TodosActions.editTodo = (id, text) => {
   return TodosActions.update('todos', Immutable.fromJS({ id, text }))
 }
 
-TodosActions.deleteTodo = TodosActions.delete
+TodosActions.deleteTodo = TodosActions.delete.bind(null, 'todos')
 
 TodosActions.completeTodo = (id) => {
   return TodosActions.update('todos', Immutable.fromJS({ id, completed: true }))
