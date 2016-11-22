@@ -1,8 +1,11 @@
 import { expect } from 'chai'
 import * as sinon from 'sinon'
-import reducer from '../src/reducer'
-import * as actionNames from '../src/utils/actionNames'
-import { createReducer, fetchReducer, updateReducer, deleteReducer } from '../src/reducers'
+import reducer from '../../src/reducers'
+import * as actionNames from '../../src/utils/actionNames'
+import createReducer from '../../src/reducers/create'
+import fetchReducer from '../../src/reducers/fetch'
+import updateReducer from '../../src/reducers/update'
+import deleteReducer from '../../src/reducers/delete'
 
 describe('Reducer', () => {
   let generateActionNamesStub,

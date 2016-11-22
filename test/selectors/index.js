@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import selectors from '../src/selectors'
+import selectors from '../../src/selectors'
 
 describe('Selectors', () => {
   it('should throw exception if config is not provided', () => {
