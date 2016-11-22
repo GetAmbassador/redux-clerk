@@ -13,17 +13,19 @@ export const start = (state, action) => {
 
   // Create updated record tuple
   // We have to create a tuple here in order to preserve the Integer typed keys
-  const updatedRecord = Map([[uid, action.record]])
+
+  const previousRecord = state.getIn(['raw', uid])
+  const updatedRecordTuple = Map([[uid, previousRecord.merge(action.record)]])
 
   // Create tuple for previous version of the item
-  const previousRecord = Map([[uid, state.getIn(['raw', uid])]])
+  const previousRecordTuple = Map([[uid, previousRecord]])
 
   return state.withMutations(map => {
     // Optimistically update the record
-    map.set('raw', state.get('raw').merge(updatedRecord))
+    map.set('raw', state.get('raw').merge(updatedRecordTuple))
 
     // Save previous version in case the update fails
-    map.set('pendingUpdate', state.get('pendingUpdate').merge(previousRecord))
+    map.set('pendingUpdate', state.get('pendingUpdate').merge(previousRecordTuple))
   })
 }
 

@@ -7,15 +7,10 @@ const TodosActions = actions({
 })
 
 TodosActions.addTodo = TodosActions.create.bind(null, 'todos')
-
-TodosActions.editTodo = (id, text) => {
-  return TodosActions.update('todos', Immutable.fromJS({ id, text }))
-}
-
+TodosActions.editTodo = TodosActions.update
 TodosActions.deleteTodo = TodosActions.delete.bind(null, 'todos')
-
 TodosActions.completeTodo = (id) => {
-  return TodosActions.update('todos', Immutable.fromJS({ id, completed: true }))
+  return TodosActions.update(Immutable.fromJS({ id, completed: true }))
 }
 
 export default TodosActions

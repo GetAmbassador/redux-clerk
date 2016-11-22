@@ -18,11 +18,11 @@ export default class TodoItem extends Component {
     this.setState({ editing: true })
   }
 
-  handleSave = (id, text) => {
-    if (text.length === 0) {
-      this.props.deleteTodo(id)
+  handleSave = (newTodo) => {
+    if (newTodo.get('text').length === 0) {
+      this.props.deleteTodo(newTodo.get('id'))
     } else {
-      this.props.editTodo(id, text)
+      this.props.editTodo(newTodo)
     }
     this.setState({ editing: false })
   }
@@ -35,7 +35,7 @@ export default class TodoItem extends Component {
       element = (
         <TodoTextInput text={todo.get('text')}
                        editing={this.state.editing}
-                       onSave={(text) => this.handleSave(todo.get('id'), text)} />
+                       onSave={(text) => this.handleSave(todo.set('text', text))} />
       )
     } else {
       element = (
