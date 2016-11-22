@@ -1,4 +1,4 @@
-import { Map } from 'immutable'
+import Immutable, { Map } from 'immutable'
 
 /**
  * The start action for the create reducer
@@ -23,7 +23,8 @@ export const start = (state, action) => {
     map.set('raw', state.get('raw').merge(newRecord))
 
     // Add uid to provided instance
-    map.setIn(['instances', action.instance, 'data'], map.getIn(['instances', action.instance, 'data']).insert(0, uid))
+    const instanceData = map.getIn(['instances', action.instance, 'data']) || Immutable.fromJS([])
+    map.setIn(['instances', action.instance, 'data'], instanceData.insert(0, uid))
   })
 }
 

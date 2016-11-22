@@ -1,3 +1,5 @@
+import Immutable from 'immutable'
+
 /**
  * The selector for computing derived datasets
  * @param  {Object} config - selector configuration
@@ -14,6 +16,11 @@ export const datasetSelector = (config, state, instance) => {
   // Get instance array
   const instanceData = baseState.getIn(['instances', instance, 'data'])
   const rawData = baseState.get('raw')
+
+  // If instanceData is not created yet, return empty List
+  if(!instanceData) {
+    return Immutable.fromJS([])
+  }
 
   // Re-compute data
   return instanceData.map(i => rawData.get(i))

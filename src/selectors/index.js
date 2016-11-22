@@ -1,4 +1,4 @@
-import { datasetSelector } from './selectors/dataset'
+import { datasetSelector } from './dataset'
 
 /**
  * Generates selectors with the provided config
