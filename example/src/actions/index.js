@@ -6,13 +6,7 @@ const TodosActions = actions({
   uidField: 'id'
 })
 
-TodosActions.addTodo = (text)=> {
-  return TodosActions.create('todos', Immutable.fromJS({
-    id: new Date().getTime(),
-    completed: false,
-    text
-  }))
-}
+TodosActions.addTodo = TodosActions.create.bind(null, 'todos')
 
 TodosActions.editTodo = (id, text) => {
   return TodosActions.update('todos', Immutable.fromJS({ id, text }))

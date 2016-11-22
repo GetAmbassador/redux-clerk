@@ -1,4 +1,5 @@
 import React, { PropTypes, Component } from 'react'
+import Immutable from 'immutable'
 import TodoTextInput from './TodoTextInput'
 
 export default class Header extends Component {
@@ -8,7 +9,11 @@ export default class Header extends Component {
 
   handleSave = text => {
     if (text.length !== 0) {
-      this.props.addTodo(text)
+      this.props.addTodo(Immutable.fromJS({
+        id: new Date().getTime(),
+        completed: false,
+        text
+      }))
     }
   }
 
