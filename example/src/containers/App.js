@@ -9,7 +9,7 @@ import TodoSelectors from '../selectors'
 
 const App = ({todos, actions}) => (
   <div>
-    <Header addTodo={actions.addTodo} />
+    <Header create={actions.create} />
     <MainSection todos={todos} actions={actions} />
   </div>
 )

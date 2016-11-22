@@ -6,10 +6,7 @@ const TodosActions = actions({
   uidField: 'id'
 })
 
-TodosActions.addTodo = TodosActions.create.bind(null, 'todos')
-TodosActions.editTodo = TodosActions.update
-TodosActions.deleteTodo = TodosActions.delete.bind(null, 'todos')
-TodosActions.completeTodo = (id) => {
+TodosActions.complete = (id) => {
   return TodosActions.update(Immutable.fromJS({ id, completed: true }))
 }
 
