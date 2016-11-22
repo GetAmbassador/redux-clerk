@@ -81,6 +81,8 @@ export default TodosReducer
 import { selectors } from 'redux-clerk'
 
 const TodosSelectors = selectors({
+
+  // Tell us where to find the base state for the related redux-clerk reducer.
   baseSelector: state => state.todos
 })
 
