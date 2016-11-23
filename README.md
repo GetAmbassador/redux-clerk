@@ -169,6 +169,7 @@ cd redux-clerk
 npm install
 npm run build
 cd example
+npm install react-scripts -g
 npm install
 npm start
 ```
