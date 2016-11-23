@@ -33,5 +33,23 @@ describe('Selectors', () => {
 
       expect(datasetSelector(config, currentState, 'test1').toJS()).to.deep.equal(expectedResult)
     })
+
+    it('should return empty list if instance has not yet been created', () => {
+
+      const currentState = {
+        companies: Immutable.fromJS({
+          raw: Map({}),
+          instances: {}
+        })
+      }
+
+      const config = {
+        baseSelector: state => state.companies
+      }
+
+      const expectedResult = []
+
+      expect(datasetSelector(config, currentState, 'test1').toJS()).to.deep.equal(expectedResult)
+    })
   })
 })
