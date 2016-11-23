@@ -30,6 +30,29 @@ describe('Reducers::Create', () => {
 
       expect(start(previousState, action).toJS()).to.deep.equal(expectedResult)
     })
+
+    it('should create the provided instance if not already created', () => {
+      const previousState = Immutable.fromJS({
+        raw: Map({})
+      })
+
+      const action = {
+        record: Immutable.fromJS({ uid: 123, test: '123' }),
+        instance: 'test1',
+        uidField: 'uid'
+      }
+
+      const expectedResult = {
+        raw: {
+          123: { uid: 123, test: '123' }
+        },
+        instances: {
+          test1: { data: [123] }
+        }
+      }
+
+      expect(start(previousState, action).toJS()).to.deep.equal(expectedResult)
+    })
   })
 
   describe('success', () => {
