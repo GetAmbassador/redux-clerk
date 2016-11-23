@@ -1,3 +1,3 @@
 export actions from './actions'
-export reducer from './reducer'
+export reducer from './reducers'
 export selectors from './selectors'

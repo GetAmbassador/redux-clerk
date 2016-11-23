@@ -1,4 +1,4 @@
-# redux-clerk (WIP)
+# Redux Clerk
 
 [![CircleCI](https://circleci.com/gh/GetAmbassador/redux-clerk.svg?style=svg&circle-token=a520f1c555abc4074f1801e49633e4244f9ce36d)](https://circleci.com/gh/GetAmbassador/redux-clerk)
 
@@ -24,7 +24,7 @@ import { actions } from 'redux-clerk'
 import axios from 'axios'
 
 const TodosActions = actions({
-  actionPrefix: 'TODOS_',
+  actionPrefix: 'TODOS',
   uidField: 'id',
   fetcher: (params, handleSuccess, handleError) => {
     return axios.get('todos', { params })
@@ -65,8 +65,8 @@ The reducer will handle all actions dispatched by the action creators noted abov
 import { reducer } from 'redux-clerk'
 
 const TodosReducer = reducer({
-  actionPrefix: 'TODOS_',
-  uidField: 'uid'
+  actionPrefix: 'TODOS',
+  uidField: 'id'
 })
 
 export default TodosReducer
@@ -158,6 +158,20 @@ git clone git@github.com:GetAmbassador/redux-clerk.git
 cd redux-clerk
 npm install
 npm test
+```
+
+## Example
+An example TodoMVC using Redux Clerk is available in the `example` directory. To run the example:
+
+```
+git clone git@github.com:GetAmbassador/redux-clerk.git
+cd redux-clerk
+npm install
+npm run build
+cd example
+npm install react-scripts -g
+npm install
+npm start
 ```
 
 ## License

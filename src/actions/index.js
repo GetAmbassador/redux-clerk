@@ -1,8 +1,8 @@
-import { Create } from './actions/Create'
-import { Update } from './actions/Update'
-import { Delete } from './actions/Delete'
-import { Fetch } from './actions/Fetch'
-import { Instance } from './actions/Instance'
+import { Create } from './Create'
+import { Update } from './Update'
+import { Delete } from './Delete'
+import { Fetch } from './Fetch'
+import { Instance } from './Instance'
 
 /**
  * Creates a new instance of each CRUD action

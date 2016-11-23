@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import actions from '../src/actions'
+import actions from '../../src/actions'
 
 describe('Actions', () => {
   const config = {

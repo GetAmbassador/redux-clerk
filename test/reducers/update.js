@@ -26,6 +26,31 @@ describe('Reducers::Update', () => {
 
       expect(start(previousState, action).toJS()).to.deep.equal(expectedResult)
     })
+
+
+    it('should merge partial changes with existing data', () => {
+      const previousState = Map({
+        raw: Map([[123, Immutable.fromJS({ uid: 123, test: '123', company: 'Acme' })]]),
+        pendingUpdate: Map({})
+      })
+
+      const action = {
+        record: Immutable.fromJS({ uid: 123, test: 'name' }),
+        uidField: 'uid'
+      }
+
+      const expectedResult = {
+        raw: {
+          123: { uid: 123, test: 'name', company: 'Acme' }
+        },
+        pendingUpdate: {
+          123: { uid: 123, test: '123', company: 'Acme' }
+        }
+      }
+
+      expect(start(previousState, action).toJS()).to.deep.equal(expectedResult)
+    })
+
   })
 
   describe('success', () => {

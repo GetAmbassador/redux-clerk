@@ -1,8 +1,12 @@
 import { expect } from 'chai'
 import * as sinon from 'sinon'
-import reducer from '../src/reducer'
-import * as actionNames from '../src/utils/actionNames'
-import { createReducer, fetchReducer, updateReducer, deleteReducer } from '../src/reducers'
+import Immutable from 'immutable'
+import reducer from '../../src/reducers'
+import * as actionNames from '../../src/utils/actionNames'
+import createReducer from '../../src/reducers/create'
+import fetchReducer from '../../src/reducers/fetch'
+import updateReducer from '../../src/reducers/update'
+import deleteReducer from '../../src/reducers/delete'
 
 describe('Reducer', () => {
   let generateActionNamesStub,
@@ -106,6 +110,25 @@ describe('Reducer', () => {
 
   it('should return default state', () => {
     expect(reducer(config)(undefined, { type: 'unknown' }).toJS()).to.deep.equal(defaultState)
+  })
+
+  it('should preserve existing state', () => {
+    const previousState = Immutable.fromJS({
+      raw: {
+        123: { name: 'test' }
+      }
+    })
+
+    const expectedState = {
+      raw: {
+        123: { name: 'test' }
+      },
+      instances: {},
+      pendingDelete: {},
+      pendingUpdate: {}
+    }
+
+    expect(reducer(config)(previousState, { type: 'unknown' }).toJS()).to.deep.equal(expectedState)
   })
 
   it('should call fetchReducer.start on USERS_FETCH', () => {
