@@ -18,9 +18,6 @@ export default class MainSection extends Component {
 
   state = { filter: SHOW_ALL }
 
-  handleClearCompleted = () => {
-    this.props.actions.clearCompleted()
-  }
 
   handleShow = filter => {
     this.setState({ filter })
@@ -48,7 +45,6 @@ export default class MainSection extends Component {
         <Footer completedCount={completedCount}
                 activeCount={activeCount}
                 filter={filter}
-                onClearCompleted={this.handleClearCompleted.bind(this)}
                 onShow={this.handleShow.bind(this)} />
       )
     }
