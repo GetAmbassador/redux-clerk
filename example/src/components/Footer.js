@@ -13,7 +13,6 @@ export default class Footer extends Component {
     completedCount: PropTypes.number.isRequired,
     activeCount: PropTypes.number.isRequired,
     filter: PropTypes.string.isRequired,
-    onClearCompleted: PropTypes.func.isRequired,
     onShow: PropTypes.func.isRequired
   }
 

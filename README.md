@@ -1,4 +1,4 @@
-# redux-clerk (WIP)
+# Redux Clerk
 
 [![CircleCI](https://circleci.com/gh/GetAmbassador/redux-clerk.svg?style=svg&circle-token=a520f1c555abc4074f1801e49633e4244f9ce36d)](https://circleci.com/gh/GetAmbassador/redux-clerk)
 
@@ -158,6 +158,19 @@ git clone git@github.com:GetAmbassador/redux-clerk.git
 cd redux-clerk
 npm install
 npm test
+```
+
+## Example
+An example TodoMVC using Redux Clerk is available in the `example` dir. To run the example:
+
+```
+git clone git@github.com:GetAmbassador/redux-clerk.git
+cd redux-clerk
+npm install
+npm run build
+cd example
+npm install
+npm start
 ```
 
 ## License
