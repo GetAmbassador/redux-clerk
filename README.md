@@ -24,7 +24,7 @@ import { actions } from 'redux-clerk'
 import axios from 'axios'
 
 const TodosActions = actions({
-  actionPrefix: 'TODOS_',
+  actionPrefix: 'TODOS',
   uidField: 'id',
   fetcher: (params, handleSuccess, handleError) => {
     return axios.get('todos', { params })
@@ -65,8 +65,8 @@ The reducer will handle all actions dispatched by the action creators noted abov
 import { reducer } from 'redux-clerk'
 
 const TodosReducer = reducer({
-  actionPrefix: 'TODOS_',
-  uidField: 'uid'
+  actionPrefix: 'TODOS',
+  uidField: 'id'
 })
 
 export default TodosReducer
@@ -161,7 +161,7 @@ npm test
 ```
 
 ## Example
-An example TodoMVC using Redux Clerk is available in the `example` dir. To run the example:
+An example TodoMVC using Redux Clerk is available in the `example` directory. To run the example:
 
 ```
 git clone git@github.com:GetAmbassador/redux-clerk.git
