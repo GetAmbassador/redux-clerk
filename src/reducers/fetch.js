@@ -34,7 +34,7 @@ export const success = (state, action) => {
       const instanceData = Immutable.fromJS(action.responseData.map(i => i[action.uidField]))
 
       // Append if options.appendResponse is true
-      if(action.options.appendResponse === true) {
+      if(action.options.appendResponse) {
         const existingInstanceData = map.getIn(['instances', action.instance, 'data'])
         map.setIn(['instances', action.instance, 'data'], existingInstanceData.concat(instanceData))
       }
