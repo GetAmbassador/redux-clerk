@@ -105,7 +105,7 @@ The UID of the record to be deleted.
 Type: `number`    
 Required: yes
 
-##### createDataset
+##### createDataset(datasetKey)
 ###### datasetKey
 The name of the dataset to be created.
 
