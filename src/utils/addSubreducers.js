@@ -6,7 +6,7 @@
  * @return {Object} - Updated state
  */
 
-export const addSubreducers = (primary, secondary) => {
+const addSubreducers = (primary, secondary) => {
   return (state, action) => {
     let nextState = primary(state, action)
 
@@ -22,3 +22,5 @@ export const addSubreducers = (primary, secondary) => {
     return nextState
   }
 }
+
+export default addSubreducers
