@@ -16,7 +16,7 @@ Redux Clerk handles the async CRUD in your Redux App.
 
 ## Usage
 
-### Actions
+### Action Creators
 Redux Clerk provides action creators for handling CRUD operations.
 
 ```
@@ -52,11 +52,62 @@ export default TodosActions
 ```
 
 #### Provided Action Creators
-* fetch
-* create
-* update
-* delete
-* createDataset
+
+##### fetch(datasetKey, params, options)
+###### datasetKey
+The name of the dataset where the fetched records should be applied.
+
+Type: `string` _(must be A-Za-z_0-9)_
+Required: yes
+
+###### params
+The params to be passed to the fetcher.
+
+Type: `object`
+
+###### options
+The options for the fetch action.
+
+Type: `object`
+Available options:
+* `appendResponse` - By default the dataset is replaced with the response data. Set this to `false` to have the response data appended.
+
+##### create(datasetKey, record)
+###### datasetKey
+The name of the dataset where created record should be applied.
+
+Type: `string` _(must be A-Za-z_0-9)_
+Required: yes
+
+###### record
+The record to be created. Must contain a temporary UID in the configured `uidField`.
+
+Type: `object`
+
+##### update(record)
+###### record
+The record to be updated. Must contain the UID to be updated in the configured `uidField`.
+
+Type: `object`
+
+##### delete(datasetKey, uid)
+###### datasetKey
+The name of the dataset where deletion should be applied.
+
+Type: `string` _(must be A-Za-z_0-9)_
+Required: yes
+
+###### uid
+The UID of the record to be deleted.
+
+Type: `number`
+
+##### createDataset
+###### datasetKey
+The name of the dataset to be created.
+
+Type: `string` _(must be A-Za-z_0-9)_
+Required: yes
 
 ### Reducer
 The reducer will handle all actions dispatched by the action creators noted above.
