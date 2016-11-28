@@ -14,13 +14,24 @@ export class Fetch extends BaseAction {
   }
 
   /**
+   * Default options for the fetch action.
+   */
+  static defaultOptions = {
+    append: false
+  }
+
+  /**
    * Generate an action creator with the provided data.
    * @param {String} instance - Instance key where changes should be applied
    * @param {Object} params - Additional params to be passed to the fetcher
+   * @param {Object} options - Additional options used in the fetch action
    *
    * @returns {Function} - Returns the fetch action thunk.
    */
-  do = (instance, params = null) => {
+  do = (instance, params = null, options = {}) => {
+
+    // Extend fetch options
+    options = Object.assign({}, this.defaultOptions, options)
 
     // Validate instance key
     this.validateInstance(instance)
@@ -29,7 +40,7 @@ export class Fetch extends BaseAction {
 
       // Create data object to be dispatched with actions
       const { uidField } = this.config
-      const data = { instance, uidField }
+      const data = { instance, uidField, options }
 
       // Call BaseAction.start with dispatch
       this.start(dispatch, data)

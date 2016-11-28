@@ -32,7 +32,17 @@ export const success = (state, action) => {
 
       // Update instance array with new data
       const instanceData = Immutable.fromJS(action.responseData.map(i => i[action.uidField]))
-      map.setIn(['instances', action.instance, 'data'], instanceData)
+
+      // Append if options.appendResponse is true
+      if(action.options.appendResponse === true) {
+        const existingInstanceData = map.getIn(['instances', action.instance, 'data'])
+        map.setIn(['instances', action.instance, 'data'], existingInstanceData.concat(instanceData))
+      }
+      // Otherwise we replace the data with the fetch response
+      else {
+        map.setIn(['instances', action.instance, 'data'], instanceData)
+      }
+
     }
   })
 }
