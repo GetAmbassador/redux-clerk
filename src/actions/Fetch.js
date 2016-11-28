@@ -17,7 +17,7 @@ export class Fetch extends BaseAction {
    * Default options for the fetch action.
    */
   static defaultOptions = {
-    append: false
+    appendResponse: false
   }
 
   /**
