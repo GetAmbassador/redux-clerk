@@ -42,12 +42,13 @@ describe('Actions::Fetch', () => {
 
     it('should dispatch start action', () => {
       const action = new Fetch(configBase)
-      action.do('users')(dispatchSpy)
+      action.do('users', { page: 1 }, { appendResponse: true })(dispatchSpy)
       expect(dispatchSpy.calledOnce).to.be.true
       expect(dispatchSpy.calledWith({
         type: 'TEST_FETCH',
         instance: 'users',
-        uidField: configBase.uidField
+        uidField: configBase.uidField,
+        options: { appendResponse: true }
       })).to.be.true
     })
 
@@ -67,7 +68,8 @@ describe('Actions::Fetch', () => {
           type: 'TEST_FETCH_SUCCESS',
           instance: 'users',
           uidField: configBase.uidField,
-          responseData: [{ uid: 123, name: 'test' }]
+          responseData: [{ uid: 123, name: 'test' }],
+          options: {}
         })).to.be.true
         done()
       })
@@ -81,7 +83,8 @@ describe('Actions::Fetch', () => {
           type: 'TEST_FETCH_ERROR',
           instance: 'users',
           uidField: configBase.uidField,
-          responseData: { error: 'test' }
+          responseData: { error: 'test' },
+          options: {}
         })).to.be.true
         done()
       })
