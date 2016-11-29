@@ -23,7 +23,7 @@ Redux Clerk provides action creators for handling CRUD operations.
 import { actions } from 'redux-clerk'
 import axios from 'axios'
 
-const TodosActions = actions({
+const todosActions = actions({
   actionPrefix: 'TODOS',
   uidField: 'id',
   fetcher: (params, handleSuccess, handleError) => {
@@ -48,7 +48,7 @@ const TodosActions = actions({
   }
 })
 
-export default TodosActions
+export default todosActions
 ```
 
 #### Provided Action Creators
@@ -64,12 +64,12 @@ The reducer will handle all actions dispatched by the action creators noted abov
 ```
 import { reducer } from 'redux-clerk'
 
-const TodosReducer = reducer({
+const todosReducer = reducer({
   actionPrefix: 'TODOS',
   uidField: 'id'
 })
 
-export default TodosReducer
+export default todosReducer
 ```
 
 ### Selectors
@@ -80,14 +80,41 @@ export default TodosReducer
 ```
 import { selectors } from 'redux-clerk'
 
-const TodosSelectors = selectors({
+const todosSelectors = selectors({
 
   // Tell us where to find the base state for the related redux-clerk reducer.
   baseSelector: state => state.todos
 })
 
-export default TodosSelectors
+export default todosSelectors
 ```
+
+## Extending existing reducer
+If you need to handle additional updates the raw/instance data it is possible to extend the provided reducer with [reduce-reducers](https://www.npmjs.com/package/reduce-reducers).
+
+```
+import reduceReducers from 'reduce-reducers'
+import { selectors } from 'redux-clerk'
+
+// Configure the Redux Clerk reducer normally
+const reduxClerkReducer = reducer({
+  actionPrefix: 'TODOS',
+  uidField: 'id'
+})
+
+// Create a reducer to handle any additional actions
+const myReducer = (state, action) => {
+  case 'MY_OTHER_ACTION':
+    return state.setIn(['raw', 123, 'name'], 'New Name')
+  default: return state
+}
+
+// This
+cont reducer = reduceReducers(reduxClerkReducer, myReducer)
+
+export default reducer
+```
+
 
 ## Normalization and Derived Datasets
 In order to maintain minimum possible state redux-clerk will normalize the data returned from the fetcher and allow subsets of that data to be created.
