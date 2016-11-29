@@ -9,6 +9,27 @@ Redux Clerk handles the async CRUD in your Redux App.
 * Handles derived datasets and provides selectors for computing derived data.
 * Stores minimum possible state.
 * Handles optimistic updates to the store.
+* State is managed and stored as an [Immutable.js](https://facebook.github.io/immutable-js/) data structure.
+
+```
+// The tidy, minimal state managed by Redux Clerk.
+{
+
+  // Full data objects are only store stored once and never duplicated.
+  raw: {
+    123: { uid: 123, name: 'Apple' },
+    234: { uid: 234, name: 'Banana' },
+    345: { uid: 345, name: 'Peach' }
+  },
+
+  // Redux Clerk stores derived datasets as Lists of UIDs.
+  instances: {
+    myTypeaheadDataset: [234, 123],
+    myTableDataset: [345, 234],
+    myListDataset: [123, 234, 345]
+  }
+}
+```
 
 ## Installation
 
@@ -23,7 +44,7 @@ Redux Clerk provides action creators for handling CRUD operations.
 import { actions } from 'redux-clerk'
 import axios from 'axios'
 
-const TodosActions = actions({
+const todosActions = actions({
   actionPrefix: 'TODOS',
   uidField: 'id',
   fetcher: (params, handleSuccess, handleError) => {
@@ -48,7 +69,7 @@ const TodosActions = actions({
   }
 })
 
-export default TodosActions
+export default todosActions
 ```
 
 #### Provided Action Creators
@@ -118,12 +139,12 @@ The reducer will handle all actions dispatched by the action creators noted abov
 ```
 import { reducer } from 'redux-clerk'
 
-const TodosReducer = reducer({
+const todosReducer = reducer({
   actionPrefix: 'TODOS',
   uidField: 'id'
 })
 
-export default TodosReducer
+export default todosReducer
 ```
 
 ### Selectors
@@ -134,14 +155,41 @@ export default TodosReducer
 ```
 import { selectors } from 'redux-clerk'
 
-const TodosSelectors = selectors({
+const todosSelectors = selectors({
 
   // Tell us where to find the base state for the related redux-clerk reducer.
   baseSelector: state => state.todos
 })
 
-export default TodosSelectors
+export default todosSelectors
 ```
+
+## Extending an existing reducer
+If you need to handle additional updates to the raw/instance data it is possible to extend the provided reducer with [reduce-reducers](https://www.npmjs.com/package/reduce-reducers).
+
+```
+import reduceReducers from 'reduce-reducers'
+import { selectors } from 'redux-clerk'
+
+// Configure the Redux Clerk reducer normally
+const reduxClerkReducer = reducer({
+  actionPrefix: 'TODOS',
+  uidField: 'id'
+})
+
+// Create a reducer to handle any additional actions
+const myReducer = (state, action) => {
+  case 'MY_OTHER_ACTION':
+    return state.setIn(['raw', 123, 'name'], 'New Name')
+  default: return state
+}
+
+// This
+cont reducer = reduceReducers(reduxClerkReducer, myReducer)
+
+export default reducer
+```
+
 
 ## Normalization and Derived Datasets
 In order to maintain minimum possible state redux-clerk will normalize the data returned from the fetcher and allow subsets of that data to be created.
