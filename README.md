@@ -9,6 +9,27 @@ Redux Clerk handles the async CRUD in your Redux App.
 * Handles derived datasets and provides selectors for computing derived data.
 * Stores minimum possible state.
 * Handles optimistic updates to the store.
+* State is managed and stored as an [Immutable.js](https://facebook.github.io/immutable-js/) data structure.
+
+```
+// The tidy, minimal state managed by Redux Clerk.
+{
+
+  // Full data objects are only store stored once and never duplicated.
+  raw: {
+    123: { uid: 123, name: 'Apple' },
+    234: { uid: 234, name: 'Banana' },
+    345: { uid: 345, name: 'Peach' }
+  },
+
+  // Redux Clerk stores derived datasets as Lists of UIDs.
+  instances: {
+    myTypeaheadDataset: [234, 123],
+    myTableDataset: [345, 234],
+    myListDataset: [123, 234, 345]
+  }
+}
+```
 
 ## Installation
 
