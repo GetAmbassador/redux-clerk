@@ -165,7 +165,7 @@ export default todosSelectors
 ```
 
 ## Extending an existing reducer
-If you need to handle additional updates the raw/instance data it is possible to extend the provided reducer with [reduce-reducers](https://www.npmjs.com/package/reduce-reducers).
+If you need to handle additional updates to the raw/instance data it is possible to extend the provided reducer with [reduce-reducers](https://www.npmjs.com/package/reduce-reducers).
 
 ```
 import reduceReducers from 'reduce-reducers'
