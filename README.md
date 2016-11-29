@@ -89,7 +89,7 @@ const todosSelectors = selectors({
 export default todosSelectors
 ```
 
-## Extending existing reducer
+## Extending an existing reducer
 If you need to handle additional updates the raw/instance data it is possible to extend the provided reducer with [reduce-reducers](https://www.npmjs.com/package/reduce-reducers).
 
 ```
