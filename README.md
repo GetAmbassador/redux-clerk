@@ -24,9 +24,9 @@ Redux Clerk handles the async CRUD in your Redux App.
 
   // Redux Clerk stores derived datasets as Lists of UIDs.
   instances: {
-    myTypeaheadDataset: [234, 123],
-    myTableDataset: [345, 234],
-    myListDataset: [123, 234, 345]
+    myTypeaheadDataset: { data: [234, 123] },
+    myTableDataset: { data: [345, 234] },
+    myListDataset: { data: [123, 234, 345] }
   }
 }
 ```
