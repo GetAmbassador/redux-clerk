@@ -25,6 +25,11 @@ export const start = (state, action) => {
     // Add uid to provided instance
     const instanceData = map.getIn(['instances', action.instance, 'data']) || Immutable.fromJS([])
     map.setIn(['instances', action.instance, 'data'], instanceData.insert(0, uid))
+
+    // Add additional data if provided
+    if(action.additionalData) {
+      map.mergeIn(['instances', action.instance, 'additionalData'], Immutable.fromJS(action.additionalData))
+    }
   })
 }
 
@@ -55,6 +60,11 @@ export const success = (state, action) => {
     // Remove temporary uid from instance array
     const temporaryUidIndex = map.getIn(['instances', action.instance, 'data']).findIndex(uid => uid === temporaryUid)
     map.removeIn(['instances', action.instance, 'data', temporaryUidIndex])
+
+    // Add additional data if provided
+    if(action.additionalData) {
+      map.mergeIn(['instances', action.instance, 'additionalData'], Immutable.fromJS(action.additionalData))
+    }
   })
 }
 
@@ -77,6 +87,11 @@ export const error = (state, action) => {
     const temporaryUid = action.record.get(action.uidField)
     const temporaryUidIndex = map.getIn(['instances', action.instance, 'data']).findIndex(uid => uid === temporaryUid)
     map.removeIn(['instances', action.instance, 'data', temporaryUidIndex])
+
+    // Add additional data if provided
+    if(action.additionalData) {
+      map.mergeIn(['instances', action.instance, 'additionalData'], Immutable.fromJS(action.additionalData))
+    }
   })
 }
 

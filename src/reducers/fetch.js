@@ -4,13 +4,18 @@ import Immutable from 'immutable'
 /**
  * The start action for the fetch reducer
  * @param  {Immutable.Map} state - current reducer state
+ * @param  {Object} action - action object
  *
  * @return {Immutable.Map} - updated state
  */
-export const start = (state) => {
-  // Currently we do nothing on start
-  // Eventually we'll set a loading state to true
-  return state
+export const start = (state, action) => {
+  return state.withMutations(map => {
+
+    // Add additional data if provided
+    if(action.additionalData) {
+      map.mergeIn(['instances', action.instance, 'additionalData'], Immutable.fromJS(action.additionalData))
+    }
+  })
 }
 
 /**
@@ -42,7 +47,11 @@ export const success = (state, action) => {
       else {
         map.setIn(['instances', action.instance, 'data'], instanceData)
       }
+    }
 
+    // Add additional data if provided
+    if(action.additionalData) {
+      map.mergeIn(['instances', action.instance, 'additionalData'], Immutable.fromJS(action.additionalData))
     }
   })
 }
@@ -50,13 +59,18 @@ export const success = (state, action) => {
 /**
  * The error action for the fetch reducer
  * @param  {Immutable.Map} state - current reducer state
+ * @param  {Object} action - action object
  *
  * @return {Immutable.Map} - updated state
  */
-export const error = (state) => {
-  // Currently we do nothing on error
-  // Eventually we'll set a loading state to false
-  return state
+export const error = (state, action) => {
+  return state.withMutations(map => {
+
+    // Add additional data if provided
+    if(action.additionalData) {
+      map.mergeIn(['instances', action.instance, 'additionalData'], Immutable.fromJS(action.additionalData))
+    }
+  })
 }
 
 export default {

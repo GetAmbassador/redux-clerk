@@ -19,15 +19,21 @@ class BaseAction {
    * @param {Function} dispatch - The dispatch function provided by Redux.
    * @param {Object} actionData - Data to the original action.
    * @param {Object} responseData - Data from the async request handlers (creator, deleter, updater, fetcher).
+   * @param {Object} additionalData - Optional additional data to be saved with the instance
    *
    * @returns {void}
    */
-   _dispatch = (type, dispatch, actionData, responseData) => {
+   _dispatch = (type, dispatch, actionData, responseData, additionalData) => {
      const action = Object.assign({}, { type: this.actionNames[type] }, actionData)
 
      // Include response data from async handler if provided
      if(responseData) {
        action.responseData = responseData
+     }
+
+     // Include additional data from async handler if provided
+     if(additionalData) {
+       action.additionalData = additionalData
      }
 
      dispatch(action)

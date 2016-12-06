@@ -17,7 +17,7 @@ describe('Reducers::Fetch', () => {
         }
       }
 
-      expect(start(previousState).toJS()).to.deep.equal(expectedResult)
+      expect(start(previousState, {}).toJS()).to.deep.equal(expectedResult)
     })
   })
 
@@ -112,7 +112,7 @@ describe('Reducers::Fetch', () => {
         }
       }
 
-      expect(error(previousState).toJS()).to.deep.equal(expectedResult)
+      expect(error(previousState, {}).toJS()).to.deep.equal(expectedResult)
     })
   })
 })
