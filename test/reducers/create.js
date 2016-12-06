@@ -8,14 +8,22 @@ describe('Reducers::Create', () => {
       const previousState = Immutable.fromJS({
         raw: Map([[123, Immutable.fromJS({ uid: 123, test: '123' })]]),
         instances: {
-          test1: { data: [123] }
+          test1: {
+            data: [123],
+            additionalData: {
+              totalCount: 1
+            }
+          }
         }
       })
 
       const action = {
         record: Immutable.fromJS({ uid: 234, test: '234' }),
         instance: 'test1',
-        uidField: 'uid'
+        uidField: 'uid',
+        additionalData: {
+          totalCount: 2
+        }
       }
 
       const expectedResult = {
@@ -24,7 +32,12 @@ describe('Reducers::Create', () => {
           234: { uid: 234, test: '234' }
         },
         instances: {
-          test1: { data: [234, 123] }
+          test1: {
+            data: [234, 123],
+            additionalData: {
+              totalCount: 2
+            }
+          }
         }
       }
 
@@ -56,8 +69,10 @@ describe('Reducers::Create', () => {
   })
 
   describe('success', () => {
-    it('should replace the temporary uid with the permanent uid', () => {
-      const previousState = Immutable.fromJS({
+    let previousState
+
+    beforeEach(() => {
+      previousState = Immutable.fromJS({
         raw: Map([['temp123', Immutable.fromJS({ uid: 'temp123', test: '123' })], [234, Immutable.fromJS({ uid: 234, test: '234' })]]),
         instances: {
           test1: {
@@ -65,7 +80,9 @@ describe('Reducers::Create', () => {
           }
         }
       })
+    })
 
+    it('should replace the temporary uid with the permanent uid', () => {
       const action = {
         record: Immutable.fromJS({ uid: 'temp123', test: '123' }),
         responseData: { uid: 123, test: '123' },
@@ -87,11 +104,42 @@ describe('Reducers::Create', () => {
 
       expect(success(previousState, action).toJS()).to.deep.equal(expectedResult)
     })
+
+    it('should set additional data in state if provided', () => {
+      const action = {
+        record: Immutable.fromJS({ uid: 'temp123', test: '123' }),
+        responseData: { uid: 123, test: '123' },
+        instance: 'test1',
+        uidField: 'uid',
+        additionalData: {
+          totalCount: 2
+        }
+      }
+
+      const expectedResult = {
+        raw: {
+          123: { uid: 123, test: '123' },
+          234: { uid: 234, test: '234' }
+        },
+        instances: {
+          test1: {
+            data: [123, 234],
+            additionalData: {
+              totalCount: 2
+            }
+          }
+        }
+      }
+
+      expect(success(previousState, action).toJS()).to.deep.equal(expectedResult)
+    })
   })
 
   describe('error', () => {
-    it('should remove the created item', () => {
-      const previousState = Immutable.fromJS({
+    let previousState
+
+    beforeEach(() => {
+      previousState = Immutable.fromJS({
         raw: Map([['temp123', Immutable.fromJS({ uid: 'temp123', test: '123' })], [234, Immutable.fromJS({ uid: 234, test: '234' })]]),
         instances: {
           test1: {
@@ -99,7 +147,9 @@ describe('Reducers::Create', () => {
           }
         }
       })
+    })
 
+    it('should remove the created item', () => {
       const action = {
         record: Immutable.fromJS({ uid: 'temp123', test: '123' }),
         instance: 'test1',
@@ -113,6 +163,33 @@ describe('Reducers::Create', () => {
         instances: {
           test1: {
             data: [234]
+          }
+        }
+      }
+
+      expect(error(previousState, action).toJS()).to.deep.equal(expectedResult)
+    })
+
+    it('should set additional data in state if provided', () => {
+      const action = {
+        record: Immutable.fromJS({ uid: 'temp123', test: '123' }),
+        instance: 'test1',
+        uidField: 'uid',
+        additionalData: {
+          totalCount: 1
+        }
+      }
+
+      const expectedResult = {
+        raw: {
+          234: { uid: 234, test: '234' }
+        },
+        instances: {
+          test1: {
+            data: [234],
+            additionalData: {
+              totalCount: 1
+            }
           }
         }
       }
