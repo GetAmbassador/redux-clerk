@@ -15,7 +15,7 @@ Redux Clerk handles the async CRUD in your Redux App.
 // The tidy, minimal state managed by Redux Clerk.
 {
 
-  // Full data objects are only store stored once and never duplicated.
+  // Full data objects are only stored once and never duplicated.
   raw: {
     123: { uid: 123, name: 'Apple' },
     234: { uid: 234, name: 'Banana' },
@@ -149,9 +149,6 @@ export default todosReducer
 
 ### Selectors
 
-#### Provided Selectors
-* dataset
-
 ```
 import { selectors } from 'redux-clerk'
 
@@ -163,6 +160,22 @@ const todosSelectors = selectors({
 
 export default todosSelectors
 ```
+
+#### Provided Selectors
+
+##### dataset(state, datasetKey)
+The dataset selector recomputes the derived data for the specified dataset.
+
+###### state
+The Redux state provided in `mapStateToProps`
+
+Type: `object`
+
+###### datasetKey
+The name of the dataset that should be used for computing the derived data.
+
+Type: `string` _(must be A-Za-z_0-9)_
+Required: yes
 
 ## Extending an existing reducer
 If you need to handle additional updates to the raw/instance data it is possible to extend the provided reducer with [reduce-reducers](https://www.npmjs.com/package/reduce-reducers).

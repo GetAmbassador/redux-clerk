@@ -25,11 +25,13 @@ describe('Selectors', () => {
         baseSelector: state => state.companies
       }
 
-      const expectedResult = [
-        { uid: 234, name: 'test 234' },
-        { uid: 123, name: 'test 123' },
-        { uid: 345, name: 'test 345' }
-      ]
+      const expectedResult = {
+        data: [
+          { uid: 234, name: 'test 234' },
+          { uid: 123, name: 'test 123' },
+          { uid: 345, name: 'test 345' }
+        ]
+      }
 
       expect(datasetSelector(config, currentState, 'test1').toJS()).to.deep.equal(expectedResult)
     })
@@ -48,6 +50,42 @@ describe('Selectors', () => {
       }
 
       const expectedResult = []
+
+      expect(datasetSelector(config, currentState, 'test1').toJS()).to.deep.equal(expectedResult)
+    })
+
+    it('should return additional data if provided', () => {
+
+      const currentState = {
+        companies: Immutable.fromJS({
+          raw:  Map([
+            [123, Immutable.fromJS({ uid: 123, name: 'test 123' })],
+            [234, Immutable.fromJS({ uid: 234, name: 'test 234' })],
+            [345, Immutable.fromJS({ uid: 345, name: 'test 345' })]
+          ]),
+          instances: {
+            test1: {
+              data: [234,123,345],
+              additionalData: {
+                totalCount: 3
+              }
+            }
+          }
+        })
+      }
+
+      const config = {
+        baseSelector: state => state.companies
+      }
+
+      const expectedResult = {
+        data: [
+          { uid: 234, name: 'test 234' },
+          { uid: 123, name: 'test 123' },
+          { uid: 345, name: 'test 345' }
+        ],
+        totalCount: 3
+      }
 
       expect(datasetSelector(config, currentState, 'test1').toJS()).to.deep.equal(expectedResult)
     })

@@ -1,4 +1,4 @@
-import Immutable from 'immutable'
+import { Map, List } from 'immutable'
 
 /**
  * The selector for computing derived datasets
@@ -19,9 +19,14 @@ export const datasetSelector = (config, state, instance) => {
 
   // If instanceData is not created yet, return empty List
   if(!instanceData) {
-    return Immutable.fromJS([])
+    return List([])
   }
 
   // Re-compute data
-  return instanceData.map(i => rawData.get(i))
+  const computedData = instanceData.map(i => rawData.get(i))
+
+  // Gather additional data
+  const additionalData = baseState.getIn(['instances', instance, 'additionalData']) || Map({})
+
+  return additionalData.merge(Map({ data: computedData }))
 }

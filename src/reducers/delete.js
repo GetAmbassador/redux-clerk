@@ -1,4 +1,4 @@
-import { Map } from 'immutable'
+import Immutable, { Map } from 'immutable'
 
 /**
  * The start action for the delete reducer
@@ -23,6 +23,11 @@ export const start = (state, action) => {
 
     // Saving the item being deleted in case deletion fails
     map.set('pendingDelete', state.get('pendingDelete').merge(itemPendingDeleteTuple))
+
+    // Add additional data if provided
+    if(action.additionalData) {
+      map.mergeIn(['instances', action.instance, 'additionalData'], Immutable.fromJS(action.additionalData))
+    }
   })
 }
 
@@ -34,8 +39,16 @@ export const start = (state, action) => {
  * @return {Immutable.Map} - updated state
  */
 export const success = (state, action) => {
-  // Remove the item pending delete
-  return state.deleteIn(['pendingDelete', action.uid])
+  return state.withMutations(map => {
+
+    // Remove the item pending delete
+    map.deleteIn(['pendingDelete', action.uid])
+
+    // Add additional data if provided
+    if(action.additionalData) {
+      map.mergeIn(['instances', action.instance, 'additionalData'], Immutable.fromJS(action.additionalData))
+    }
+  })
 }
 
 /**
@@ -58,6 +71,11 @@ export const error = (state, action) => {
     // Re-add the deleted items
     map.set('raw', state.get('raw').merge(deletedRecordTuple))
     map.setIn(['instances', action.instance, 'data'], map.getIn(['instances', action.instance, 'data']).insert(deletedRecord.get('index'), action.uid))
+
+    // Add additional data if provided
+    if(action.additionalData) {
+      map.mergeIn(['instances', action.instance, 'additionalData'], Immutable.fromJS(action.additionalData))
+    }
   })
 }
 
