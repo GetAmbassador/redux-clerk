@@ -34,7 +34,7 @@ Redux Clerk handles the async CRUD in your Redux App.
 
 ## Installation
 
-`npm install redux-clerk`
+`npm install redux-clerk --save`
 
 ## Usage
 
