@@ -1,6 +1,7 @@
 # Redux Clerk
 
-[![CircleCI](https://circleci.com/gh/GetAmbassador/redux-clerk.svg?style=svg&circle-token=a520f1c555abc4074f1801e49633e4244f9ce36d)](https://circleci.com/gh/GetAmbassador/redux-clerk)
+[![CircleCI][build-badge]][build]
+[![npm package][npm-badge]][npm]
 
 Redux Clerk handles the async CRUD in your Redux App.
 
@@ -33,7 +34,7 @@ Redux Clerk handles the async CRUD in your Redux App.
 
 ## Installation
 
-`npm install redux-clerk`
+`npm install redux-clerk --save`
 
 ## Usage
 
@@ -50,27 +51,81 @@ const todosActions = actions({
   fetcher: (params, handleSuccess, handleError) => {
     return axios.get('todos', { params })
     .then(response => handleSuccess(response.data))
-    .catch(response => handleError(response.data))
+    .catch(response => handleError())
   },
   creator: (data, handleSuccess, handleError) => {
     return axios.post('todos', data)
     .then(response => handleSuccess(response.data))
-    .catch(response => handleError(response.data))
+    .catch(response => handleError())
   },
   updater: (data, handleSuccess, handleError) => {
     return axios.patch(`todos/${data.id}`, data)
     .then(response => handleSuccess(response.data))
-    .catch(response => handleError(response.data))
+    .catch(response => handleError())
   },
   deleter: (id, handleSuccess, handleError) => {
     return axios.delete(`todos/${id}`, data)
     .then(response => handleSuccess())
-    .catch(response => handleError(response.data))
+    .catch(response => handleError())
   }
 })
 
 export default todosActions
 ```
+
+#### Configuration Options
+
+###### actionPrefix
+Prefix for all dispatched actions.
+
+Type: `string` _(must be A-Za-z_0-9)_  
+Required: yes
+
+###### uidField
+Name of property where the record's unique identifier can be found.
+
+Type: `string` _(must be A-Za-z_0-9)_  
+Required: yes
+
+###### fetcher
+Used for making async request when fetch action is called. The `fetcher` will be provided three args: `params`, `handleSuccess`, and  `handleError`.
+
+Type: `function`  
+Required: no  
+Provided Args:
+  - `params` - params provided when the `fetch` action is called
+  - `handleSuccess` - function to call when async request is complete. Array of fetched items should be passed as the first argument. A single object is also acceptable.
+  - `handleError` - function to call when async request fails.
+
+###### creator
+Used for making async request when create action is called. The `creator` will be provided three args: `record`, `handleSuccess`, and  `handleError`.
+
+Type: `function`  
+Required: no  
+Provided Args:
+  - `record` - the newly created record.
+  - `handleSuccess` - function to call when async request is complete. Saved record can be optionally passed as the first argument while calling `handleSuccess`.
+  - `handleError` - function to call when async request fails.
+
+###### updater
+Used for making async request when update action is called. The `updater` will be provided three args: `record`, `handleSuccess`, and  `handleError`.
+
+Type: `function`  
+Required: no  
+Provided Args:
+  - `record` - the updated record.
+  - `handleSuccess` - function to call when async request is complete. Saved record can be optionally passed as the first argument while calling `handleSuccess`.
+  - `handleError` - function to call when async request fails.
+
+###### deleter
+Used for making async request when delete action is called. The `deleter` will be provided three args: `id`, `handleSuccess`, and  `handleError`.
+
+Type: `function`  
+Required: no  
+Provided Args:
+  - `id` - the id of the record to be deleted.
+  - `handleSuccess` - function to call when async request is complete.
+  - `handleError` - function to call when async request fails.
 
 #### Provided Action Creators
 
@@ -291,3 +346,9 @@ npm start
 
 ## License
 MIT
+
+[build-badge]: https://img.shields.io/circleci/token/9b304b29e1beb2dcd1a8ca0a6a66dc4914340796/project/github/GetAmbassador/redux-clerk/master.svg?style=flat-square
+[build]: https://circleci.com/gh/GetAmbassador/redux-clerk
+
+[npm-badge]: https://img.shields.io/npm/v/redux-clerk.svg?style=flat-square
+[npm]: https://www.npmjs.org/package/redux-clerk
