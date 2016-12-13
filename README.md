@@ -293,7 +293,7 @@ npm start
 ## License
 MIT
 
-[build-badge]: https://img.shields.io/circleci/project/github/RedSparr0w/node-csgo-parser/master.svg?style=flat-square
+[build-badge]: https://img.shields.io/circleci/project/github/GetAmbassador/redux-clerk/master.svg?style=flat-square
 [build]: https://circleci.com/gh/GetAmbassador/redux-clerk
 
 [npm-badge]: https://img.shields.io/npm/v/redux-clerk.svg?style=flat-square
