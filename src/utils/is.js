@@ -1,5 +1,5 @@
 /**
- * Checks if privided valis is an object
+ * Checks if provided value is an object
  * @param  {*} value - The value in question
  *
  * @return {Boolean} - True if value is an object
