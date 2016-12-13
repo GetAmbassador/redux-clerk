@@ -78,20 +78,20 @@ export default todosActions
 ###### actionPrefix
 Prefix for all dispatched actions.
 
-Type: `string` _(must be A-Za-z_0-9)_
+Type: `string` _(must be A-Za-z_0-9)_  
 Required: yes
 
 ###### uidField
 Name of property where the record's unique identifier can be found.
 
-Type: `string` _(must be A-Za-z_0-9)_
+Type: `string` _(must be A-Za-z_0-9)_  
 Required: yes
 
 ###### fetcher
 Used for making async request when fetch action is called. The `fetcher` will be provided three args: `params`, `handleSuccess`, and  `handleError`.
 
 Type: `function`
-Required: no
+Required: no  
 Provided Args:
   - `params` - params provided when the `fetch` action is called
   - `handleSuccess` - function to call when async request is complete. Array of fetched items should be passed as the first argument. A single object is also acceptable.
@@ -101,7 +101,7 @@ Provided Args:
 Used for making async request when create action is called. The `creator` will be provided three args: `record`, `handleSuccess`, and  `handleError`.
 
 Type: `function`
-Required: no
+Required: no  
 Provided Args:
   - `record` - the newly created record.
   - `handleSuccess` - function to call when async request is complete. Saved record can be optionally passed as the first argument while calling `handleSuccess`.
@@ -111,7 +111,7 @@ Provided Args:
 Used for making async request when update action is called. The `updater` will be provided three args: `record`, `handleSuccess`, and  `handleError`.
 
 Type: `function`
-Required: no
+Required: no  
 Provided Args:
   - `record` - the updated record.
   - `handleSuccess` - function to call when async request is complete. Saved record can be optionally passed as the first argument while calling `handleSuccess`.
@@ -121,7 +121,7 @@ Provided Args:
 Used for making async request when delete action is called. The `deleter` will be provided three args: `id`, `handleSuccess`, and  `handleError`.
 
 Type: `function`
-Required: no
+Required: no  
 Provided Args:
   - `id` - the id of the record to be deleted.
   - `handleSuccess` - function to call when async request is complete.
