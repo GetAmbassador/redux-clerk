@@ -90,7 +90,7 @@ Required: yes
 ###### fetcher
 Used for making async request when fetch action is called. The `fetcher` will be provided three args: `params`, `handleSuccess`, and  `handleError`.
 
-Type: `function`
+Type: `function`  
 Required: no  
 Provided Args:
   - `params` - params provided when the `fetch` action is called
@@ -100,7 +100,7 @@ Provided Args:
 ###### creator
 Used for making async request when create action is called. The `creator` will be provided three args: `record`, `handleSuccess`, and  `handleError`.
 
-Type: `function`
+Type: `function`  
 Required: no  
 Provided Args:
   - `record` - the newly created record.
@@ -110,7 +110,7 @@ Provided Args:
 ###### updater
 Used for making async request when update action is called. The `updater` will be provided three args: `record`, `handleSuccess`, and  `handleError`.
 
-Type: `function`
+Type: `function`  
 Required: no  
 Provided Args:
   - `record` - the updated record.
@@ -120,7 +120,7 @@ Provided Args:
 ###### deleter
 Used for making async request when delete action is called. The `deleter` will be provided three args: `id`, `handleSuccess`, and  `handleError`.
 
-Type: `function`
+Type: `function`  
 Required: no  
 Provided Args:
   - `id` - the id of the record to be deleted.
