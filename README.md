@@ -1,6 +1,7 @@
 # Redux Clerk
 
-[![CircleCI](https://circleci.com/gh/GetAmbassador/redux-clerk.svg?style=svg&circle-token=a520f1c555abc4074f1801e49633e4244f9ce36d)](https://circleci.com/gh/GetAmbassador/redux-clerk)
+[![CircleCI][build-badge]][build]
+[![npm package][npm-badge]][npm]
 
 Redux Clerk handles the async CRUD in your Redux App.
 
@@ -291,3 +292,9 @@ npm start
 
 ## License
 MIT
+
+[build-badge]: https://img.shields.io/circleci/project/github/RedSparr0w/node-csgo-parser/master.svg?style=flat-square
+[build]: https://circleci.com/gh/GetAmbassador/redux-clerk
+
+[npm-badge]: https://img.shields.io/npm/v/redux-clerk.svg?style=flat-square
+[npm]: https://www.npmjs.org/package/redux-clerk
