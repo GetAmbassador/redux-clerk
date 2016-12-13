@@ -96,6 +96,29 @@ describe('Reducers::Fetch', () => {
       expect(success(previousState, action).toJS()).to.deep.equal(expectedResult)
     })
 
+    it('should convert response data to array if object is provided', () => {
+      const action = {
+        uidField: 'uid',
+        instance: 'test1',
+        responseData: { uid: 123, test: 'name' },
+        options: {}
+      }
+
+      const expectedResult = {
+        raw: {
+          123: { uid: 123, test: 'name' },
+          234: { uid: 234, test: '234' }
+        },
+        instances: {
+          test1: {
+            data: [123]
+          }
+        }
+      }
+
+      expect(success(previousState, action).toJS()).to.deep.equal(expectedResult)
+    })
+
     it('should append the response data if options.appendResponse is true', () => {
       const action = {
         uidField: 'uid',
