@@ -65,10 +65,15 @@ export const error = (state, action) => {
   return state.withMutations(map => {
 
     // Revert changes
-    map.set('raw', state.get('raw').merge(updatedRecord))
-
-    // Remove the item pending update
-    map.deleteIn(['pendingUpdate', uid])
+    if(updatedRecord) {
+      map.set('raw', state.get('raw').merge(updatedRecord))
+      // Remove the item pending update
+      map.deleteIn(['pendingUpdate', uid])
+    }
+    // If updated record wasn't previously in the store we can remove from raw on failure.
+    else {
+      map.removeIn(['raw'. uid])
+    }
   })
 }
 
