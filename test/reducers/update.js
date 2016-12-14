@@ -51,6 +51,27 @@ describe('Reducers::Update', () => {
       expect(start(previousState, action).toJS()).to.deep.equal(expectedResult)
     })
 
+    it('should add new record to raw if not already in state', () => {
+      const previousState = Immutable.fromJS({
+        raw: {},
+        pendingUpdate: {}
+      })
+
+      const action = {
+        record: Immutable.fromJS({ uid: 123, test: 'name' }),
+        uidField: 'uid'
+      }
+
+      const expectedResult = {
+        raw: {
+          123: { uid: 123, test: 'name' }
+        },
+        pendingUpdate: {}
+      }
+
+      expect(start(previousState, action).toJS()).to.deep.equal(expectedResult)
+    })
+
   })
 
   describe('success', () => {
