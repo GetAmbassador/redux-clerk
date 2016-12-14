@@ -120,5 +120,26 @@ describe('Reducers::Update', () => {
 
       expect(error(previousState, action).toJS()).to.deep.equal(expectedResult)
     })
+
+    it('should remove the record from raw if not previously added', () => {
+      const previousState = Immutable.fromJS({
+        raw: Map([[123, Immutable.fromJS({ uid: 123, test: 'name' })], [234, Immutable.fromJS({ uid: 234, test: '234' })]]),
+        pendingUpdate: {}
+      })
+
+      const action = {
+        record: Immutable.fromJS({ uid: 123, test: '123' }),
+        uidField: 'uid'
+      }
+
+      const expectedResult = {
+        raw: {
+          234: { uid: 234, test: '234' }
+        },
+        pendingUpdate: {}
+      }
+
+      expect(error(previousState, action).toJS()).to.deep.equal(expectedResult)
+    })
   })
 })
