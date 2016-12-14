@@ -1,8 +1,12 @@
+## 0.2.3
+###### _December 14, 2016_
+
+- Records are now added while updating if not already in state ([#20](https://github.com/GetAmbassador/redux-clerk/pull/20))
+
 ## 0.2.2
 ###### _December 13, 2016_
 
 - Added the ability to return fetch response as an object or array ([#18](https://github.com/GetAmbassador/redux-clerk/pull/18))
-
 
 ## 0.2.1
 ###### _December 7, 2016_
