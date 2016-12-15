@@ -15,7 +15,6 @@ const reducer = (config) => {
 
   if (!config) throw new Error('clerk.reducer: Expected config')
   if (!config.actionPrefix) throw new Error('clerk.reducer: Expected actionPrefix')
-  if (!config.uidField) throw new Error('clerk.reducer: Expected uidField')
 
   // Generate action names for create, fetch, update, delete
   const createActions = generateActionNames(config.actionPrefix, 'create')

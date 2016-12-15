@@ -1,8 +1,7 @@
 import { reducer } from '../../../lib'
 
 const TodosReducer = reducer({
-  actionPrefix: 'TODOS',
-  uidField: 'id'
+  actionPrefix: 'TODOS'
 })
 
 export default TodosReducer
