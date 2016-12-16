@@ -25,7 +25,6 @@ describe('Reducer', () => {
 
   const config = {
     actionPrefix: 'users',
-    uidField: 'uid'
   }
 
   const defaultState = {
@@ -93,10 +92,6 @@ describe('Reducer', () => {
 
   it('should throw exception if config.eventPrefix is not provided', () => {
     expect(reducer.bind(this, {})).to.throw('clerk.reducer: Expected actionPrefix')
-  })
-
-  it('should throw exception if config.uid is not provided', () => {
-    expect(reducer.bind(this, { actionPrefix: 'test' })).to.throw('clerk.reducer: Expected uidField')
   })
 
   it('should call generateActionNames with config.eventPrefix and each crud action', () => {

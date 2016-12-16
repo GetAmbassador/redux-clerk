@@ -195,8 +195,7 @@ The reducer will handle all actions dispatched by the action creators noted abov
 import { reducer } from 'redux-clerk'
 
 const todosReducer = reducer({
-  actionPrefix: 'TODOS',
-  uidField: 'id'
+  actionPrefix: 'TODOS'
 })
 
 export default todosReducer
@@ -241,8 +240,7 @@ import { selectors } from 'redux-clerk'
 
 // Configure the Redux Clerk reducer normally
 const reduxClerkReducer = reducer({
-  actionPrefix: 'TODOS',
-  uidField: 'id'
+  actionPrefix: 'TODOS'
 })
 
 // Create a reducer to handle any additional actions
