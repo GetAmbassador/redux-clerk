@@ -1,3 +1,8 @@
+## 0.2.4
+###### _December 15, 2016_
+
+- uidField option has been removed for the reducer (it is not longer needed) ([#22](https://github.com/GetAmbassador/redux-clerk/pull/22))
+
 ## 0.2.3
 ###### _December 14, 2016_
 
