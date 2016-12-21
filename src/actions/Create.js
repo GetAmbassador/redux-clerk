@@ -23,7 +23,7 @@ export class Create extends BaseAction {
    */
   do = (instance, record) => {
 
-    // Make sure record is immutable
+    // Make sure record is an immutable map
     record = Immutable.Iterable.isIterable(record) ? record : Immutable.fromJS(record)
 
     // Validate instance key

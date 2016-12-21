@@ -1,3 +1,4 @@
+import Immutable from 'immutable'
 import BaseAction from './BaseAction'
 
 /**
@@ -32,6 +33,9 @@ export class Fetch extends BaseAction {
 
     // Extend fetch options
     options = Object.assign({}, this.defaultOptions, options)
+
+    // Make sure params is an immutable map
+    params = !params || params && Immutable.Iterable.isIterable(params) ? params : Immutable.fromJS(params)
 
     // Validate instance key
     this.validateInstance(instance)

@@ -1,5 +1,6 @@
 import { expect } from 'chai'
 import sinon from 'sinon'
+import { Map } from 'immutable'
 import { Fetch } from '../../src/actions/Fetch'
 
 describe('Actions::Fetch', () => {
@@ -42,7 +43,7 @@ describe('Actions::Fetch', () => {
 
     it('should dispatch start action', () => {
       const action = new Fetch(configBase)
-      action.do('users', { page: 1 }, { appendResponse: true })(dispatchSpy)
+      action.do('users', Map({ page: 1 }), { appendResponse: true })(dispatchSpy)
       expect(dispatchSpy.calledOnce).to.be.true
       expect(dispatchSpy.calledWith({
         type: 'TEST_FETCH',
@@ -54,10 +55,17 @@ describe('Actions::Fetch', () => {
 
     it('should call config.fetcher with provided params', () => {
       const action = new Fetch(configSpy)
-      const params = { someParam: 'test' }
+      const params = Map({ someParam: 'test' })
       action.do('users', params)(dispatchSpy)
       expect(configSpy.fetcher.calledOnce).to.be.true
       expect(configSpy.fetcher.args[0][0]).to.deep.equal(params)
+    })
+
+    it('should convert params to immutable', () => {
+      const action = new Fetch(configSpy)
+      const params = Map({ someParam: 'test' })
+      action.do('users', params)(dispatchSpy)
+      expect(configSpy.fetcher.args[0][0]).to.deep.equal(Map(params))
     })
 
     it('should dispatch success action', done => {
