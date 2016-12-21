@@ -1,3 +1,4 @@
+import Immutable from 'immutable'
 import BaseAction from './BaseAction'
 
 /**
@@ -21,6 +22,9 @@ export class Create extends BaseAction {
    * @returns {Function} - Returns the create action thunk.
    */
   do = (instance, record) => {
+
+    // Make sure record is immutable
+    record = Immutable.Iterable.isIterable(record) ? record : Immutable.fromJS(record)
 
     // Validate instance key
     this.validateInstance(instance)
