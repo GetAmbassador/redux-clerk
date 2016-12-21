@@ -1,3 +1,4 @@
+import Immutable from 'immutable'
 import BaseAction from './BaseAction'
 
 /**
@@ -20,6 +21,9 @@ export class Update extends BaseAction {
    * @returns {Function} - Returns the update action thunk.
    */
   do = (record) => {
+
+    // Make sure record is immutable
+    record = Immutable.Iterable.isIterable(record) ? record : Immutable.fromJS(record)
 
     return dispatch => {
 
