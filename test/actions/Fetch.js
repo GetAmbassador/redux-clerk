@@ -1,5 +1,6 @@
 import { expect } from 'chai'
 import sinon from 'sinon'
+import { Map } from 'immutable'
 import { Fetch } from '../../src/actions/Fetch'
 
 describe('Actions::Fetch', () => {
@@ -58,6 +59,13 @@ describe('Actions::Fetch', () => {
       action.do('users', params)(dispatchSpy)
       expect(configSpy.fetcher.calledOnce).to.be.true
       expect(configSpy.fetcher.args[0][0]).to.deep.equal(params)
+    })
+
+    it('should convert immutable map params to raw js', () => {
+      const action = new Fetch(configSpy)
+      const params = Map({ someParam: 'test' })
+      action.do('users', params)(dispatchSpy)
+      expect(configSpy.fetcher.args[0][0]).to.deep.equal(params.toJS())
     })
 
     it('should dispatch success action', done => {
