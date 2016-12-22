@@ -43,7 +43,7 @@ describe('Actions::Fetch', () => {
 
     it('should dispatch start action', () => {
       const action = new Fetch(configBase)
-      action.do('users', Map({ page: 1 }), { appendResponse: true })(dispatchSpy)
+      action.do('users', { page: 1 }, { appendResponse: true })(dispatchSpy)
       expect(dispatchSpy.calledOnce).to.be.true
       expect(dispatchSpy.calledWith({
         type: 'TEST_FETCH',
@@ -55,17 +55,17 @@ describe('Actions::Fetch', () => {
 
     it('should call config.fetcher with provided params', () => {
       const action = new Fetch(configSpy)
-      const params = Map({ someParam: 'test' })
+      const params = { someParam: 'test' }
       action.do('users', params)(dispatchSpy)
       expect(configSpy.fetcher.calledOnce).to.be.true
       expect(configSpy.fetcher.args[0][0]).to.deep.equal(params)
     })
 
-    it('should convert params to immutable', () => {
+    it('should convert immutable map params to raw js', () => {
       const action = new Fetch(configSpy)
       const params = Map({ someParam: 'test' })
       action.do('users', params)(dispatchSpy)
-      expect(configSpy.fetcher.args[0][0]).to.deep.equal(Map(params))
+      expect(configSpy.fetcher.args[0][0]).to.deep.equal(params.toJS())
     })
 
     it('should dispatch success action', done => {

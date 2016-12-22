@@ -34,8 +34,8 @@ export class Fetch extends BaseAction {
     // Extend fetch options
     options = Object.assign({}, this.defaultOptions, options)
 
-    // Make sure params is an immutable map
-    params = !params || params && Immutable.Iterable.isIterable(params) ? params : Immutable.fromJS(params)
+    // Make sure params is a raw JS object
+    params = Immutable.Iterable.isIterable(params) ? params.toJS() : params
 
     // Validate instance key
     this.validateInstance(instance)
