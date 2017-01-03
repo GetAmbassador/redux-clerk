@@ -1,4 +1,4 @@
-import { Map, List } from 'immutable'
+import { Map } from 'immutable'
 
 /**
  * The selector for computing derived datasets
@@ -6,7 +6,7 @@ import { Map, List } from 'immutable'
  * @param  {Immutable.Map} state - current reducer state
  * @param  {Object} instance - instance key
  *
- * @return {Immutable.List} - computed data
+ * @return {Immutable.Map} - computed data
  */
 export const datasetSelector = (config, state, instance) => {
 
@@ -17,9 +17,9 @@ export const datasetSelector = (config, state, instance) => {
   const instanceData = baseState.getIn(['instances', instance, 'data'])
   const rawData = baseState.get('raw')
 
-  // If instanceData is not created yet, return empty List
+  // If instanceData is not created yet, return empty Map
   if(!instanceData) {
-    return List([])
+    return Map({})
   }
 
   // Re-compute data
