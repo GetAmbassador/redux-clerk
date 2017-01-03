@@ -1,3 +1,8 @@
+## 0.2.5
+###### _January 3, 2017_
+
+- Return Map instead of List for empty dataset ([#25](https://github.com/GetAmbassador/redux-clerk/pull/25))
+
 ## 0.2.4
 ###### _December 15, 2016_
 
