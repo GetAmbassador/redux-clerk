@@ -2,6 +2,7 @@
 ###### _January 3, 2017_
 
 - Return Map instead of List for empty dataset ([#25](https://github.com/GetAmbassador/redux-clerk/pull/25))
+- Ensure data is properly converted between actions and reducers ([#24](https://github.com/GetAmbassador/redux-clerk/pull/24))
 
 ## 0.2.4
 ###### _December 15, 2016_
