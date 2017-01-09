@@ -30,3 +30,20 @@ export const datasetSelector = (config, state, instance) => {
 
   return additionalData.merge(Map({ data: computedData }))
 }
+
+/**
+ * The selector for retrieving a dataset property
+ * @param  {Object} config - selector configuration
+ * @param  {Immutable.Map} state - current reducer state
+ * @param  {Object} instance - instance key
+ * @param  {String} property - key of the property to retrieve
+ *
+ * @return {*} - the property value
+ */
+export const datasetPropertySelector = (config, state, instance, property) => {
+  // Get redux-clerk data from store
+  const baseState = config.baseSelector(state)
+
+  // Return the property
+  return baseState.getIn(['instances', instance, 'additionalData', property])
+}

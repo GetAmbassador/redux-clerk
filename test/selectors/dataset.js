@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 import Immutable, { Map } from 'immutable'
-import { datasetSelector } from '../../src/selectors/dataset'
+import { datasetSelector, datasetPropertySelector } from '../../src/selectors/dataset'
 
 describe('Selectors', () => {
   describe('dataset', () => {
@@ -88,6 +88,35 @@ describe('Selectors', () => {
       }
 
       expect(datasetSelector(config, currentState, 'test1').toJS()).to.deep.equal(expectedResult)
+    })
+  })
+
+  describe('datasetProperty', () => {
+    it('should return a data property from the state', () => {
+
+      const currentState = {
+        companies: Immutable.fromJS({
+          raw:  Map([
+            [123, Immutable.fromJS({ uid: 123, name: 'test 123' })],
+            [234, Immutable.fromJS({ uid: 234, name: 'test 234' })],
+            [345, Immutable.fromJS({ uid: 345, name: 'test 345' })]
+          ]),
+          instances: {
+            test1: {
+              additionalData: {
+                totalCount: 42
+              },
+              data: [234,123,345]
+            }
+          }
+        })
+      }
+
+      const config = {
+        baseSelector: state => state.companies
+      }
+
+      expect(datasetPropertySelector(config, currentState, 'test1', 'totalCount')).to.equal(42)
     })
   })
 })
