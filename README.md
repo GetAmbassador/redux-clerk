@@ -231,6 +231,26 @@ The name of the dataset that should be used for computing the derived data.
 Type: `string` _(must be A-Za-z_0-9)_
 Required: yes
 
+##### datasetProperty(state, datasetKey, propertyKey)
+The datasetProperty selector retrieves an individual property from an instance's additional data.
+
+###### state
+The Redux state provided in `mapStateToProps`
+
+Type: `object`
+
+###### datasetKey
+The name of the dataset that should be used for computing the derived data.
+
+Type: `string` _(must be A-Za-z_0-9)_
+Required: yes
+
+###### propertyKey
+The name of the property that should be retrieved.
+
+Type: `string` _(must be A-Za-z_0-9)_
+Required: yes
+
 ## Extending an existing reducer
 If you need to handle additional updates to the raw/instance data it is possible to extend the provided reducer with [reduce-reducers](https://www.npmjs.com/package/reduce-reducers).
 

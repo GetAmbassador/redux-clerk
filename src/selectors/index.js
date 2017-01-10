@@ -1,4 +1,4 @@
-import { datasetSelector } from './dataset'
+import { datasetSelector, datasetPropertySelector } from './dataset'
 
 /**
  * Generates selectors with the provided config
@@ -11,7 +11,8 @@ const selectors = (config) => {
   if (!config.baseSelector) throw new Error('clerk.selectors: Expected baseSelector')
 
   return {
-    dataset: datasetSelector.bind(null, config)
+    dataset: datasetSelector.bind(null, config),
+    datasetProperty: datasetPropertySelector.bind(null, config)
   }
 }
 
