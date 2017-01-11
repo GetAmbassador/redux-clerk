@@ -1,3 +1,8 @@
+## 0.2.6
+###### _January 11, 2017_
+
+- Added the datasetProperty selector ([#27](https://github.com/GetAmbassador/redux-clerk/pull/27))
+
 ## 0.2.5
 ###### _January 3, 2017_
 
