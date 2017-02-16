@@ -251,6 +251,20 @@ The name of the property that should be retrieved.
 Type: `string` _(must be A-Za-z_0-9)_
 Required: yes
 
+##### get(state, uid)
+The get selector retrieves an individual record by its uid.
+
+###### state
+The Redux state provided in `mapStateToProps`
+
+Type: `object`
+
+###### uid
+The unique id for the record.
+
+Type: `number`
+Required: yes
+
 ## Extending an existing reducer
 If you need to handle additional updates to the raw/instance data it is possible to extend the provided reducer with [reduce-reducers](https://www.npmjs.com/package/reduce-reducers).
 

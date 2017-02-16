@@ -1,4 +1,5 @@
 import { datasetSelector, datasetPropertySelector } from './dataset'
+import { recordSelector } from './record'
 
 /**
  * Generates selectors with the provided config
@@ -12,7 +13,8 @@ const selectors = (config) => {
 
   return {
     dataset: datasetSelector.bind(null, config),
-    datasetProperty: datasetPropertySelector.bind(null, config)
+    datasetProperty: datasetPropertySelector.bind(null, config),
+    get: recordSelector.bind(null, config)
   }
 }
 
