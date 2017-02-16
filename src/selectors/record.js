@@ -4,7 +4,7 @@
  * @param  {Immutable.Map} state - current reducer state
  * @param  {Number} uid - id of the record
  *
- * @return {*} - the item
+ * @return {Object} - the record
  */
 export const recordSelector = (config, state, uid) => {
 
