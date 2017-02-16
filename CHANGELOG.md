@@ -1,3 +1,8 @@
+## 0.2.7
+###### _February 16, 2017_
+
+- Added the get selector ([#29](https://github.com/GetAmbassador/redux-clerk/pull/29))
+
 ## 0.2.6
 ###### _January 11, 2017_
 
