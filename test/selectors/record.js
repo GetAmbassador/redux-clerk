@@ -30,7 +30,7 @@ describe('Selectors', () => {
       expect(recordSelector(config, currentState, 234).toJS()).to.deep.equal(expectedResult)
     })
 
-    it('should return a single record', () => {
+    it('should return a single record when uid is passed as string', () => {
 
       const currentState = {
         companies: Immutable.fromJS({
