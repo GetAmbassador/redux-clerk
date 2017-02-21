@@ -30,6 +30,32 @@ describe('Selectors', () => {
       expect(recordSelector(config, currentState, 234).toJS()).to.deep.equal(expectedResult)
     })
 
+    it('should return a single record when uid is passed as string', () => {
+
+      const currentState = {
+        companies: Immutable.fromJS({
+          raw:  Map([
+            [123, Immutable.fromJS({ uid: 123, name: 'test 123' })],
+            [234, Immutable.fromJS({ uid: 234, name: 'test 234' })],
+            [345, Immutable.fromJS({ uid: 345, name: 'test 345' })]
+          ]),
+          instances: {
+            test1: {
+              data: [234,123,345]
+            }
+          }
+        })
+      }
+
+      const config = {
+        baseSelector: state => state.companies
+      }
+
+      const expectedResult = { uid: 234, name: 'test 234' }
+
+      expect(recordSelector(config, currentState, '234').toJS()).to.deep.equal(expectedResult)
+    })
+
     it('should return undefined if record is not found', () => {
 
       const currentState = {

@@ -12,5 +12,7 @@ export const recordSelector = (config, state, uid) => {
   const baseState = config.baseSelector(state)
 
   // Return the property
-  return baseState.getIn(['raw', uid])
+  // We try the provided value as well as the value cast to integer
+  // This allows string or integer uids to work
+  return baseState.getIn(['raw', uid]) || baseState.getIn(['raw', +uid])
 }

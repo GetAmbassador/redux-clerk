@@ -251,8 +251,8 @@ The name of the property that should be retrieved.
 Type: `string` _(must be A-Za-z_0-9)_
 Required: yes
 
-##### get(state, uid)
-The get selector retrieves an individual record by its uid.
+##### record(state, uid)
+The record selector retrieves an individual record by its uid.
 
 ###### state
 The Redux state provided in `mapStateToProps`
@@ -262,7 +262,7 @@ Type: `object`
 ###### uid
 The unique id for the record.
 
-Type: `number`
+Type: `number` or `string`
 Required: yes
 
 ## Extending an existing reducer
