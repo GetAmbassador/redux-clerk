@@ -1,3 +1,8 @@
+## 0.2.8
+###### _February 21, 2017_
+
+- Cast uid to int in record selector ([#31](https://github.com/GetAmbassador/redux-clerk/pull/31))
+
 ## 0.2.7
 ###### _February 16, 2017_
 
