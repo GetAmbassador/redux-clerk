@@ -14,7 +14,7 @@ const selectors = (config) => {
   return {
     dataset: datasetSelector.bind(null, config),
     datasetProperty: datasetPropertySelector.bind(null, config),
-    get: recordSelector.bind(null, config)
+    record: recordSelector.bind(null, config)
   }
 }
 

@@ -16,6 +16,6 @@ describe('Selectors', () => {
     })
     expect(generatedSelectors.dataset).to.be.a('function')
     expect(generatedSelectors.datasetProperty).to.be.a('function')
-    expect(generatedSelectors.get).to.be.a('function')
+    expect(generatedSelectors.record).to.be.a('function')
   })
 })
