@@ -46,7 +46,6 @@ export const success = (state, action) => {
 
       // Merge new raw data with existing raw data
       const normalizedData = normalize(action.uidField, Immutable.fromJS(responseData))
-
       map.set('raw', map.get('raw').mergeDeep(normalizedData))
     }
 
