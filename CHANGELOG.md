@@ -1,7 +1,7 @@
 ## 0.3.0
 ###### _March 15, 2017_
 
-- Fetch response will now deep merge response data in to raw data ([#33](https://github.com/GetAmbassador/redux-clerk/pull/33))
+- Fetch response will now deep merge response data into raw data ([#33](https://github.com/GetAmbassador/redux-clerk/pull/33))
 
 ## 0.2.8
 ###### _February 21, 2017_
