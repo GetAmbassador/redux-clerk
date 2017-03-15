@@ -56,16 +56,16 @@ describe('Reducers::Fetch', () => {
     let previousState
 
     beforeEach(() => {
-      previousState = Immutable.fromJS({
-        raw: {
-          123: { uid: 123, test: '123', field_old: 'test' },
-          234: { uid: 234, test: '234' }
-        },
-        instances: {
+      previousState = Map({
+        raw: Map([
+          [123, Map({ uid: 123, test: '123', field_old: 'test' })],
+          [234, Map({ uid: 234, test: '234' })]
+        ]),
+        instances: Immutable.fromJS({
           test1: {
             data: [123, 234]
           }
-        }
+        })
       })
     })
 

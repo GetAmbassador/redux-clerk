@@ -45,15 +45,9 @@ export const success = (state, action) => {
     if(Array.isArray(responseData)) {
 
       // Merge new raw data with existing raw data
-      let normalizedData = normalize(action.uidField, Immutable.fromJS(responseData)).map((item, uid) => {
-        // If an item is already saved merge the two items
-        if (state.getIn(['raw', uid.toString()])) {
-          return state.getIn(['raw', uid.toString()]).merge(item)
-        }
-        return item
-      })
+      const normalizedData = normalize(action.uidField, Immutable.fromJS(responseData))
 
-      map.set('raw', state.get('raw').merge(normalizedData))
+      map.set('raw', map.get('raw').mergeDeep(normalizedData))
     }
 
     // Update instance array with new data
