@@ -1,24 +1,24 @@
 import BaseAction from './BaseAction'
 
 /**
- * Class representing a delete action.
+ * Class representing a remove action.
  * @extends BaseAction
  */
-export class Delete extends BaseAction {
+export class Remove extends BaseAction {
   /**
-   * Create an instance of the delete action.
+   * Create an instance of the remove action.
    * @param {Object} config - The configuration for the action.
    */
   constructor(config) {
-    super('delete', config)
+    super('remove', config)
   }
 
   /**
    * Generate an action creator with the provided data.
    * @param {String} instance - Instance key where changes should be applied
-   * @param {String} uid - UID of the item to be deleted.
+   * @param {String} uid - UID of the item to be removed.
    *
-   * @returns {Function} - Returns the delete action thunk.
+   * @returns {Function} - Returns the remove action thunk.
    */
   do = (instance, uid) => {
 
@@ -34,15 +34,15 @@ export class Delete extends BaseAction {
       // Call BaseAction.start with dispatch and the action data
       this.start(dispatch, data)
 
-      // If config.deleter is provided, call it
-      if(typeof this.config.deleter === 'function') {
+      // If config.remover is provided, call it
+      if(typeof this.config.remover === 'function') {
         // Prepare BaseAction.success and BaseAction.error handlers
         // by currying with dispatch
         const success = this.success.bind(this, dispatch, data)
         const error = this.error.bind(this, dispatch, data)
 
-        // Call deleter
-        return this.config.deleter(uid, success, error)
+        // Call remover
+        return this.config.remover(uid, success, error)
       }
     }
   }

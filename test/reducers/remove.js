@@ -1,8 +1,8 @@
 import { expect } from 'chai'
 import Immutable, { Map } from 'immutable'
-import { start, success, error } from '../../src/reducers/delete'
+import { start, success, error } from '../../src/reducers/remove'
 
-describe('Reducers::Delete', () => {
+describe('Reducers::Remove', () => {
   describe('start', () => {
     let previousState
 
@@ -14,11 +14,11 @@ describe('Reducers::Delete', () => {
             data: [123,234]
           }
         },
-        pendingDelete: Map({})
+        pendingRemoval: Map({})
       })
     })
 
-    it('should move provided uid from raw to pendingDelete', () => {
+    it('should move provided uid from raw to pendingRemoval', () => {
       const action = {
         uid: 234,
         instance: 'test1'
@@ -33,7 +33,7 @@ describe('Reducers::Delete', () => {
             data: [123]
           }
         },
-        pendingDelete: {
+        pendingRemoval: {
           234: { index: 1, data: { uid: 234, test: '234' }}
         }
       }
@@ -62,7 +62,7 @@ describe('Reducers::Delete', () => {
             }
           }
         },
-        pendingDelete: {
+        pendingRemoval: {
           234: { index: 1, data: { uid: 234, test: '234' }}
         }
       }
@@ -82,11 +82,11 @@ describe('Reducers::Delete', () => {
             data: [123]
           }
         },
-        pendingDelete: Map([[234, Immutable.fromJS({ index: 0, data: { uid: 234, test: '234' }})]])
+        pendingRemoval: Map([[234, Immutable.fromJS({ index: 0, data: { uid: 234, test: '234' }})]])
       })
     })
 
-    it('should remove the provided item from pendingDelete', () => {
+    it('should remove the provided item from pendingRemoval', () => {
       const action = {
         uid: 234
       }
@@ -100,7 +100,7 @@ describe('Reducers::Delete', () => {
             data: [123]
           }
         },
-        pendingDelete: {}
+        pendingRemoval: {}
       }
 
       expect(success(previousState, action).toJS()).to.deep.equal(expectedResult)
@@ -127,7 +127,7 @@ describe('Reducers::Delete', () => {
             }
           }
         },
-        pendingDelete: {}
+        pendingRemoval: {}
       }
 
       expect(success(previousState, action).toJS()).to.deep.equal(expectedResult)
@@ -145,11 +145,11 @@ describe('Reducers::Delete', () => {
             data: [123]
           }
         },
-        pendingDelete: Map([[234, Immutable.fromJS({ index: 1, data: { uid: 234, test: '234' }})]])
+        pendingRemoval: Map([[234, Immutable.fromJS({ index: 1, data: { uid: 234, test: '234' }})]])
       })
     })
 
-    it('should re-add the deleted item', () => {
+    it('should re-add the removed item', () => {
       const action = {
         uid: 234,
         instance: 'test1'
@@ -165,7 +165,7 @@ describe('Reducers::Delete', () => {
             data: [123,234]
           }
         },
-        pendingDelete: {}
+        pendingRemoval: {}
       }
 
       expect(error(previousState, action).toJS()).to.deep.equal(expectedResult)
@@ -193,7 +193,7 @@ describe('Reducers::Delete', () => {
             }
           }
         },
-        pendingDelete: {}
+        pendingRemoval: {}
       }
 
       expect(error(previousState, action).toJS()).to.deep.equal(expectedResult)

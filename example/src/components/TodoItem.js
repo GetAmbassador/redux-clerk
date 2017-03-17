@@ -6,7 +6,7 @@ export default class TodoItem extends Component {
   static propTypes = {
     todo: PropTypes.object.isRequired,
     update: PropTypes.func.isRequired,
-    delete: PropTypes.func.isRequired,
+    remove: PropTypes.func.isRequired,
     complete: PropTypes.func.isRequired
   }
 
@@ -20,7 +20,7 @@ export default class TodoItem extends Component {
 
   handleSave = (newTodo) => {
     if (newTodo.get('text').length === 0) {
-      this.props.delete('todos', newTodo.get('id'))
+      this.props.remove('todos', newTodo.get('id'))
     } else {
       this.props.update(newTodo)
     }
@@ -46,7 +46,7 @@ export default class TodoItem extends Component {
             {this.props.todo.get('text')}
           </label>
           <button className="destroy"
-                  onClick={() => this.props.delete('todos', this.props.todo.get('id'))} />
+                  onClick={() => this.props.remove('todos', this.props.todo.get('id'))} />
         </div>
       )
     }

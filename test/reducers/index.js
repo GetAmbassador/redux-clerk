@@ -6,7 +6,7 @@ import * as actionNames from '../../src/utils/actionNames'
 import createReducer from '../../src/reducers/create'
 import fetchReducer from '../../src/reducers/fetch'
 import updateReducer from '../../src/reducers/update'
-import deleteReducer from '../../src/reducers/delete'
+import removeReducer from '../../src/reducers/remove'
 
 describe('Reducer', () => {
   let generateActionNamesStub,
@@ -19,9 +19,9 @@ describe('Reducer', () => {
       updateReducerStartStub,
       updateReducerSuccessStub,
       updateReducerErrorStub,
-      deleteReducerStartStub,
-      deleteReducerSuccessStub,
-      deleteReducerErrorStub
+      removeReducerStartStub,
+      removeReducerSuccessStub,
+      removeReducerErrorStub
 
   const config = {
     actionPrefix: 'users',
@@ -30,7 +30,7 @@ describe('Reducer', () => {
   const defaultState = {
     raw: {},
     instances: {},
-    pendingDelete: {},
+    pendingRemoval: {},
     pendingUpdate: {}
   }
 
@@ -52,9 +52,9 @@ describe('Reducer', () => {
       error: 'USERS_UPDATE_ERROR'
     })
     generateActionNamesStub.onCall(3).returns({
-      start: 'USERS_DELETE',
-      success: 'USERS_DELETE_SUCCESS',
-      error: 'USERS_DELETE_ERROR'
+      start: 'USERS_REMOVE',
+      success: 'USERS_REMOVE_SUCCESS',
+      error: 'USERS_REMOVE_ERROR'
     })
     fetchReducerStartStub = sinon.stub(fetchReducer, 'start')
     fetchReducerSuccessStub = sinon.stub(fetchReducer, 'success')
@@ -65,9 +65,9 @@ describe('Reducer', () => {
     updateReducerStartStub = sinon.stub(updateReducer, 'start')
     updateReducerSuccessStub = sinon.stub(updateReducer, 'success')
     updateReducerErrorStub = sinon.stub(updateReducer, 'error')
-    deleteReducerStartStub = sinon.stub(deleteReducer, 'start')
-    deleteReducerSuccessStub = sinon.stub(deleteReducer, 'success')
-    deleteReducerErrorStub = sinon.stub(deleteReducer, 'error')
+    removeReducerStartStub = sinon.stub(removeReducer, 'start')
+    removeReducerSuccessStub = sinon.stub(removeReducer, 'success')
+    removeReducerErrorStub = sinon.stub(removeReducer, 'error')
   })
 
   afterEach(() => {
@@ -81,9 +81,9 @@ describe('Reducer', () => {
     updateReducerStartStub.restore()
     updateReducerSuccessStub.restore()
     updateReducerErrorStub.restore()
-    deleteReducerStartStub.restore()
-    deleteReducerSuccessStub.restore()
-    deleteReducerErrorStub.restore()
+    removeReducerStartStub.restore()
+    removeReducerSuccessStub.restore()
+    removeReducerErrorStub.restore()
   })
 
   it('should throw exception if config is not provided', () => {
@@ -100,7 +100,7 @@ describe('Reducer', () => {
     expect(actionNames.generateActionNames.firstCall.calledWith('users', 'create')).to.be.true
     expect(actionNames.generateActionNames.secondCall.calledWith('users', 'fetch')).to.be.true
     expect(actionNames.generateActionNames.thirdCall.calledWith('users', 'update')).to.be.true
-    expect(actionNames.generateActionNames.lastCall.calledWith('users', 'delete')).to.be.true
+    expect(actionNames.generateActionNames.lastCall.calledWith('users', 'remove')).to.be.true
   })
 
   it('should return default state', () => {
@@ -119,7 +119,7 @@ describe('Reducer', () => {
         123: { name: 'test' }
       },
       instances: {},
-      pendingDelete: {},
+      pendingRemoval: {},
       pendingUpdate: {}
     }
 
@@ -225,36 +225,36 @@ describe('Reducer', () => {
     expect(updateReducerErrorStub.args[0][1]).to.deep.equal(action)
   })
 
-  it('should call deleteReducer.start on USERS_DELETE', () => {
+  it('should call removeReducer.start on USERS_REMOVE', () => {
     const action = {
-      type: 'USERS_DELETE'
+      type: 'USERS_REMOVE'
     }
     reducer(config)(undefined, action)
 
-    expect(deleteReducerStartStub.calledOnce).to.be.true
-    expect(deleteReducerStartStub.args[0][0].toJS()).to.deep.equal(defaultState)
-    expect(deleteReducerStartStub.args[0][1]).to.deep.equal(action)
+    expect(removeReducerStartStub.calledOnce).to.be.true
+    expect(removeReducerStartStub.args[0][0].toJS()).to.deep.equal(defaultState)
+    expect(removeReducerStartStub.args[0][1]).to.deep.equal(action)
   })
 
-  it('should call deleteReducer.success on USERS_DELETE_SUCCESS', () => {
+  it('should call removeReducer.success on USERS_REMOVE_SUCCESS', () => {
     const action = {
-      type: 'USERS_DELETE_SUCCESS'
+      type: 'USERS_REMOVE_SUCCESS'
     }
     reducer(config)(undefined, action)
 
-    expect(deleteReducerSuccessStub.calledOnce).to.be.true
-    expect(deleteReducerSuccessStub.args[0][0].toJS()).to.deep.equal(defaultState)
-    expect(deleteReducerSuccessStub.args[0][1]).to.deep.equal(action)
+    expect(removeReducerSuccessStub.calledOnce).to.be.true
+    expect(removeReducerSuccessStub.args[0][0].toJS()).to.deep.equal(defaultState)
+    expect(removeReducerSuccessStub.args[0][1]).to.deep.equal(action)
   })
 
-  it('should call deleteReducer.error on USERS_DELETE_ERROR', () => {
+  it('should call removeReducer.error on USERS_REMOVE_ERROR', () => {
     const action = {
-      type: 'USERS_DELETE_ERROR'
+      type: 'USERS_REMOVE_ERROR'
     }
     reducer(config)(undefined, action)
 
-    expect(deleteReducerErrorStub.calledOnce).to.be.true
-    expect(deleteReducerErrorStub.args[0][0].toJS()).to.deep.equal(defaultState)
-    expect(deleteReducerErrorStub.args[0][1]).to.deep.equal(action)
+    expect(removeReducerErrorStub.calledOnce).to.be.true
+    expect(removeReducerErrorStub.args[0][0].toJS()).to.deep.equal(defaultState)
+    expect(removeReducerErrorStub.args[0][1]).to.deep.equal(action)
   })
 })
