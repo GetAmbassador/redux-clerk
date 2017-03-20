@@ -1,4 +1,4 @@
-import Immutable, { Map } from 'immutable'
+import Immutable, { Map, List } from 'immutable'
 
 /**
  * The start action for the remove reducer
@@ -13,12 +13,28 @@ export const start = (state, action) => {
     // Optimistically remove the item
     map.deleteIn(['raw', action.uid])
 
-    // Remove uid from instance array
-    const uidIndex = map.getIn(['instances', action.instance, 'data']).findIndex(uid => uid === action.uid)
-    map.removeIn(['instances', action.instance, 'data', uidIndex])
+    // Maintain a reference to the deleted item in each instance
+    let instanceIndices = List()
+    map.get('instances').entrySeq().forEach(item => {
+      const instanceKey = item[0]
+      const instanceUids = item[1].get('data')
+      const uidIndexInInstance = instanceUids.indexOf(action.uid)
 
-    // Get item that is being removed
-    const itemPendingRemovalData = Map({ index: uidIndex, data: state.getIn(['raw', action.uid]) })
+      // If the uid of the item to be deleted exists in this instance
+      // we save the index. This allows us to re-add the item later
+      // if the removal is unsuccessful.
+      if(uidIndexInInstance > -1) {
+        instanceIndices = instanceIndices.push(Map({ instance: instanceKey, index: uidIndexInInstance }))
+
+        // Once reference is saved we can remove the item from the instance
+        map.removeIn(['instances', instanceKey, 'data', uidIndexInInstance])
+      }
+    })
+
+    // Create reference to raw item that is being removed
+    // We also include the instance indices found above
+    // The raw object and instance indices will be used in the error action to restore the deleted item
+    const itemPendingRemovalData = Map({ instanceIndices: instanceIndices, data: state.getIn(['raw', action.uid]) })
     const itemPendingRemovalTuple = Map([[action.uid, itemPendingRemovalData]])
 
     // Saving the item being removed in case deletion fails
@@ -64,13 +80,22 @@ export const error = (state, action) => {
   // We have to create a tuple here in order to preserve the Integer typed keys
   const removedRecord = state.getIn(['pendingRemoval', action.uid])
   const removedRecordTuple = Map([[action.uid, removedRecord.get('data')]])
+  const removedInstanceIndices = removedRecord.get('instanceIndices')
+
   return state.withMutations(map => {
     // Remove the item pending removal
     map.deleteIn(['pendingRemoval', action.uid])
 
-    // Re-add the removed items
+    // Re-add the removed item to raw
     map.set('raw', state.get('raw').merge(removedRecordTuple))
-    map.setIn(['instances', action.instance, 'data'], map.getIn(['instances', action.instance, 'data']).insert(removedRecord.get('index'), action.uid))
+
+    // Re-add the removed item to each instance
+    removedInstanceIndices.forEach(item => {
+      const instanceKey = item.get('instance')
+      const instanceData = map.getIn(['instances', instanceKey, 'data'])
+      const itemIndex = item.get('index')
+      map.setIn(['instances', instanceKey, 'data'], instanceData.insert(itemIndex, action.uid))
+    })
 
     // Add additional data if provided
     if(action.additionalData) {

@@ -15,16 +15,17 @@ export class Remove extends BaseAction {
 
   /**
    * Generate an action creator with the provided data.
+   * @param {String} instance - Instance key where changes should be applied
    * @param {String} uid - UID of the item to be removed.
    *
    * @returns {Function} - Returns the remove action thunk.
    */
-  do = (uid) => {
+  do = (instance, uid) => {
     return dispatch => {
 
       // Create data object to be dispatched with actions
       const { uidField } = this.config
-      const data = { uid, uidField }
+      const data = { instance, uid, uidField }
 
       // Call BaseAction.start with dispatch and the action data
       this.start(dispatch, data)

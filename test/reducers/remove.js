@@ -12,6 +12,12 @@ describe('Reducers::Remove', () => {
         instances: {
           test1: {
             data: [123,234]
+          },
+          test2: {
+            data: [234,123]
+          },
+          test3: {
+            data: [123]
           }
         },
         pendingRemoval: Map({})
@@ -20,8 +26,7 @@ describe('Reducers::Remove', () => {
 
     it('should move provided uid from raw to pendingRemoval', () => {
       const action = {
-        uid: 234,
-        instance: 'test1'
+        uid: 234
       }
 
       const expectedResult = {
@@ -31,10 +36,19 @@ describe('Reducers::Remove', () => {
         instances: {
           test1: {
             data: [123]
+          },
+          test2: {
+            data: [123]
+          },
+          test3: {
+            data: [123]
           }
         },
         pendingRemoval: {
-          234: { index: 1, data: { uid: 234, test: '234' }}
+          234: {
+            instanceIndices: [{ instance: 'test1', index: 1 }, { instance: 'test2', index: 0 }],
+            data: { uid: 234, test: '234' }
+          }
         }
       }
 
@@ -60,10 +74,19 @@ describe('Reducers::Remove', () => {
             additionalData: {
               totalCount: 1
             }
+          },
+          test2: {
+            data: [123]
+          },
+          test3: {
+            data: [123]
           }
         },
         pendingRemoval: {
-          234: { index: 1, data: { uid: 234, test: '234' }}
+          234: {
+            instanceIndices: [{ instance: 'test1', index: 1 }, { instance: 'test2', index: 0 }],
+            data: { uid: 234, test: '234' }
+          }
         }
       }
 
@@ -82,7 +105,7 @@ describe('Reducers::Remove', () => {
             data: [123]
           }
         },
-        pendingRemoval: Map([[234, Immutable.fromJS({ index: 0, data: { uid: 234, test: '234' }})]])
+        pendingRemoval: Map([[234, Immutable.fromJS({ instanceIndices: [{ instance: 'test1', index: 1 }, { instance: 'test2', index: 0 }], data: { uid: 234, test: '234' }})]])
       })
     })
 
@@ -143,9 +166,15 @@ describe('Reducers::Remove', () => {
         instances: {
           test1: {
             data: [123]
+          },
+          test2: {
+            data: [123]
+          },
+          test3: {
+            data: [123]
           }
         },
-        pendingRemoval: Map([[234, Immutable.fromJS({ index: 1, data: { uid: 234, test: '234' }})]])
+        pendingRemoval: Map([[234, Immutable.fromJS({ instanceIndices: [{ instance: 'test1', index: 1 }, { instance: 'test2', index: 0 }], data: { uid: 234, test: '234' }})]])
       })
     })
 
@@ -162,7 +191,13 @@ describe('Reducers::Remove', () => {
         },
         instances: {
           test1: {
-            data: [123,234]
+            data: [234, 123]
+          },
+          test2: {
+            data: [234, 123]
+          },
+          test3: {
+            data: [123]
           }
         },
         pendingRemoval: {}
@@ -187,10 +222,16 @@ describe('Reducers::Remove', () => {
         },
         instances: {
           test1: {
-            data: [123,234],
+            data: [123, 234],
             additionalData: {
               totalCount: 2
             }
+          },
+          test2: {
+            data: [234, 123]
+          },
+          test3: {
+            data: [123]
           }
         },
         pendingRemoval: {}
