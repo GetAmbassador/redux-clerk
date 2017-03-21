@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { List } from 'immutable'
 import Header from '../components/Header'
 import MainSection from '../components/MainSection'
 import TodoActions from '../actions'
@@ -20,7 +21,7 @@ App.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  todos: TodoSelectors.dataset(state, 'todos').get('data')
+  todos: TodoSelectors.dataset(state, 'todos').get('data', List())
 })
 
 const mapDispatchToProps = dispatch => ({
