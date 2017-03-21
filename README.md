@@ -278,7 +278,7 @@ const myReducer = (state, action) => {
   default: return state
 }
 
-cont reducer = reduceReducers(reduxClerkReducer, myReducer)
+const reducer = reduceReducers(reduxClerkReducer, myReducer)
 
 export default reducer
 ```
