@@ -44,9 +44,15 @@ describe('Actions::Fetch', () => {
     it('should dispatch start action', () => {
       const action = new Fetch(configBase)
       action.do('users', { page: 1 }, { appendResponse: true })(dispatchSpy)
-      expect(dispatchSpy.calledOnce).to.be.true
-      expect(dispatchSpy.calledWith({
+      expect(dispatchSpy.calledTwice).to.be.true
+      expect(dispatchSpy.firstCall.calledWith({
         type: 'TEST_FETCH',
+        instance: 'users',
+        uidField: configBase.uidField,
+        options: { appendResponse: true }
+      })).to.be.true
+      expect(dispatchSpy.secondCall.calledWith({
+        type: 'TEST_FETCH_POST',
         instance: 'users',
         uidField: configBase.uidField,
         options: { appendResponse: true }
@@ -71,9 +77,16 @@ describe('Actions::Fetch', () => {
     it('should dispatch success action', done => {
       const action = new Fetch(configSuccess)
       action.do('users')(dispatchSpy).then(() => {
-        expect(dispatchSpy.calledTwice).to.be.true
-        expect(dispatchSpy.secondCall.calledWith({
+        expect(dispatchSpy.callCount).to.equal(4)
+        expect(dispatchSpy.getCall(2).calledWith({
           type: 'TEST_FETCH_SUCCESS',
+          instance: 'users',
+          uidField: configBase.uidField,
+          responseData: [{ uid: 123, name: 'test' }],
+          options: {}
+        })).to.be.true
+        expect(dispatchSpy.getCall(3).calledWith({
+          type: 'TEST_FETCH_SUCCESS_POST',
           instance: 'users',
           uidField: configBase.uidField,
           responseData: [{ uid: 123, name: 'test' }],
@@ -86,9 +99,16 @@ describe('Actions::Fetch', () => {
     it('should dispatch error action', done => {
       const action = new Fetch(configError)
       action.do('users')(dispatchSpy).then(() => {
-        expect(dispatchSpy.calledTwice).to.be.true
-        expect(dispatchSpy.secondCall.calledWith({
+        expect(dispatchSpy.callCount).to.equal(4)
+        expect(dispatchSpy.getCall(2).calledWith({
           type: 'TEST_FETCH_ERROR',
+          instance: 'users',
+          uidField: configBase.uidField,
+          responseData: { error: 'test' },
+          options: {}
+        })).to.be.true
+        expect(dispatchSpy.getCall(3).calledWith({
+          type: 'TEST_FETCH_ERROR_POST',
           instance: 'users',
           uidField: configBase.uidField,
           responseData: { error: 'test' },
