@@ -191,7 +191,7 @@ describe('Reducers::Remove', () => {
         },
         instances: {
           test1: {
-            data: [234, 123]
+            data: [123, 234]
           },
           test2: {
             data: [234, 123]
