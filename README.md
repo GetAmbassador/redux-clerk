@@ -278,12 +278,28 @@ const myReducer = (state, action) => {
   default: return state
 }
 
-// This
 cont reducer = reduceReducers(reduxClerkReducer, myReducer)
 
 export default reducer
 ```
 
+If you need to make additional updates to the store after any of the CRUD actions, Redux Clerk will dispatch post create, post fetch, post update and post remove actions. You can add cases for these actions in your reducer and update the store as needed.
+
+Below is a list of all additional actions that are dispatched. Each each will contain relevant data for the action type.
+
+```
+{prefix}_CREATE_POST
+{prefix}_CREATE_SUCCESS_POST
+{prefix}_CREATE_ERROR_POST
+{prefix}_FETCH_SUCCESS_POST
+{prefix}_FETCH_ERROR_POST
+{prefix}_UPDATE_POST
+{prefix}_UPDATE_SUCCESS_POST
+{prefix}_UPDATE_ERROR_POST
+{prefix}_REMOVE_POST
+{prefix}_REMOVE_SUCCESS_POST
+{prefix}_REMOVE_ERROR_POST
+```
 
 ## Normalization and Derived Datasets
 In order to maintain minimum possible state redux-clerk will normalize the data returned from the fetcher and allow subsets of that data to be created.
