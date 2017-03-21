@@ -20,7 +20,7 @@ export default class TodoItem extends Component {
 
   handleSave = (newTodo) => {
     if (newTodo.get('text').length === 0) {
-      this.props.remove('todos', newTodo.get('id'))
+      this.props.remove(newTodo.get('id'))
     } else {
       this.props.update(newTodo)
     }
@@ -46,7 +46,7 @@ export default class TodoItem extends Component {
             {this.props.todo.get('text')}
           </label>
           <button className="destroy"
-                  onClick={() => this.props.remove('todos', this.props.todo.get('id'))} />
+                  onClick={() => this.props.remove(this.props.todo.get('id'))} />
         </div>
       )
     }
