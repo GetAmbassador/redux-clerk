@@ -1,6 +1,6 @@
 import { Create } from './Create'
 import { Update } from './Update'
-import { Delete } from './Delete'
+import { Remove } from './Remove'
 import { Fetch } from './Fetch'
 import { Instance } from './Instance'
 
@@ -19,14 +19,14 @@ const actions = (config) => {
   const fetchAction = new Fetch(config)
   const createAction = new Create(config)
   const updateAction = new Update(config)
-  const deleteAction = new Delete(config)
+  const removeAction = new Remove(config)
   const instanceAction = new Instance(config)
 
   return {
     fetch: fetchAction.do,
     create: createAction.do,
     update: updateAction.do,
-    delete: deleteAction.do,
+    remove: removeAction.do,
     createDataset: instanceAction.do
   }
 }

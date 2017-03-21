@@ -63,7 +63,7 @@ const todosActions = actions({
     .then(response => handleSuccess(response.data))
     .catch(response => handleError())
   },
-  deleter: (id, handleSuccess, handleError) => {
+  remover: (id, handleSuccess, handleError) => {
     return axios.delete(`todos/${id}`, data)
     .then(response => handleSuccess())
     .catch(response => handleError())
@@ -117,13 +117,13 @@ Provided Args:
   - `handleSuccess` - function to call when async request is complete. Saved record can be optionally passed as the first argument while calling `handleSuccess`.
   - `handleError` - function to call when async request fails.
 
-###### deleter
-Used for making async request when delete action is called. The `deleter` will be provided three args: `id`, `handleSuccess`, and  `handleError`.
+###### remover
+Used for making async request when remove action is called. The `remover` will be provided three args: `id`, `handleSuccess`, and  `handleError`.
 
 Type: `function`  
 Required: no  
 Provided Args:
-  - `id` - the id of the record to be deleted.
+  - `id` - the id of the record to be removed.
   - `handleSuccess` - function to call when async request is complete.
   - `handleError` - function to call when async request fails.
 
@@ -168,15 +168,9 @@ The record to be updated. Must contain the UID to be updated in the configured `
 Type: `object`    
 Required: yes
 
-##### delete(datasetKey, uid)
-###### datasetKey
-The name of the dataset where deletion should be applied.
-
-Type: `string` _(must be A-Za-z_0-9)_    
-Required: yes
-
+##### remove(uid)
 ###### uid
-The UID of the record to be deleted.
+The UID of the record to be removed.
 
 Type: `number`    
 Required: yes

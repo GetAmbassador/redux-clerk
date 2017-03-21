@@ -3,7 +3,7 @@ import { generateActionNames } from '../utils/actionNames'
 import createReducer from './create'
 import fetchReducer from './fetch'
 import updateReducer from './update'
-import deleteReducer from './delete'
+import removeReducer from './remove'
 
 /**
  * Creates a reducer with the provided config
@@ -16,11 +16,11 @@ const reducer = (config) => {
   if (!config) throw new Error('clerk.reducer: Expected config')
   if (!config.actionPrefix) throw new Error('clerk.reducer: Expected actionPrefix')
 
-  // Generate action names for create, fetch, update, delete
+  // Generate action names for create, fetch, update, remove
   const createActions = generateActionNames(config.actionPrefix, 'create')
   const fetchActions = generateActionNames(config.actionPrefix, 'fetch')
   const updateActions = generateActionNames(config.actionPrefix, 'update')
-  const deleteActions = generateActionNames(config.actionPrefix, 'delete')
+  const removeActions = generateActionNames(config.actionPrefix, 'remove')
 
   const defaultState = Immutable.fromJS({
 
@@ -39,8 +39,8 @@ const reducer = (config) => {
     // }
     instances: {},
 
-    // pendingDelete: Contains items that are pending deletion
-    pendingDelete: {},
+    // pendingRemoval: Contains items that are pending removal
+    pendingRemoval: {},
 
     // pendingUpdate: Contains items that are pending update
     pendingUpdate: {}
@@ -66,9 +66,9 @@ const reducer = (config) => {
       case updateActions.start: return updateReducer.start(state, action)
       case updateActions.success: return updateReducer.success(state, action)
       case updateActions.error: return updateReducer.error(state, action)
-      case deleteActions.start: return deleteReducer.start(state, action)
-      case deleteActions.success: return deleteReducer.success(state, action)
-      case deleteActions.error: return deleteReducer.error(state, action)
+      case removeActions.start: return removeReducer.start(state, action)
+      case removeActions.success: return removeReducer.success(state, action)
+      case removeActions.error: return removeReducer.error(state, action)
       default: return state
     }
   }
