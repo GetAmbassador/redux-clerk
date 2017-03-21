@@ -13,8 +13,11 @@ describe('Actions::BaseAction', () => {
 
   const mockActionNames = {
     start: 'TEST_CREATE',
+    startPost: 'TEST_CREATE_POST',
     success: 'TEST_CREATE_SUCCESS',
-    error: 'TEST_CREATE_ERROR'
+    successPost: 'TEST_CREATE_SUCCESS_POST',
+    error: 'TEST_CREATE_ERROR',
+    errorPost: 'TEST_CREATE_ERROR_POST'
   }
 
   beforeEach(() => {
@@ -71,8 +74,9 @@ describe('Actions::BaseAction', () => {
       const action = new BaseAction('create', config)
       const dispatch = sinon.spy()
       action.start(dispatch, { action: 'data' }, { response: 'data' })
-      expect(dispatch.calledOnce).to.be.true
+      expect(dispatch.calledTwice).to.be.true
       expect(dispatch.args[0][0]).to.deep.equal({ type: 'TEST_CREATE', action: 'data', responseData: { response: 'data' }})
+      expect(dispatch.args[1][0]).to.deep.equal({ type: 'TEST_CREATE_POST', action: 'data', responseData: { response: 'data' }})
     })
   })
 
@@ -81,8 +85,9 @@ describe('Actions::BaseAction', () => {
       const action = new BaseAction('create', config)
       const dispatch = sinon.spy()
       action.success(dispatch, { action: 'data' }, { response: 'data' })
-      expect(dispatch.calledOnce).to.be.true
+      expect(dispatch.calledTwice).to.be.true
       expect(dispatch.args[0][0]).to.deep.equal({ type: 'TEST_CREATE_SUCCESS', action: 'data', responseData: { response: 'data' }})
+      expect(dispatch.args[1][0]).to.deep.equal({ type: 'TEST_CREATE_SUCCESS_POST', action: 'data', responseData: { response: 'data' }})
     })
   })
 
@@ -91,8 +96,9 @@ describe('Actions::BaseAction', () => {
       const action = new BaseAction('create', config)
       const dispatch = sinon.spy()
       action.error(dispatch, { action: 'data' }, { response: 'data' })
-      expect(dispatch.calledOnce).to.be.true
+      expect(dispatch.calledTwice).to.be.true
       expect(dispatch.args[0][0]).to.deep.equal({ type: 'TEST_CREATE_ERROR', action: 'data', responseData: { response: 'data' }})
+      expect(dispatch.args[1][0]).to.deep.equal({ type: 'TEST_CREATE_ERROR_POST', action: 'data', responseData: { response: 'data' }})
     })
   })
 })

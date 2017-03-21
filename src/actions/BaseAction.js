@@ -52,31 +52,37 @@ class BaseAction {
   }
 
   /**
-   * Dispatch start action.
-   * @param {Function} dispatch - The dispatch function provided by Redux.
-   * @param {Object} data - Any additional data to be passed with the action.
+   * Dispatch start and startPost actions.
+   * @param {Array} args - All function args to be passed to _dispatch
    *
    * @returns {void}
    */
-  start = this._dispatch.bind(this, 'start')
+  start = (...args) => {
+    this._dispatch('start', ...args)
+    this._dispatch('startPost', ...args)
+  }
 
   /**
-   * Dispatch success action.
-   * @param {Function} dispatch - The dispatch function provided by Redux.
-   * @param {Object} data - Any additional data to be passed with the action.
+   * Dispatch success and successPost actions.
+   * @param {Array} args - All function args to be passed to _dispatch
    *
    * @returns {void}
    */
-  success = this._dispatch.bind(this, 'success')
+  success = (...args) => {
+    this._dispatch('success', ...args)
+    this._dispatch('successPost', ...args)
+  }
 
   /**
-   * Dispatch error action.
-   * @param {Function} dispatch - The dispatch function provided by Redux.
-   * @param {Object} data - Any additional data to be passed with the action.
+   * Dispatch error and errorPpost actions.
+   * @param {Array} args - All function args to be passed to _dispatch
    *
    * @returns {void}
    */
-  error = this._dispatch.bind(this, 'error')
+  error = (...args) => {
+    this._dispatch('error', ...args)
+    this._dispatch('errorPost', ...args)
+  }
 }
 
 export default BaseAction

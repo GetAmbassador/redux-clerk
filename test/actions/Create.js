@@ -45,9 +45,15 @@ describe('Actions::Create', () => {
       const action = new Create(configBase)
       const data = Map({ other: 'data' })
       action.do('users', data)(dispatchSpy)
-      expect(dispatchSpy.calledOnce).to.be.true
-      expect(dispatchSpy.calledWith({
+      expect(dispatchSpy.calledTwice).to.be.true
+      expect(dispatchSpy.firstCall.calledWith({
         type: 'TEST_CREATE',
+        instance: 'users',
+        record: Map({ other: 'data' }),
+        uidField: configBase.uidField
+      })).to.be.true
+      expect(dispatchSpy.secondCall.calledWith({
+        type: 'TEST_CREATE_POST',
         instance: 'users',
         record: Map({ other: 'data' }),
         uidField: configBase.uidField
@@ -73,9 +79,16 @@ describe('Actions::Create', () => {
       const action = new Create(configSuccess)
       const data = Map({ uid: 'new', name: 'test' })
       action.do('users', data)(dispatchSpy).then(() => {
-        expect(dispatchSpy.calledTwice).to.be.true
-        expect(dispatchSpy.secondCall.calledWith({
+        expect(dispatchSpy.callCount).to.equal(4)
+        expect(dispatchSpy.getCall(2).calledWith({
           type: 'TEST_CREATE_SUCCESS',
+          instance: 'users',
+          record: Map({ uid: 'new', name: 'test' }),
+          uidField: configBase.uidField,
+          responseData: { uid: 123, name: 'test' }
+        })).to.be.true
+        expect(dispatchSpy.getCall(3).calledWith({
+          type: 'TEST_CREATE_SUCCESS_POST',
           instance: 'users',
           record: Map({ uid: 'new', name: 'test' }),
           uidField: configBase.uidField,
@@ -89,9 +102,16 @@ describe('Actions::Create', () => {
       const action = new Create(configError)
       const data = Map({ uid: 'new', name: 'test' })
       action.do('users', data)(dispatchSpy).then(() => {
-        expect(dispatchSpy.calledTwice).to.be.true
-        expect(dispatchSpy.secondCall.calledWith({
+        expect(dispatchSpy.callCount).to.equal(4)
+        expect(dispatchSpy.getCall(2).calledWith({
           type: 'TEST_CREATE_ERROR',
+          instance: 'users',
+          record: Map({ uid: 'new', name: 'test' }),
+          uidField: configBase.uidField,
+          responseData: { error: 'test' }
+        })).to.be.true
+        expect(dispatchSpy.getCall(3).calledWith({
+          type: 'TEST_CREATE_ERROR_POST',
           instance: 'users',
           record: Map({ uid: 'new', name: 'test' }),
           uidField: configBase.uidField,

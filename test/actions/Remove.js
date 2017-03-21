@@ -43,9 +43,14 @@ describe('Actions::Remove', () => {
     it('should dispatch start action', () => {
       const action = new Remove(configBase)
       action.do(123)(dispatchSpy)
-      expect(dispatchSpy.calledOnce).to.be.true
-      expect(dispatchSpy.calledWith({
+      expect(dispatchSpy.calledTwice).to.be.true
+      expect(dispatchSpy.firstCall.calledWith({
         type: 'TEST_REMOVE',
+        uid: 123,
+        uidField: configBase.uidField
+      })).to.be.true
+      expect(dispatchSpy.secondCall.calledWith({
+        type: 'TEST_REMOVE_POST',
         uid: 123,
         uidField: configBase.uidField
       })).to.be.true
@@ -61,9 +66,14 @@ describe('Actions::Remove', () => {
     it('should dispatch success action', done => {
       const action = new Remove(configSuccess)
       action.do(123)(dispatchSpy).then(() => {
-        expect(dispatchSpy.calledTwice).to.be.true
-        expect(dispatchSpy.secondCall.calledWith({
+        expect(dispatchSpy.callCount).to.equal(4)
+        expect(dispatchSpy.getCall(2).calledWith({
           type: 'TEST_REMOVE_SUCCESS',
+          uid: 123,
+          uidField: configBase.uidField
+        })).to.be.true
+        expect(dispatchSpy.getCall(3).calledWith({
+          type: 'TEST_REMOVE_SUCCESS_POST',
           uid: 123,
           uidField: configBase.uidField
         })).to.be.true
@@ -74,9 +84,15 @@ describe('Actions::Remove', () => {
     it('should dispatch error action', done => {
       const action = new Remove(configError)
       action.do(123)(dispatchSpy).then(() => {
-        expect(dispatchSpy.calledTwice).to.be.true
-        expect(dispatchSpy.secondCall.calledWith({
+        expect(dispatchSpy.callCount).to.equal(4)
+        expect(dispatchSpy.getCall(2).calledWith({
           type: 'TEST_REMOVE_ERROR',
+          uid: 123,
+          uidField: configBase.uidField,
+          responseData: { error: 'test' }
+        })).to.be.true
+        expect(dispatchSpy.getCall(3).calledWith({
+          type: 'TEST_REMOVE_ERROR_POST',
           uid: 123,
           uidField: configBase.uidField,
           responseData: { error: 'test' }

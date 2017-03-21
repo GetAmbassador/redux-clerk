@@ -25,9 +25,13 @@ describe('Actions::Instance', () => {
     it('should dispatch start action with provided instance key', () => {
       const action = new Instance(config)
       action.do('users')(dispatchSpy)
-      expect(dispatchSpy.calledOnce).to.be.true
-      expect(dispatchSpy.calledWith({
+      expect(dispatchSpy.calledTwice).to.be.true
+      expect(dispatchSpy.firstCall.calledWith({
         type: 'TEST_INSTANCE',
+        instance: 'users'
+      })).to.be.true
+      expect(dispatchSpy.secondCall.calledWith({
+        type: 'TEST_INSTANCE_POST',
         instance: 'users'
       })).to.be.true
     })
