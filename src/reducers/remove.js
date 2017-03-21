@@ -1,4 +1,4 @@
-import Immutable, { Map, List } from 'immutable'
+import { Map, List } from 'immutable'
 
 /**
  * The start action for the remove reducer
@@ -39,11 +39,6 @@ export const start = (state, action) => {
 
     // Saving the item being removed in case deletion fails
     map.set('pendingRemoval', state.get('pendingRemoval').merge(itemPendingRemovalTuple))
-
-    // Add additional data if provided
-    if(action.additionalData) {
-      map.mergeIn(['instances', action.instance, 'additionalData'], Immutable.fromJS(action.additionalData))
-    }
   })
 }
 
@@ -59,11 +54,6 @@ export const success = (state, action) => {
 
     // Remove the item pending removal
     map.deleteIn(['pendingRemoval', action.uid])
-
-    // Add additional data if provided
-    if(action.additionalData) {
-      map.mergeIn(['instances', action.instance, 'additionalData'], Immutable.fromJS(action.additionalData))
-    }
   })
 }
 
@@ -96,11 +86,6 @@ export const error = (state, action) => {
       const itemIndex = item.get('index')
       map.setIn(['instances', instanceKey, 'data'], instanceData.insert(itemIndex, action.uid))
     })
-
-    // Add additional data if provided
-    if(action.additionalData) {
-      map.mergeIn(['instances', action.instance, 'additionalData'], Immutable.fromJS(action.additionalData))
-    }
   })
 }
 

@@ -42,11 +42,10 @@ describe('Actions::Remove', () => {
 
     it('should dispatch start action', () => {
       const action = new Remove(configBase)
-      action.do('users', 123)(dispatchSpy)
+      action.do(123)(dispatchSpy)
       expect(dispatchSpy.calledOnce).to.be.true
       expect(dispatchSpy.calledWith({
         type: 'TEST_REMOVE',
-        instance: 'users',
         uid: 123,
         uidField: configBase.uidField
       })).to.be.true
@@ -54,18 +53,17 @@ describe('Actions::Remove', () => {
 
     it('should call config.remover with provided uid', () => {
       const action = new Remove(configSpy)
-      action.do('users', 123)(dispatchSpy)
+      action.do(123)(dispatchSpy)
       expect(configSpy.remover.calledOnce).to.be.true
       expect(configSpy.remover.args[0][0]).to.deep.equal(123)
     })
 
     it('should dispatch success action', done => {
       const action = new Remove(configSuccess)
-      action.do('users', 123)(dispatchSpy).then(() => {
+      action.do(123)(dispatchSpy).then(() => {
         expect(dispatchSpy.calledTwice).to.be.true
         expect(dispatchSpy.secondCall.calledWith({
           type: 'TEST_REMOVE_SUCCESS',
-          instance: 'users',
           uid: 123,
           uidField: configBase.uidField
         })).to.be.true
@@ -75,11 +73,10 @@ describe('Actions::Remove', () => {
 
     it('should dispatch error action', done => {
       const action = new Remove(configError)
-      action.do('users', 123)(dispatchSpy).then(() => {
+      action.do(123)(dispatchSpy).then(() => {
         expect(dispatchSpy.calledTwice).to.be.true
         expect(dispatchSpy.secondCall.calledWith({
           type: 'TEST_REMOVE_ERROR',
-          instance: 'users',
           uid: 123,
           uidField: configBase.uidField,
           responseData: { error: 'test' }

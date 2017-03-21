@@ -168,13 +168,7 @@ The record to be updated. Must contain the UID to be updated in the configured `
 Type: `object`    
 Required: yes
 
-##### remove(datasetKey, uid)
-###### datasetKey
-The name of the dataset where deletion should be applied.
-
-Type: `string` _(must be A-Za-z_0-9)_    
-Required: yes
-
+##### remove(uid)
 ###### uid
 The UID of the record to be removed.
 
