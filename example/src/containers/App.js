@@ -21,7 +21,7 @@ App.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  todos: TodoSelectors.dataset(state, 'todos').get('data') || List()
+  todos: TodoSelectors.dataset(state, 'todos').get('data', List())
 })
 
 const mapDispatchToProps = dispatch => ({
