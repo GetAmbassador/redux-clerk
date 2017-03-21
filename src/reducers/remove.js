@@ -13,14 +13,14 @@ export const start = (state, action) => {
     // Optimistically remove the item
     map.deleteIn(['raw', action.uid])
 
-    // Maintain a reference to the deleted item in each instance
+    // Keep a reference to the index of the removed item in each instance
     let instanceIndices = List()
     map.get('instances').entrySeq().forEach(item => {
       const instanceKey = item[0]
       const instanceUids = item[1].get('data')
       const uidIndexInInstance = instanceUids.indexOf(action.uid)
 
-      // If the uid of the item to be deleted exists in this instance
+      // If the uid of the item to be removed exists in this instance
       // we save the index. This allows us to re-add the item later
       // if the removal is unsuccessful.
       if(uidIndexInInstance > -1) {
