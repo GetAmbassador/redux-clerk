@@ -1,17 +1,10 @@
 /**
- * Generates action name for a provided prefix, type and action
- * @param  {String} prefix - name prefix, ex: users
- * @param  {String} type - action type, ex: fetch
- * @param  {String} action - base action name, ex: success
+ * Generates action name for a provided parts
+ * @param  {Array} parts - all parts of the action name to be combined
  *
- * @return {String} - Object of action names
+ * @return {String} - Action name string
  */
-const generateActionName = (prefix, type, action) => {
-  const parts = []
-  if(prefix) parts.push(prefix)
-  if(type) parts.push(type)
-  if(action) parts.push(action)
-
+const generateActionName = (...parts) => {
   return parts.join('_').toUpperCase()
 }
 
@@ -26,15 +19,21 @@ const generateActionName = (prefix, type, action) => {
  * Ex: generateActionNames('users', 'fetch')
  * {
  *   start: 'USERS_FETCH',
+ *   startPost: 'USERS_FETCH_POST',
  *   success: 'USERS_FETCH_SUCCESS',
- *   error: 'USERS_FETCH_ERROR'
+ *   successPost: 'USERS_FETCH_SUCCESS_POST',
+ *   error: 'USERS_FETCH_ERROR',
+ *   errorPost: 'USERS_FETCH_ERROR_POST'
  * }
  */
 export const generateActionNames = (prefix, type) => {
   return {
     start: generateActionName(prefix, type),
+    startPost: generateActionName(prefix, type, 'post'),
     success: generateActionName(prefix, type, 'success'),
-    error: generateActionName(prefix, type, 'error')
+    successPost: generateActionName(prefix, type, 'success', 'post'),
+    error: generateActionName(prefix, type, 'error'),
+    errorPost: generateActionName(prefix, type, 'error', 'post'),
   }
 }
 
