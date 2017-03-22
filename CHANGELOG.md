@@ -1,8 +1,8 @@
 ## 1.0.0-rc.1
 ###### _March 22, 2017_
 
-- Rename delete action to remove to avoid reserved word conflicts ([#35](https://github.com/GetAmbassador/redux-clerk/pull/35))
 - Added post action hooks ([#36](https://github.com/GetAmbassador/redux-clerk/pull/36))
+- Rename delete action to remove to avoid reserved word conflicts ([#35](https://github.com/GetAmbassador/redux-clerk/pull/35))
 
 ## 0.3.0
 ###### _March 15, 2017_
