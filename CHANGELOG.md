@@ -1,3 +1,8 @@
+## 1.0.0-rc.2
+###### _March 23, 2017_
+
+- Added pre action hooks ([#38](https://github.com/GetAmbassador/redux-clerk/pull/38))
+
 ## 1.0.0-rc.1
 ###### _March 22, 2017_
 
