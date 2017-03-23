@@ -18,20 +18,26 @@ const generateActionName = (...parts) => {
  *
  * Ex: generateActionNames('users', 'fetch')
  * {
+ *   startPre: 'USERS_FETCH_PRE',
  *   start: 'USERS_FETCH',
  *   startPost: 'USERS_FETCH_POST',
+ *   successPre: 'USERS_FETCH_SUCCESS_PRE',
  *   success: 'USERS_FETCH_SUCCESS',
  *   successPost: 'USERS_FETCH_SUCCESS_POST',
+ *   errorPre: 'USERS_FETCH_ERROR_PRE',
  *   error: 'USERS_FETCH_ERROR',
  *   errorPost: 'USERS_FETCH_ERROR_POST'
  * }
  */
 export const generateActionNames = (prefix, type) => {
   return {
+    startPre: generateActionName(prefix, type, 'pre'),
     start: generateActionName(prefix, type),
     startPost: generateActionName(prefix, type, 'post'),
+    successPre: generateActionName(prefix, type, 'success', 'pre'),
     success: generateActionName(prefix, type, 'success'),
     successPost: generateActionName(prefix, type, 'success', 'post'),
+    errorPre: generateActionName(prefix, type, 'error', 'pre'),
     error: generateActionName(prefix, type, 'error'),
     errorPost: generateActionName(prefix, type, 'error', 'post'),
   }

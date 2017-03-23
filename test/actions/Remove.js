@@ -43,13 +43,18 @@ describe('Actions::Remove', () => {
     it('should dispatch start action', () => {
       const action = new Remove(configBase)
       action.do(123)(dispatchSpy)
-      expect(dispatchSpy.calledTwice).to.be.true
+      expect(dispatchSpy.calledThrice).to.be.true
       expect(dispatchSpy.firstCall.calledWith({
-        type: 'TEST_REMOVE',
+        type: 'TEST_REMOVE_PRE',
         uid: 123,
         uidField: configBase.uidField
       })).to.be.true
       expect(dispatchSpy.secondCall.calledWith({
+        type: 'TEST_REMOVE',
+        uid: 123,
+        uidField: configBase.uidField
+      })).to.be.true
+      expect(dispatchSpy.thirdCall.calledWith({
         type: 'TEST_REMOVE_POST',
         uid: 123,
         uidField: configBase.uidField
@@ -66,13 +71,18 @@ describe('Actions::Remove', () => {
     it('should dispatch success action', done => {
       const action = new Remove(configSuccess)
       action.do(123)(dispatchSpy).then(() => {
-        expect(dispatchSpy.callCount).to.equal(4)
-        expect(dispatchSpy.getCall(2).calledWith({
+        expect(dispatchSpy.callCount).to.equal(6)
+        expect(dispatchSpy.getCall(3).calledWith({
+          type: 'TEST_REMOVE_SUCCESS_PRE',
+          uid: 123,
+          uidField: configBase.uidField
+        })).to.be.true
+        expect(dispatchSpy.getCall(4).calledWith({
           type: 'TEST_REMOVE_SUCCESS',
           uid: 123,
           uidField: configBase.uidField
         })).to.be.true
-        expect(dispatchSpy.getCall(3).calledWith({
+        expect(dispatchSpy.getCall(5).calledWith({
           type: 'TEST_REMOVE_SUCCESS_POST',
           uid: 123,
           uidField: configBase.uidField
@@ -84,14 +94,20 @@ describe('Actions::Remove', () => {
     it('should dispatch error action', done => {
       const action = new Remove(configError)
       action.do(123)(dispatchSpy).then(() => {
-        expect(dispatchSpy.callCount).to.equal(4)
-        expect(dispatchSpy.getCall(2).calledWith({
+        expect(dispatchSpy.callCount).to.equal(6)
+        expect(dispatchSpy.getCall(3).calledWith({
+          type: 'TEST_REMOVE_ERROR_PRE',
+          uid: 123,
+          uidField: configBase.uidField,
+          responseData: { error: 'test' }
+        })).to.be.true
+        expect(dispatchSpy.getCall(4).calledWith({
           type: 'TEST_REMOVE_ERROR',
           uid: 123,
           uidField: configBase.uidField,
           responseData: { error: 'test' }
         })).to.be.true
-        expect(dispatchSpy.getCall(3).calledWith({
+        expect(dispatchSpy.getCall(5).calledWith({
           type: 'TEST_REMOVE_ERROR_POST',
           uid: 123,
           uidField: configBase.uidField,
