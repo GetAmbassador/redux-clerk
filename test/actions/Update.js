@@ -44,13 +44,18 @@ describe('Actions::Update', () => {
     it('should dispatch start action', () => {
       const action = new Update(configBase)
       action.do(Map({ other: 'data' }))(dispatchSpy)
-      expect(dispatchSpy.calledTwice).to.be.true
+      expect(dispatchSpy.calledThrice).to.be.true
       expect(dispatchSpy.firstCall.calledWith({
-        type: 'TEST_UPDATE',
+        type: 'TEST_UPDATE_PRE',
         uidField: configBase.uidField,
         record: Map({ other: 'data' })
       })).to.be.true
       expect(dispatchSpy.secondCall.calledWith({
+        type: 'TEST_UPDATE',
+        uidField: configBase.uidField,
+        record: Map({ other: 'data' })
+      })).to.be.true
+      expect(dispatchSpy.thirdCall.calledWith({
         type: 'TEST_UPDATE_POST',
         uidField: configBase.uidField,
         record: Map({ other: 'data' })
@@ -60,14 +65,20 @@ describe('Actions::Update', () => {
     it('should dispatch success action', done => {
       const action = new Update(configSuccess)
       action.do(Map({ uid: 123, name: 'test' }))(dispatchSpy).then(() => {
-        expect(dispatchSpy.callCount).to.equal(4)
-        expect(dispatchSpy.getCall(2).calledWith({
+        expect(dispatchSpy.callCount).to.equal(6)
+        expect(dispatchSpy.getCall(3).calledWith({
+          type: 'TEST_UPDATE_SUCCESS_PRE',
+          uidField: configBase.uidField,
+          record: Map({ uid: 123, name: 'test' }),
+          responseData: { uid: 123, name: 'test' }
+        })).to.be.true
+        expect(dispatchSpy.getCall(4).calledWith({
           type: 'TEST_UPDATE_SUCCESS',
           uidField: configBase.uidField,
           record: Map({ uid: 123, name: 'test' }),
           responseData: { uid: 123, name: 'test' }
         })).to.be.true
-        expect(dispatchSpy.getCall(3).calledWith({
+        expect(dispatchSpy.getCall(5).calledWith({
           type: 'TEST_UPDATE_SUCCESS_POST',
           uidField: configBase.uidField,
           record: Map({ uid: 123, name: 'test' }),
@@ -95,14 +106,20 @@ describe('Actions::Update', () => {
     it('should dispatch error action', done => {
       const action = new Update(configError)
       action.do(Map({ uid: 123, name: 'test' }))(dispatchSpy).then(() => {
-        expect(dispatchSpy.callCount).to.equal(4)
-        expect(dispatchSpy.getCall(2).calledWith({
+        expect(dispatchSpy.callCount).to.equal(6)
+        expect(dispatchSpy.getCall(3).calledWith({
+          type: 'TEST_UPDATE_ERROR_PRE',
+          uidField: configBase.uidField,
+          record: Map({ uid: 123, name: 'test' }),
+          responseData: { error: 'test' }
+        })).to.be.true
+        expect(dispatchSpy.getCall(4).calledWith({
           type: 'TEST_UPDATE_ERROR',
           uidField: configBase.uidField,
           record: Map({ uid: 123, name: 'test' }),
           responseData: { error: 'test' }
         })).to.be.true
-        expect(dispatchSpy.getCall(3).calledWith({
+        expect(dispatchSpy.getCall(5).calledWith({
           type: 'TEST_UPDATE_ERROR_POST',
           uidField: configBase.uidField,
           record: Map({ uid: 123, name: 'test' }),

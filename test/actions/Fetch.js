@@ -44,14 +44,20 @@ describe('Actions::Fetch', () => {
     it('should dispatch start action', () => {
       const action = new Fetch(configBase)
       action.do('users', { page: 1 }, { appendResponse: true })(dispatchSpy)
-      expect(dispatchSpy.calledTwice).to.be.true
+      expect(dispatchSpy.calledThrice).to.be.true
       expect(dispatchSpy.firstCall.calledWith({
-        type: 'TEST_FETCH',
+        type: 'TEST_FETCH_PRE',
         instance: 'users',
         uidField: configBase.uidField,
         options: { appendResponse: true }
       })).to.be.true
       expect(dispatchSpy.secondCall.calledWith({
+        type: 'TEST_FETCH',
+        instance: 'users',
+        uidField: configBase.uidField,
+        options: { appendResponse: true }
+      })).to.be.true
+      expect(dispatchSpy.thirdCall.calledWith({
         type: 'TEST_FETCH_POST',
         instance: 'users',
         uidField: configBase.uidField,
@@ -77,15 +83,22 @@ describe('Actions::Fetch', () => {
     it('should dispatch success action', done => {
       const action = new Fetch(configSuccess)
       action.do('users')(dispatchSpy).then(() => {
-        expect(dispatchSpy.callCount).to.equal(4)
-        expect(dispatchSpy.getCall(2).calledWith({
+        expect(dispatchSpy.callCount).to.equal(6)
+        expect(dispatchSpy.getCall(3).calledWith({
+          type: 'TEST_FETCH_SUCCESS_PRE',
+          instance: 'users',
+          uidField: configBase.uidField,
+          responseData: [{ uid: 123, name: 'test' }],
+          options: {}
+        })).to.be.true
+        expect(dispatchSpy.getCall(4).calledWith({
           type: 'TEST_FETCH_SUCCESS',
           instance: 'users',
           uidField: configBase.uidField,
           responseData: [{ uid: 123, name: 'test' }],
           options: {}
         })).to.be.true
-        expect(dispatchSpy.getCall(3).calledWith({
+        expect(dispatchSpy.getCall(5).calledWith({
           type: 'TEST_FETCH_SUCCESS_POST',
           instance: 'users',
           uidField: configBase.uidField,
@@ -99,15 +112,22 @@ describe('Actions::Fetch', () => {
     it('should dispatch error action', done => {
       const action = new Fetch(configError)
       action.do('users')(dispatchSpy).then(() => {
-        expect(dispatchSpy.callCount).to.equal(4)
-        expect(dispatchSpy.getCall(2).calledWith({
+        expect(dispatchSpy.callCount).to.equal(6)
+        expect(dispatchSpy.getCall(3).calledWith({
+          type: 'TEST_FETCH_ERROR_PRE',
+          instance: 'users',
+          uidField: configBase.uidField,
+          responseData: { error: 'test' },
+          options: {}
+        })).to.be.true
+        expect(dispatchSpy.getCall(4).calledWith({
           type: 'TEST_FETCH_ERROR',
           instance: 'users',
           uidField: configBase.uidField,
           responseData: { error: 'test' },
           options: {}
         })).to.be.true
-        expect(dispatchSpy.getCall(3).calledWith({
+        expect(dispatchSpy.getCall(5).calledWith({
           type: 'TEST_FETCH_ERROR_POST',
           instance: 'users',
           uidField: configBase.uidField,
