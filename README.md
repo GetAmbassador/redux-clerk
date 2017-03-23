@@ -283,21 +283,32 @@ const reducer = reduceReducers(reduxClerkReducer, myReducer)
 export default reducer
 ```
 
-If you need to make additional updates to the store after any of the CRUD actions, Redux Clerk will dispatch post create, post fetch, post update and post remove actions. You can add cases for these actions in your reducer and update the store as needed.
+If you need to make additional updates to the store before or after any of the CRUD actions, Redux Clerk will dispatch a pre/post action for each CRUD operation. You can add cases for these actions in your reducer and update the store as needed.
 
 Below is a list of all additional actions that are dispatched. Each each will contain relevant data for the action type.
 
 ```
+{prefix}_CREATE_PRE
 {prefix}_CREATE_POST
+{prefix}_CREATE_SUCCESS_PRE
 {prefix}_CREATE_SUCCESS_POST
+{prefix}_CREATE_ERROR_PRE
 {prefix}_CREATE_ERROR_POST
+{prefix}_FETCH_SUCCESS_PRE
 {prefix}_FETCH_SUCCESS_POST
+{prefix}_FETCH_ERROR_PRE
 {prefix}_FETCH_ERROR_POST
+{prefix}_UPDATE_PRE
 {prefix}_UPDATE_POST
+{prefix}_UPDATE_SUCCESS_PRE
 {prefix}_UPDATE_SUCCESS_POST
+{prefix}_UPDATE_ERROR_PRE
 {prefix}_UPDATE_ERROR_POST
+{prefix}_REMOVE_PRE
 {prefix}_REMOVE_POST
+{prefix}_REMOVE_SUCCESS_PRE
 {prefix}_REMOVE_SUCCESS_POST
+{prefix}_REMOVE_ERROR_PRE
 {prefix}_REMOVE_ERROR_POST
 ```
 
