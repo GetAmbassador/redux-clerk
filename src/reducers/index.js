@@ -34,8 +34,8 @@ const reducer = (config) => {
     // Holds derived subsets of the raw data
     // Stored as arrays of uids
     // {
-    //   instance1: { data: [123, 234] },
-    //   instance2: { [234,345,456] }
+    //   instance1: { data: [123, 234], loading: false, fetching: false },
+    //   instance2: { data: [234, 345, 456], loading: false, fetching: false }
     // }
     instances: {},
 
