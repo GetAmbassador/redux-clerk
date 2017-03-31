@@ -35,9 +35,7 @@ describe('Reducer', () => {
       update: [],
       remove: []
     },
-    instances: {},
-    pendingRemoval: {},
-    pendingUpdate: {}
+    instances: {}
   }
 
   beforeEach(() => {
@@ -130,9 +128,7 @@ describe('Reducer', () => {
         update: [],
         remove: []
       },
-      instances: {},
-      pendingRemoval: {},
-      pendingUpdate: {}
+      instances: {}
     }
 
     expect(reducer(config)(previousState, { type: 'unknown' }).toJS()).to.deep.equal(expectedState)

@@ -56,13 +56,7 @@ const reducer = (config) => {
     //   instance1: { data: [123, 234] },
     //   instance2: { [234,345,456] }
     // }
-    instances: {},
-
-    // pendingRemoval: Contains items that are pending removal
-    pendingRemoval: {},
-
-    // pendingUpdate: Contains items that are pending update
-    pendingUpdate: {}
+    instances: {}
   })
 
   // Clerk reducer
