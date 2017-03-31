@@ -31,6 +31,25 @@ const reducer = (config) => {
     // }
     raw: {},
 
+    // pendingRaw: Contains pending updates made to data objects
+    // {
+    //   123: { ... },
+    //   234: { ... }
+    // }
+    pendingRaw: {},
+
+    // Holds uids of pending items
+    // {
+    //   create: [123],
+    //   update: [234, 345],
+    //   remove: [456]
+    // }
+    pending: {
+      create: [],
+      update: [],
+      remove: []
+    },
+
     // Holds derived subsets of the raw data
     // Stored as arrays of uids
     // {

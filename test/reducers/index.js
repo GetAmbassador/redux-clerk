@@ -29,6 +29,12 @@ describe('Reducer', () => {
 
   const defaultState = {
     raw: {},
+    pendingRaw: {},
+    pending: {
+      create: [],
+      update: [],
+      remove: []
+    },
     instances: {},
     pendingRemoval: {},
     pendingUpdate: {}
@@ -117,6 +123,12 @@ describe('Reducer', () => {
     const expectedState = {
       raw: {
         123: { name: 'test' }
+      },
+      pendingRaw: {},
+      pending: {
+        create: [],
+        update: [],
+        remove: []
       },
       instances: {},
       pendingRemoval: {},
