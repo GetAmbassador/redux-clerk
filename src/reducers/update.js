@@ -1,4 +1,4 @@
-import { Map } from 'immutable'
+import { Map, List } from 'immutable'
 
 /**
  * The start action for the update reducer
@@ -21,13 +21,17 @@ export const start = (state, action) => {
   const updatedRecordTuple = Map([[uid, updatedRecord]])
 
   return state.withMutations(map => {
-    // Optimistically update the record
-    map.set('raw', state.get('raw').merge(updatedRecordTuple))
+    if (action.isAsync) {
+      // Add updated item to pendingRaw
+      map.setIn(['pendingRaw', uid], updatedRecord)
 
-    if(previousRecord) {
-      // Save previous version in case the update fails
-      const previousRecordTuple = Map([[uid, previousRecord]])
-      map.set('pendingUpdate', state.get('pendingUpdate').merge(previousRecordTuple))
+      // Add uid to pending.update
+      const pendingUpdate = map.getIn(['pending', 'update'], List())
+      map.setIn(['pending', 'update'], pendingUpdate.insert(0, uid))
+    }
+    else {
+      // Optimistically update the record
+      map.set('raw', state.get('raw').merge(updatedRecordTuple))
     }
   })
 }
@@ -43,8 +47,20 @@ export const start = (state, action) => {
 
    const uid = action.record.get(action.uidField)
 
-   // Remove the item pending update
-   return state.deleteIn(['pendingUpdate', uid])
+   return state.withMutations(map => {
+    // Update the record in raw
+    const updatedRecord = map.getIn(['pendingRaw', uid], Map())
+    const updatedRecordTuple = Map([[uid, updatedRecord]])
+    map.set('raw', state.get('raw').merge(updatedRecordTuple))
+
+    // Remove the item from pendingRaw
+    map.removeIn(['pendingRaw', uid])
+
+    // Remove uid from pending.update
+    const pendingUpdate = map.getIn(['pending', 'update'], List())
+    const uidIndexInPendingUpdate = pendingUpdate.indexOf(uid)
+    map.removeIn(['pending', 'update', uidIndexInPendingUpdate])
+   })
  }
 
 /**
@@ -59,22 +75,14 @@ export const error = (state, action) => {
 
   const uid = action.record.get(action.uidField)
 
-  // Create reverted record tuple
-  // We have to create a tuple here in order to preserve the Integer typped keys
-  const updatedRecord = state.getIn(['pendingUpdate', uid])
-  const updatedRecordTuple = Map([[uid, updatedRecord]])
   return state.withMutations(map => {
+    // Remove the item from pendingRaw
+    map.removeIn(['pendingRaw', uid])
 
-    // Revert changes
-    if(updatedRecord) {
-      map.set('raw', state.get('raw').merge(updatedRecordTuple))
-      // Remove the item pending update
-      map.deleteIn(['pendingUpdate', uid])
-    }
-    // If updated record wasn't previously in the store we can remove from raw on failure.
-    else {
-      map.removeIn(['raw', uid])
-    }
+    // Remove uid from pending.update
+    const pendingUpdate = map.getIn(['pending', 'update'], List())
+    const uidIndexInPendingUpdate = pendingUpdate.indexOf(uid)
+    map.removeIn(['pending', 'update', uidIndexInPendingUpdate])
   })
 }
 
