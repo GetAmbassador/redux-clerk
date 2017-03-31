@@ -1,4 +1,4 @@
-import Immutable, { Map } from 'immutable'
+import Immutable, { Map, List } from 'immutable'
 
 /**
  * The start action for the create reducer
@@ -24,12 +24,12 @@ export const start = (state, action) => {
 
     if (action.isAsync) {
       // Add uid to pending.create
-      const pendingCreate = map.getIn(['pending', 'create']) || Immutable.fromJS([])
+      const pendingCreate = map.getIn(['pending', 'create'], List())
       map.setIn(['pending', 'create'], pendingCreate.insert(0, uid))
     }
     else {
       // Add uid to provided instance
-      const instanceData = map.getIn(['instances', action.instance, 'data']) || Immutable.fromJS([])
+      const instanceData = map.getIn(['instances', action.instance, 'data'], List())
       map.setIn(['instances', action.instance, 'data'], instanceData.insert(0, uid))
     }
 
@@ -65,7 +65,7 @@ export const success = (state, action) => {
     map.removeIn(['raw', temporaryUid])
 
     // Remove temporary uid from pending.create
-    const pendingCreate = map.getIn(['pending', 'create']) || Immutable.fromJS([])
+    const pendingCreate = map.getIn(['pending', 'create'], List())
     const temporaryUidIndexInPendingCreate = pendingCreate.indexOf(temporaryUid)
     map.removeIn(['pending', 'create', temporaryUidIndexInPendingCreate])
 
@@ -93,7 +93,7 @@ export const error = (state, action) => {
 
     // Remove temporary uid from pending.create
     const temporaryUid = action.record.get(action.uidField)
-    const pendingCreate = map.getIn(['pending', 'create']) || Immutable.fromJS([])
+    const pendingCreate = map.getIn(['pending', 'create'], List())
     const temporaryUidIndexInPendingCreate = pendingCreate.indexOf(temporaryUid)
     map.removeIn(['pending', 'create', temporaryUidIndexInPendingCreate])
 
