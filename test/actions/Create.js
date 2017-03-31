@@ -50,19 +50,22 @@ describe('Actions::Create', () => {
         type: 'TEST_CREATE_PRE',
         instance: 'users',
         record: Map({ other: 'data' }),
-        uidField: configBase.uidField
+        uidField: configBase.uidField,
+        isAsync: false
       })).to.be.true
       expect(dispatchSpy.secondCall.calledWith({
         type: 'TEST_CREATE',
         instance: 'users',
         record: Map({ other: 'data' }),
-        uidField: configBase.uidField
+        uidField: configBase.uidField,
+        isAsync: false
       })).to.be.true
       expect(dispatchSpy.thirdCall.calledWith({
         type: 'TEST_CREATE_POST',
         instance: 'users',
         record: Map({ other: 'data' }),
-        uidField: configBase.uidField
+        uidField: configBase.uidField,
+        isAsync: false
       })).to.be.true
     })
 
@@ -85,31 +88,33 @@ describe('Actions::Create', () => {
       const action = new Create(configSuccess)
       const data = Map({ uid: 'new', name: 'test' })
       action.do('users', data)(dispatchSpy).then(() => {
-        console.log(dispatchSpy.callCount);
         expect(dispatchSpy.callCount).to.equal(6)
         expect(dispatchSpy.getCall(3).calledWith({
           type: 'TEST_CREATE_SUCCESS_PRE',
           instance: 'users',
           record: Map({ uid: 'new', name: 'test' }),
           uidField: configBase.uidField,
-          responseData: { uid: 123, name: 'test' }
+          responseData: { uid: 123, name: 'test' },
+          isAsync: true
         })).to.be.true
         expect(dispatchSpy.getCall(4).calledWith({
           type: 'TEST_CREATE_SUCCESS',
           instance: 'users',
           record: Map({ uid: 'new', name: 'test' }),
           uidField: configBase.uidField,
-          responseData: { uid: 123, name: 'test' }
+          responseData: { uid: 123, name: 'test' },
+          isAsync: true
         })).to.be.true
         expect(dispatchSpy.getCall(5).calledWith({
           type: 'TEST_CREATE_SUCCESS_POST',
           instance: 'users',
           record: Map({ uid: 'new', name: 'test' }),
           uidField: configBase.uidField,
-          responseData: { uid: 123, name: 'test' }
+          responseData: { uid: 123, name: 'test' },
+          isAsync: true
         })).to.be.true
         done()
-      }).catch(e => console.log(e))
+      })
     })
 
     it('should dispatch error action', done => {
@@ -122,21 +127,24 @@ describe('Actions::Create', () => {
           instance: 'users',
           record: Map({ uid: 'new', name: 'test' }),
           uidField: configBase.uidField,
-          responseData: { error: 'test' }
+          responseData: { error: 'test' },
+          isAsync: true
         })).to.be.true
         expect(dispatchSpy.getCall(4).calledWith({
           type: 'TEST_CREATE_ERROR',
           instance: 'users',
           record: Map({ uid: 'new', name: 'test' }),
           uidField: configBase.uidField,
-          responseData: { error: 'test' }
+          responseData: { error: 'test' },
+          isAsync: true
         })).to.be.true
         expect(dispatchSpy.getCall(5).calledWith({
           type: 'TEST_CREATE_ERROR_POST',
           instance: 'users',
           record: Map({ uid: 'new', name: 'test' }),
           uidField: configBase.uidField,
-          responseData: { error: 'test' }
+          responseData: { error: 'test' },
+          isAsync: true
         })).to.be.true
         done()
       })

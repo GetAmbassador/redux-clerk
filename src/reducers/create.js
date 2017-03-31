@@ -26,6 +26,12 @@ export const start = (state, action) => {
     const instanceData = map.getIn(['instances', action.instance, 'data']) || Immutable.fromJS([])
     map.setIn(['instances', action.instance, 'data'], instanceData.insert(0, uid))
 
+    // Add uid to pending.create
+    if (action.isAsync) {
+      const pendingCreate = map.getIn(['pending', 'create']) || Immutable.fromJS([])
+      map.setIn(['pending', 'create'], pendingCreate.insert(0, uid))
+    }
+
     // Add additional data if provided
     if(action.additionalData) {
       map.mergeIn(['instances', action.instance, 'additionalData'], Immutable.fromJS(action.additionalData))
@@ -61,6 +67,11 @@ export const success = (state, action) => {
     const temporaryUidIndex = map.getIn(['instances', action.instance, 'data']).findIndex(uid => uid === temporaryUid)
     map.removeIn(['instances', action.instance, 'data', temporaryUidIndex])
 
+    // Remove temporary uid from pending.create
+    const pendingCreate = map.getIn(['pending', 'create']) || Immutable.fromJS([])
+    const temporaryUidIndexInPendingCreate = pendingCreate.indexOf(temporaryUid)
+    map.removeIn(['pending', 'create', temporaryUidIndexInPendingCreate])
+
     // Add additional data if provided
     if(action.additionalData) {
       map.mergeIn(['instances', action.instance, 'additionalData'], Immutable.fromJS(action.additionalData))
@@ -87,6 +98,11 @@ export const error = (state, action) => {
     const temporaryUid = action.record.get(action.uidField)
     const temporaryUidIndex = map.getIn(['instances', action.instance, 'data']).findIndex(uid => uid === temporaryUid)
     map.removeIn(['instances', action.instance, 'data', temporaryUidIndex])
+
+    // Remove temporary uid from pending.create
+    const pendingCreate = map.getIn(['pending', 'create']) || Immutable.fromJS([])
+    const temporaryUidIndexInPendingCreate = pendingCreate.indexOf(temporaryUid)
+    map.removeIn(['pending', 'create', temporaryUidIndexInPendingCreate])
 
     // Add additional data if provided
     if(action.additionalData) {
