@@ -109,7 +109,7 @@ describe('Reducers::Create', () => {
         },
         instances: {
           test1: {
-            data: [234, 123],
+            data: [123],
             additionalData: {
               totalCount: 2
             }
@@ -132,7 +132,7 @@ describe('Reducers::Create', () => {
         },
         instances: {
           test1: {
-            data: ['temp123', 234]
+            data: [234]
           }
         }
       })
@@ -210,7 +210,7 @@ describe('Reducers::Create', () => {
         },
         instances: {
           test1: {
-            data: ['temp123', 234]
+            data: [234]
           }
         }
       })
