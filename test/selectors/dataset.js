@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 import Immutable, { Map } from 'immutable'
-import { datasetSelector, datasetPropertySelector } from '../../src/selectors/dataset'
+import { datasetSelector, datasetOptimisticSelector, datasetPropertySelector } from '../../src/selectors/dataset'
 
 describe('Selectors', () => {
   describe('dataset', () => {
@@ -13,6 +13,14 @@ describe('Selectors', () => {
             [234, Immutable.fromJS({ uid: 234, name: 'test 234' })],
             [345, Immutable.fromJS({ uid: 345, name: 'test 345' })]
           ]),
+          pendingRaw: Map([
+            [234, Immutable.fromJS({ uid: 234, name: 'test 234 updated' })]
+          ]),
+          pending: {
+            create: [123],
+            update: [234],
+            remove: [345]
+          },
           instances: {
             test1: {
               data: [234,123,345]
@@ -27,9 +35,9 @@ describe('Selectors', () => {
 
       const expectedResult = {
         data: [
-          { uid: 234, name: 'test 234' },
-          { uid: 123, name: 'test 123' },
-          { uid: 345, name: 'test 345' }
+          { uid: 234, name: 'test 234', pendingCreate: false, pendingUpdate: true, pendingRemove: false },
+          { uid: 123, name: 'test 123', pendingCreate: true, pendingUpdate: false, pendingRemove: false },
+          { uid: 345, name: 'test 345', pendingCreate: false, pendingUpdate: false, pendingRemove: true }
         ]
       }
 
@@ -63,6 +71,111 @@ describe('Selectors', () => {
             [234, Immutable.fromJS({ uid: 234, name: 'test 234' })],
             [345, Immutable.fromJS({ uid: 345, name: 'test 345' })]
           ]),
+          pending: {
+            create: [],
+            update: [],
+            remove: []
+          },
+          instances: {
+            test1: {
+              data: [234,123,345],
+              additionalData: {
+                totalCount: 3
+              }
+            }
+          }
+        })
+      }
+
+      const config = {
+        baseSelector: state => state.companies
+      }
+
+      const expectedResult = {
+        data: [
+          { uid: 234, name: 'test 234', pendingCreate: false, pendingUpdate: false, pendingRemove: false },
+          { uid: 123, name: 'test 123', pendingCreate: false, pendingUpdate: false, pendingRemove: false },
+          { uid: 345, name: 'test 345', pendingCreate: false, pendingUpdate: false, pendingRemove: false }
+        ],
+        totalCount: 3
+      }
+
+      expect(datasetSelector(config, currentState, 'test1').toJS()).to.deep.equal(expectedResult)
+    })
+  })
+
+  describe('datasetOptimistic', () => {
+    it('should return computed derived data based on provided state', () => {
+
+      const currentState = {
+        companies: Immutable.fromJS({
+          raw:  Map([
+            [123, Immutable.fromJS({ uid: 123, name: 'test 123' })],
+            [234, Immutable.fromJS({ uid: 234, name: 'test 234' })],
+            [345, Immutable.fromJS({ uid: 345, name: 'test 345' })]
+          ]),
+          pendingRaw: Map([
+            [234, Immutable.fromJS({ uid: 234, name: 'test 234 updated' })]
+          ]),
+          pending: {
+            create: [123],
+            update: [234],
+            remove: [345]
+          },
+          instances: {
+            test1: {
+              data: [234,123,345]
+            }
+          }
+        })
+      }
+
+      const config = {
+        baseSelector: state => state.companies
+      }
+
+      const expectedResult = {
+        data: [
+          { uid: 234, name: 'test 234 updated' },
+          { uid: 123, name: 'test 123' }
+        ]
+      }
+
+      expect(datasetOptimisticSelector(config, currentState, 'test1').toJS()).to.deep.equal(expectedResult)
+    })
+
+    it('should return empty map if instance has not yet been created', () => {
+
+      const currentState = {
+        companies: Immutable.fromJS({
+          raw: Map({}),
+          instances: {}
+        })
+      }
+
+      const config = {
+        baseSelector: state => state.companies
+      }
+
+      const expectedResult = {}
+
+      expect(datasetOptimisticSelector(config, currentState, 'test1').toJS()).to.deep.equal(expectedResult)
+    })
+
+    it('should return additional data if provided', () => {
+
+      const currentState = {
+        companies: Immutable.fromJS({
+          raw:  Map([
+            [123, Immutable.fromJS({ uid: 123, name: 'test 123' })],
+            [234, Immutable.fromJS({ uid: 234, name: 'test 234' })],
+            [345, Immutable.fromJS({ uid: 345, name: 'test 345' })]
+          ]),
+          pending: {
+            create: [],
+            update: [],
+            remove: []
+          },
           instances: {
             test1: {
               data: [234,123,345],
@@ -87,7 +200,7 @@ describe('Selectors', () => {
         totalCount: 3
       }
 
-      expect(datasetSelector(config, currentState, 'test1').toJS()).to.deep.equal(expectedResult)
+      expect(datasetOptimisticSelector(config, currentState, 'test1').toJS()).to.deep.equal(expectedResult)
     })
   })
 
