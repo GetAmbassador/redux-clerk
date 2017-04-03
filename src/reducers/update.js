@@ -23,7 +23,7 @@ export const start = (state, action) => {
   return state.withMutations(map => {
     if (action.isAsync) {
       // Add updated item to pendingRaw
-      map.setIn(['pendingRaw', uid], updatedRecord)
+      map.set('pendingRaw', state.get('pendingRaw').merge(updatedRecordTuple))
 
       // Add uid to pending.update
       const pendingUpdate = map.getIn(['pending', 'update'], List())
