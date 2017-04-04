@@ -35,9 +35,8 @@ describe('Selectors', () => {
 
       const expectedResult = {
         data: [
-          { uid: 234, name: 'test 234', pendingCreate: false, pendingUpdate: true, pendingRemove: false },
-          { uid: 123, name: 'test 123', pendingCreate: true, pendingUpdate: false, pendingRemove: false },
-          { uid: 345, name: 'test 345', pendingCreate: false, pendingUpdate: false, pendingRemove: true }
+          { uid: 234, name: 'test 234', pendingUpdate: true },
+          { uid: 345, name: 'test 345', pendingRemove: true }
         ]
       }
 
@@ -93,9 +92,9 @@ describe('Selectors', () => {
 
       const expectedResult = {
         data: [
-          { uid: 234, name: 'test 234', pendingCreate: false, pendingUpdate: false, pendingRemove: false },
-          { uid: 123, name: 'test 123', pendingCreate: false, pendingUpdate: false, pendingRemove: false },
-          { uid: 345, name: 'test 345', pendingCreate: false, pendingUpdate: false, pendingRemove: false }
+          { uid: 234, name: 'test 234' },
+          { uid: 123, name: 'test 123' },
+          { uid: 345, name: 'test 345' }
         ],
         totalCount: 3
       }
@@ -136,8 +135,8 @@ describe('Selectors', () => {
 
       const expectedResult = {
         data: [
-          { uid: 234, name: 'test 234 updated' },
-          { uid: 123, name: 'test 123' }
+          { uid: 234, name: 'test 234 updated', pendingUpdate: true },
+          { uid: 123, name: 'test 123', pendingCreate: true }
         ]
       }
 

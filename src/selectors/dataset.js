@@ -14,7 +14,7 @@ export const datasetSelector = (config, state, instance) => {
   const baseState = config.baseSelector(state)
 
   // Get instance array
-  const instanceData = baseState.getIn(['instances', instance, 'data'])
+  let instanceData = baseState.getIn(['instances', instance, 'data'])
   const rawData = baseState.get('raw')
 
   // If instanceData is not created yet, return empty Map
@@ -22,17 +22,24 @@ export const datasetSelector = (config, state, instance) => {
     return Map({})
   }
 
+  // Remove the pending.create items from the instance
+  instanceData = instanceData.filter(uid => baseState.getIn(['pending', 'create'], List()).indexOf(uid) === -1)
+
   // Re-compute data
   const computedData = instanceData.map(uid => {
     let item = rawData.get(uid)
 
     item = item.withMutations(map => {
-      // Check pending.create
-      map.set('pendingCreate', baseState.getIn(['pending', 'create'], List()).indexOf(uid) > -1)
-      // Check pending.update
-      map.set('pendingUpdate', baseState.getIn(['pending', 'update'], List()).indexOf(uid) > -1)
-      // Check pending.remove
-      map.set('pendingRemove', baseState.getIn(['pending', 'remove'], List()).indexOf(uid) > -1)
+      // Check pending.update and add the pendingUpdate prop if necessary
+      const pendingUpdate = baseState.getIn(['pending', 'update'], List()).indexOf(uid) > -1
+      if (pendingUpdate) {
+        map.set('pendingUpdate', true)
+      }
+      // Check pending.remove and add the pendingRemove prop if necessary
+      const pendingRemove = baseState.getIn(['pending', 'remove'], List()).indexOf(uid) > -1
+      if (pendingRemove) {
+        map.set('pendingRemove', true)
+      }
     })
 
     return item
@@ -74,7 +81,24 @@ export const datasetOptimisticSelector = (config, state, instance) => {
   rawData = rawData.mergeDeep(baseState.get('pendingRaw'))
 
   // Re-compute data
-  const computedData = instanceData.map(uid => rawData.get(uid))
+  const computedData = instanceData.map(uid => {
+    let item = rawData.get(uid)
+
+    item = item.withMutations(map => {
+      // Check pending.create and add the pendingCreate prop if necessary
+      const pendingCreate = baseState.getIn(['pending', 'create'], List()).indexOf(uid) > -1
+      if (pendingCreate) {
+        map.set('pendingCreate', true)
+      }
+      // Check pending.update and add the pendingUpdate prop if necessary
+      const pendingUpdate = baseState.getIn(['pending', 'update'], List()).indexOf(uid) > -1
+      if (pendingUpdate) {
+        map.set('pendingUpdate', true)
+      }
+    })
+
+    return item
+  })
 
   // Gather additional data
   const additionalData = baseState.getIn(['instances', instance, 'additionalData']) || Map({})
