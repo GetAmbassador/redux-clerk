@@ -1,4 +1,4 @@
-import { Map, List } from 'immutable'
+import { List } from 'immutable'
 
 /**
  * The start action for the remove reducer
@@ -15,25 +15,19 @@ export const start = (state, action) => {
       const pendingRemove = map.getIn(['pending', 'remove'], List())
       map.setIn(['pending', 'remove'], pendingRemove.insert(0, action.uid))
     }
-    // Optimistic removal
+    // Remove the item from raw and all instances
     else {
-      // Optimistically remove the item
+      // Remove the item from raw
       map.deleteIn(['raw', action.uid])
 
-      // Keep a reference to the index of the removed item in each instance
-      let instanceIndices = List()
+      // Remove uid from all instances
       map.get('instances').entrySeq().forEach(item => {
         const instanceKey = item[0]
         const instanceUids = item[1].get('data')
         const uidIndexInInstance = instanceUids.indexOf(action.uid)
 
-        // If the uid of the item to be removed exists in this instance
-        // we save the index. This allows us to re-add the item later
-        // if the removal is unsuccessful.
+        // If the uid of the item to be removed exists in this instance, remove it
         if(uidIndexInInstance > -1) {
-          instanceIndices = instanceIndices.push(Map({ instance: instanceKey, index: uidIndexInInstance }))
-
-          // Once reference is saved we can remove the item from the instance
           map.removeIn(['instances', instanceKey, 'data', uidIndexInInstance])
         }
       })
@@ -58,20 +52,14 @@ export const success = (state, action) => {
     // Remove the item from raw
     map.deleteIn(['raw', action.uid])
 
-    // Keep a reference to the index of the removed item in each instance
-    let instanceIndices = List()
+    // Remove uid from all instances
     map.get('instances').entrySeq().forEach(item => {
       const instanceKey = item[0]
       const instanceUids = item[1].get('data')
       const uidIndexInInstance = instanceUids.indexOf(action.uid)
 
-      // If the uid of the item to be removed exists in this instance
-      // we save the index. This allows us to re-add the item later
-      // if the removal is unsuccessful.
+      // If the uid of the item to be removed exists in this instance, remove it
       if(uidIndexInInstance > -1) {
-        instanceIndices = instanceIndices.push(Map({ instance: instanceKey, index: uidIndexInInstance }))
-
-        // Once reference is saved we can remove the item from the instance
         map.removeIn(['instances', instanceKey, 'data', uidIndexInInstance])
       }
     })
