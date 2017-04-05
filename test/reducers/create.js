@@ -7,6 +7,9 @@ describe('Reducers::Create', () => {
     it('should update data in state', () => {
       const previousState = Immutable.fromJS({
         raw: Map([[123, Immutable.fromJS({ uid: 123, test: '123' })]]),
+        pending: {
+          create: []
+        },
         instances: {
           test1: {
             data: [123],
@@ -23,13 +26,17 @@ describe('Reducers::Create', () => {
         uidField: 'uid',
         additionalData: {
           totalCount: 2
-        }
+        },
+        isAsync: false
       }
 
       const expectedResult = {
         raw: {
           123: { uid: 123, test: '123' },
           234: { uid: 234, test: '234' }
+        },
+        pending: {
+          create: []
         },
         instances: {
           test1: {
@@ -52,7 +59,8 @@ describe('Reducers::Create', () => {
       const action = {
         record: Immutable.fromJS({ uid: 123, test: '123' }),
         instance: 'test1',
-        uidField: 'uid'
+        uidField: 'uid',
+        isAsync: false
       }
 
       const expectedResult = {
@@ -66,6 +74,53 @@ describe('Reducers::Create', () => {
 
       expect(start(previousState, action).toJS()).to.deep.equal(expectedResult)
     })
+
+    it('should update data in state when creator is provided', () => {
+      const previousState = Immutable.fromJS({
+        raw: Map([[123, Immutable.fromJS({ uid: 123, test: '123' })]]),
+        pending: {
+          create: []
+        },
+        instances: {
+          test1: {
+            data: [123],
+            additionalData: {
+              totalCount: 1
+            }
+          }
+        }
+      })
+
+      const action = {
+        record: Immutable.fromJS({ uid: 234, test: '234' }),
+        instance: 'test1',
+        uidField: 'uid',
+        additionalData: {
+          totalCount: 2
+        },
+        isAsync: true
+      }
+
+      const expectedResult = {
+        raw: {
+          123: { uid: 123, test: '123' },
+          234: { uid: 234, test: '234' }
+        },
+        pending: {
+          create: [234],
+        },
+        instances: {
+          test1: {
+            data: [234,123],
+            additionalData: {
+              totalCount: 2
+            }
+          }
+        }
+      }
+
+      expect(start(previousState, action).toJS()).to.deep.equal(expectedResult)
+    })
   })
 
   describe('success', () => {
@@ -74,6 +129,9 @@ describe('Reducers::Create', () => {
     beforeEach(() => {
       previousState = Immutable.fromJS({
         raw: Map([['temp123', Immutable.fromJS({ uid: 'temp123', test: '123' })], [234, Immutable.fromJS({ uid: 234, test: '234' })]]),
+        pending: {
+          create: ['temp123'],
+        },
         instances: {
           test1: {
             data: ['temp123', 234]
@@ -87,13 +145,17 @@ describe('Reducers::Create', () => {
         record: Immutable.fromJS({ uid: 'temp123', test: '123' }),
         responseData: { uid: 123, test: '123' },
         instance: 'test1',
-        uidField: 'uid'
+        uidField: 'uid',
+        isAsync: true
       }
 
       const expectedResult = {
         raw: {
           123: { uid: 123, test: '123' },
           234: { uid: 234, test: '234' }
+        },
+        pending: {
+          create: []
         },
         instances: {
           test1: {
@@ -113,13 +175,17 @@ describe('Reducers::Create', () => {
         uidField: 'uid',
         additionalData: {
           totalCount: 2
-        }
+        },
+        isAsync: true
       }
 
       const expectedResult = {
         raw: {
           123: { uid: 123, test: '123' },
           234: { uid: 234, test: '234' }
+        },
+        pending: {
+          create: []
         },
         instances: {
           test1: {
@@ -141,6 +207,9 @@ describe('Reducers::Create', () => {
     beforeEach(() => {
       previousState = Immutable.fromJS({
         raw: Map([['temp123', Immutable.fromJS({ uid: 'temp123', test: '123' })], [234, Immutable.fromJS({ uid: 234, test: '234' })]]),
+        pending: {
+          create: ['temp123'],
+        },
         instances: {
           test1: {
             data: ['temp123', 234]
@@ -153,12 +222,16 @@ describe('Reducers::Create', () => {
       const action = {
         record: Immutable.fromJS({ uid: 'temp123', test: '123' }),
         instance: 'test1',
-        uidField: 'uid'
+        uidField: 'uid',
+        isAsync: true
       }
 
       const expectedResult = {
         raw: {
           234: { uid: 234, test: '234' }
+        },
+        pending: {
+          create: []
         },
         instances: {
           test1: {
@@ -177,12 +250,16 @@ describe('Reducers::Create', () => {
         uidField: 'uid',
         additionalData: {
           totalCount: 1
-        }
+        },
+        isAsync: true
       }
 
       const expectedResult = {
         raw: {
           234: { uid: 234, test: '234' }
+        },
+        pending: {
+          create: []
         },
         instances: {
           test1: {

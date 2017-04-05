@@ -32,21 +32,22 @@ export class Create extends BaseAction {
     return dispatch => {
 
       // Create data object to be dispatched with actions
-      const { uidField } = this.config
-      const data = { instance, record, uidField }
+      const { uidField, creator } = this.config
+      const isAsync = typeof creator === 'function'
+      const data = { instance, record, uidField, isAsync }
 
       // Call BaseAction.start with dispatch and the action data
       this.start(dispatch, data)
 
       // If config.creator is provided, call it
-      if(typeof this.config.creator === 'function') {
+      if(isAsync) {
         // Prepare BaseAction.success and BaseAction.error handlers
         // by currying with dispatch and action data
         const success = this.success.bind(this, dispatch, data)
         const error = this.error.bind(this, dispatch, data)
 
         // Call creator
-        return this.config.creator(record, success, error)
+        return creator(record, success, error)
       }
     }
   }

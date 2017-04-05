@@ -28,21 +28,22 @@ export class Update extends BaseAction {
     return dispatch => {
 
       // Create data object to be dispatched with actions
-      const { uidField } = this.config
-      const data = { record, uidField }
+      const { uidField, updater } = this.config
+      const isAsync = typeof updater === 'function'
+      const data = { record, uidField, isAsync }
 
       // Call BaseAction.start with dispatch and the action data
       this.start(dispatch, data)
 
       // If config.updater is provided, call it
-      if(typeof this.config.updater === 'function') {
+      if(isAsync) {
         // Prepare BaseAction.success and BaseAction.error handlers
         // by currying with dispatch
         const success = this.success.bind(this, dispatch, data)
         const error = this.error.bind(this, dispatch, data)
 
         // Call updater
-        return this.config.updater(record, success, error)
+        return updater(record, success, error)
       }
     }
   }

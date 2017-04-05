@@ -1,4 +1,4 @@
-import Immutable, { Map } from 'immutable'
+import Immutable, { Map, List } from 'immutable'
 
 /**
  * The start action for the create reducer
@@ -23,8 +23,14 @@ export const start = (state, action) => {
     map.set('raw', state.get('raw').merge(newRecord))
 
     // Add uid to provided instance
-    const instanceData = map.getIn(['instances', action.instance, 'data']) || Immutable.fromJS([])
+    const instanceData = map.getIn(['instances', action.instance, 'data'], List())
     map.setIn(['instances', action.instance, 'data'], instanceData.insert(0, uid))
+
+    if (action.isAsync) {
+      // Add uid to pending.create
+      const pendingCreate = map.getIn(['pending', 'create'], List())
+      map.setIn(['pending', 'create'], pendingCreate.insert(0, uid))
+    }
 
     // Add additional data if provided
     if(action.additionalData) {
@@ -57,9 +63,15 @@ export const success = (state, action) => {
     const temporaryUid = action.record.get(action.uidField)
     map.removeIn(['raw', temporaryUid])
 
-    // Remove temporary uid from instance array
-    const temporaryUidIndex = map.getIn(['instances', action.instance, 'data']).findIndex(uid => uid === temporaryUid)
-    map.removeIn(['instances', action.instance, 'data', temporaryUidIndex])
+    // Remove temporary uid from provided instance
+    const instanceUids = map.getIn(['instances', action.instance, 'data'], List())
+    const temporaryUidIndexInInstance = instanceUids.indexOf(temporaryUid)
+    map.removeIn(['instances', action.instance, 'data', temporaryUidIndexInInstance])
+
+    // Remove temporary uid from pending.create
+    const pendingCreate = map.getIn(['pending', 'create'], List())
+    const temporaryUidIndexInPendingCreate = pendingCreate.indexOf(temporaryUid)
+    map.removeIn(['pending', 'create', temporaryUidIndexInPendingCreate])
 
     // Add additional data if provided
     if(action.additionalData) {
@@ -81,12 +93,18 @@ export const error = (state, action) => {
   return state.withMutations(map => {
 
     // Remove the added record on error because the request failed
-    map.removeIn(['raw', action.record.get(action.uidField)])
-
-    // Remove temporary uid from instance array
     const temporaryUid = action.record.get(action.uidField)
-    const temporaryUidIndex = map.getIn(['instances', action.instance, 'data']).findIndex(uid => uid === temporaryUid)
-    map.removeIn(['instances', action.instance, 'data', temporaryUidIndex])
+    map.removeIn(['raw', temporaryUid])
+
+    // Remove temporary uid from provided instance
+    const instanceUids = map.getIn(['instances', action.instance, 'data'], List())
+    const temporaryUidIndexInInstance = instanceUids.indexOf(temporaryUid)
+    map.removeIn(['instances', action.instance, 'data', temporaryUidIndexInInstance])
+
+    // Remove temporary uid from pending.create
+    const pendingCreate = map.getIn(['pending', 'create'], List())
+    const temporaryUidIndexInPendingCreate = pendingCreate.indexOf(temporaryUid)
+    map.removeIn(['pending', 'create', temporaryUidIndexInPendingCreate])
 
     // Add additional data if provided
     if(action.additionalData) {

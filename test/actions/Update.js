@@ -48,17 +48,20 @@ describe('Actions::Update', () => {
       expect(dispatchSpy.firstCall.calledWith({
         type: 'TEST_UPDATE_PRE',
         uidField: configBase.uidField,
-        record: Map({ other: 'data' })
+        record: Map({ other: 'data' }),
+        isAsync: false
       })).to.be.true
       expect(dispatchSpy.secondCall.calledWith({
         type: 'TEST_UPDATE',
         uidField: configBase.uidField,
-        record: Map({ other: 'data' })
+        record: Map({ other: 'data' }),
+        isAsync: false
       })).to.be.true
       expect(dispatchSpy.thirdCall.calledWith({
         type: 'TEST_UPDATE_POST',
         uidField: configBase.uidField,
-        record: Map({ other: 'data' })
+        record: Map({ other: 'data' }),
+        isAsync: false
       })).to.be.true
     })
 
@@ -70,19 +73,22 @@ describe('Actions::Update', () => {
           type: 'TEST_UPDATE_SUCCESS_PRE',
           uidField: configBase.uidField,
           record: Map({ uid: 123, name: 'test' }),
-          responseData: { uid: 123, name: 'test' }
+          responseData: { uid: 123, name: 'test' },
+          isAsync: true
         })).to.be.true
         expect(dispatchSpy.getCall(4).calledWith({
           type: 'TEST_UPDATE_SUCCESS',
           uidField: configBase.uidField,
           record: Map({ uid: 123, name: 'test' }),
-          responseData: { uid: 123, name: 'test' }
+          responseData: { uid: 123, name: 'test' },
+          isAsync: true
         })).to.be.true
         expect(dispatchSpy.getCall(5).calledWith({
           type: 'TEST_UPDATE_SUCCESS_POST',
           uidField: configBase.uidField,
           record: Map({ uid: 123, name: 'test' }),
-          responseData: { uid: 123, name: 'test' }
+          responseData: { uid: 123, name: 'test' },
+          isAsync: true
         })).to.be.true
         done()
       })
@@ -111,19 +117,22 @@ describe('Actions::Update', () => {
           type: 'TEST_UPDATE_ERROR_PRE',
           uidField: configBase.uidField,
           record: Map({ uid: 123, name: 'test' }),
-          responseData: { error: 'test' }
+          responseData: { error: 'test' },
+          isAsync: true
         })).to.be.true
         expect(dispatchSpy.getCall(4).calledWith({
           type: 'TEST_UPDATE_ERROR',
           uidField: configBase.uidField,
           record: Map({ uid: 123, name: 'test' }),
-          responseData: { error: 'test' }
+          responseData: { error: 'test' },
+          isAsync: true
         })).to.be.true
         expect(dispatchSpy.getCall(5).calledWith({
           type: 'TEST_UPDATE_ERROR_POST',
           uidField: configBase.uidField,
           record: Map({ uid: 123, name: 'test' }),
-          responseData: { error: 'test' }
+          responseData: { error: 'test' },
+          isAsync: true
         })).to.be.true
         done()
       })
