@@ -47,17 +47,20 @@ describe('Actions::Remove', () => {
       expect(dispatchSpy.firstCall.calledWith({
         type: 'TEST_REMOVE_PRE',
         uid: 123,
-        uidField: configBase.uidField
+        uidField: configBase.uidField,
+        isAsync: false
       })).to.be.true
       expect(dispatchSpy.secondCall.calledWith({
         type: 'TEST_REMOVE',
         uid: 123,
-        uidField: configBase.uidField
+        uidField: configBase.uidField,
+        isAsync: false
       })).to.be.true
       expect(dispatchSpy.thirdCall.calledWith({
         type: 'TEST_REMOVE_POST',
         uid: 123,
-        uidField: configBase.uidField
+        uidField: configBase.uidField,
+        isAsync: false
       })).to.be.true
     })
 
@@ -75,17 +78,20 @@ describe('Actions::Remove', () => {
         expect(dispatchSpy.getCall(3).calledWith({
           type: 'TEST_REMOVE_SUCCESS_PRE',
           uid: 123,
-          uidField: configBase.uidField
+          uidField: configBase.uidField,
+          isAsync: true
         })).to.be.true
         expect(dispatchSpy.getCall(4).calledWith({
           type: 'TEST_REMOVE_SUCCESS',
           uid: 123,
-          uidField: configBase.uidField
+          uidField: configBase.uidField,
+          isAsync: true
         })).to.be.true
         expect(dispatchSpy.getCall(5).calledWith({
           type: 'TEST_REMOVE_SUCCESS_POST',
           uid: 123,
-          uidField: configBase.uidField
+          uidField: configBase.uidField,
+          isAsync: true
         })).to.be.true
         done()
       })
@@ -99,19 +105,22 @@ describe('Actions::Remove', () => {
           type: 'TEST_REMOVE_ERROR_PRE',
           uid: 123,
           uidField: configBase.uidField,
-          responseData: { error: 'test' }
+          responseData: { error: 'test' },
+          isAsync: true
         })).to.be.true
         expect(dispatchSpy.getCall(4).calledWith({
           type: 'TEST_REMOVE_ERROR',
           uid: 123,
           uidField: configBase.uidField,
-          responseData: { error: 'test' }
+          responseData: { error: 'test' },
+          isAsync: true
         })).to.be.true
         expect(dispatchSpy.getCall(5).calledWith({
           type: 'TEST_REMOVE_ERROR_POST',
           uid: 123,
           uidField: configBase.uidField,
-          responseData: { error: 'test' }
+          responseData: { error: 'test' },
+          isAsync: true
         })).to.be.true
         done()
       })

@@ -29,9 +29,13 @@ describe('Reducer', () => {
 
   const defaultState = {
     raw: {},
-    instances: {},
-    pendingRemoval: {},
-    pendingUpdate: {}
+    pendingRaw: {},
+    pending: {
+      create: [],
+      update: [],
+      remove: []
+    },
+    instances: {}
   }
 
   beforeEach(() => {
@@ -118,9 +122,13 @@ describe('Reducer', () => {
       raw: {
         123: { name: 'test' }
       },
-      instances: {},
-      pendingRemoval: {},
-      pendingUpdate: {}
+      pendingRaw: {},
+      pending: {
+        create: [],
+        update: [],
+        remove: []
+      },
+      instances: {}
     }
 
     expect(reducer(config)(previousState, { type: 'unknown' }).toJS()).to.deep.equal(expectedState)

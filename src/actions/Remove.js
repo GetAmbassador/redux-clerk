@@ -23,21 +23,22 @@ export class Remove extends BaseAction {
     return dispatch => {
 
       // Create data object to be dispatched with actions
-      const { uidField } = this.config
-      const data = { uid, uidField }
+      const { uidField, remover } = this.config
+      const isAsync = typeof remover === 'function'
+      const data = { uid, uidField, isAsync }
 
       // Call BaseAction.start with dispatch and the action data
       this.start(dispatch, data)
 
       // If config.remover is provided, call it
-      if(typeof this.config.remover === 'function') {
+      if(isAsync) {
         // Prepare BaseAction.success and BaseAction.error handlers
         // by currying with dispatch
         const success = this.success.bind(this, dispatch, data)
         const error = this.error.bind(this, dispatch, data)
 
         // Call remover
-        return this.config.remover(uid, success, error)
+        return remover(uid, success, error)
       }
     }
   }
