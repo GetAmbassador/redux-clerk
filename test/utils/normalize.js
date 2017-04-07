@@ -11,8 +11,8 @@ describe('Utils::Normalize', () => {
       ])
 
       const expectedOutput = {
-        123: { uid: 123, test: '123' },
-        234: { uid: 234, test: '234' }
+        '123': { uid: 123, test: '123' },
+        '234': { uid: 234, test: '234' }
       }
 
       expect(normalize('uid', data).toJS()).to.deep.equal(expectedOutput)
