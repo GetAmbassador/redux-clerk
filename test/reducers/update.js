@@ -6,7 +6,7 @@ describe('Reducers::Update', () => {
   describe('start', () => {
     it('should update data in state', () => {
       const previousState = Immutable.fromJS({
-        raw: Map([[123, Immutable.fromJS({ uid: 123, test: '123' })]]),
+        raw: Map([['123', Immutable.fromJS({ uid: 123, test: '123' })]]),
         pendingRaw: {},
         pending: {
           update: []
@@ -21,7 +21,7 @@ describe('Reducers::Update', () => {
 
       const expectedResult = {
         raw: {
-          123: { uid: 123, test: 'name' }
+          '123': { uid: 123, test: 'name' }
         },
         pendingRaw: {},
         pending: {
@@ -35,7 +35,7 @@ describe('Reducers::Update', () => {
 
     it('should merge partial changes with existing data', () => {
       const previousState = Immutable.fromJS({
-        raw: Map([[123, Immutable.fromJS({ uid: 123, test: '123', company: 'Acme' })]]),
+        raw: Map([['123', Immutable.fromJS({ uid: 123, test: '123', company: 'Acme' })]]),
         pendingRaw: {},
         pending: {
           update: []
@@ -50,7 +50,7 @@ describe('Reducers::Update', () => {
 
       const expectedResult = {
         raw: {
-          123: { uid: 123, test: 'name', company: 'Acme' }
+          '123': { uid: 123, test: 'name', company: 'Acme' }
         },
         pendingRaw: {},
         pending: {
@@ -78,7 +78,7 @@ describe('Reducers::Update', () => {
 
       const expectedResult = {
         raw: {
-          123: { uid: 123, test: 'name' }
+          '123': { uid: 123, test: 'name' }
         },
         pendingRaw: {},
         pending: {
@@ -91,7 +91,7 @@ describe('Reducers::Update', () => {
 
     it('should add the updated item to pendingRaw and the uid to pending.update', () => {
       const previousState = Immutable.fromJS({
-        raw: Map([[123, Immutable.fromJS({ uid: 123, test: '123' })]]),
+        raw: Map([['123', Immutable.fromJS({ uid: 123, test: '123' })]]),
         pendingRaw: {},
         pending: {
           update: []
@@ -106,13 +106,13 @@ describe('Reducers::Update', () => {
 
       const expectedResult = {
         raw: {
-          123: { uid: 123, test: '123' }
+          '123': { uid: 123, test: '123' }
         },
         pendingRaw: {
-          123: { uid: 123, test: 'name' }
+          '123': { uid: 123, test: 'name' }
         },
         pending: {
-          update: [123]
+          update: ['123']
         }
       }
 
@@ -123,10 +123,10 @@ describe('Reducers::Update', () => {
   describe('success', () => {
     it('should update the item in raw, remove the item from pendingRaw, and remove the uid from pending.update', () => {
       const previousState = Immutable.fromJS({
-        raw: Map([[123, Immutable.fromJS({ uid: 123, test: '123' })], [234, Immutable.fromJS({ uid: 234, test: '234' })]]),
-        pendingRaw: Map([[123, Immutable.fromJS({ uid: 123, test: 'name' })]]),
+        raw: Map([['123', Immutable.fromJS({ uid: 123, test: '123' })], ['234', Immutable.fromJS({ uid: 234, test: '234' })]]),
+        pendingRaw: Map([['123', Immutable.fromJS({ uid: 123, test: 'name' })]]),
         pending: {
-          update: [123]
+          update: ['123']
         }
       })
 
@@ -138,8 +138,8 @@ describe('Reducers::Update', () => {
 
       const expectedResult = {
         raw: {
-          123: { uid: 123, test: 'name' },
-          234: { uid: 234, test: '234' }
+          '123': { uid: 123, test: 'name' },
+          '234': { uid: 234, test: '234' }
         },
         pendingRaw: {},
         pending: {
@@ -154,10 +154,10 @@ describe('Reducers::Update', () => {
   describe('error', () => {
     it('should remove the item from pendingRaw and remove the uid from pending.update', () => {
       const previousState = Immutable.fromJS({
-        raw: Map([[123, Immutable.fromJS({ uid: 123, test: '123' })], [234, Immutable.fromJS({ uid: 234, test: '234' })]]),
-        pendingRaw: Map([[123, Immutable.fromJS({ uid: 123, test: 'name' })]]),
+        raw: Map([['123', Immutable.fromJS({ uid: 123, test: '123' })], ['234', Immutable.fromJS({ uid: 234, test: '234' })]]),
+        pendingRaw: Map([['123', Immutable.fromJS({ uid: 123, test: 'name' })]]),
         pending: {
-          update: [123]
+          update: ['123']
         }
       })
 
@@ -169,8 +169,8 @@ describe('Reducers::Update', () => {
 
       const expectedResult = {
         raw: {
-          123: { uid: 123, test: '123' },
-          234: { uid: 234, test: '234' }
+          '123': { uid: 123, test: '123' },
+          '234': { uid: 234, test: '234' }
         },
         pendingRaw: {},
         pending: {
@@ -183,7 +183,7 @@ describe('Reducers::Update', () => {
 
     it('should remove the record from raw if not previously added', () => {
       const previousState = Immutable.fromJS({
-        raw: Map([[123, Immutable.fromJS({ uid: 123, test: '123' })], [234, Immutable.fromJS({ uid: 234, test: '234' })]]),
+        raw: Map([['123', Immutable.fromJS({ uid: 123, test: '123' })], ['234', Immutable.fromJS({ uid: 234, test: '234' })]]),
         pendingRaw: {},
         pending: {
           update: []
@@ -198,8 +198,8 @@ describe('Reducers::Update', () => {
 
       const expectedResult = {
         raw: {
-          123: { uid: 123, test: '123' },
-          234: { uid: 234, test: '234' }
+          '123': { uid: 123, test: '123' },
+          '234': { uid: 234, test: '234' }
         },
         pendingRaw: {},
         pending: {
