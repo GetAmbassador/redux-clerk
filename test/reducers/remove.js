@@ -8,19 +8,19 @@ describe('Reducers::Remove', () => {
 
     beforeEach(() => {
       previousState = Immutable.fromJS({
-        raw: Map([[123, Immutable.fromJS({ uid: 123, test: '123' })], [234, Immutable.fromJS({ uid: 234, test: '234' })]]),
+        raw: Map([['123', Immutable.fromJS({ uid: 123, test: '123' })], ['234', Immutable.fromJS({ uid: 234, test: '234' })]]),
         pending: {
           remove: []
         },
         instances: {
           test1: {
-            data: [123,234]
+            data: ['123','234']
           },
           test2: {
-            data: [234,123]
+            data: ['234','123']
           },
           test3: {
-            data: [123]
+            data: ['123']
           }
         }
       })
@@ -34,20 +34,20 @@ describe('Reducers::Remove', () => {
 
       const expectedResult = {
         raw: {
-          123: { uid: 123, test: '123' }
+          '123': { uid: 123, test: '123' }
         },
         pending: {
           remove: []
         },
         instances: {
           test1: {
-            data: [123]
+            data: ['123']
           },
           test2: {
-            data: [123]
+            data: ['123']
           },
           test3: {
-            data: [123]
+            data: ['123']
           }
         }
       }
@@ -63,21 +63,21 @@ describe('Reducers::Remove', () => {
 
       const expectedResult = {
         raw: {
-          123: { uid: 123, test: '123' },
-          234: { uid: 234, test: '234' }
+          '123': { uid: 123, test: '123' },
+          '234': { uid: 234, test: '234' }
         },
         pending: {
-          remove: [234]
+          remove: ['234']
         },
         instances: {
           test1: {
-            data: [123,234]
+            data: ['123','234']
           },
           test2: {
-            data: [234,123]
+            data: ['234','123']
           },
           test3: {
-            data: [123]
+            data: ['123']
           }
         }
       }
@@ -91,19 +91,19 @@ describe('Reducers::Remove', () => {
 
     beforeEach(() => {
       previousState = Immutable.fromJS({
-        raw: Map([[123, Immutable.fromJS({ uid: 123, test: '123' })], [234, Immutable.fromJS({ uid: 234, test: '234' })]]),
+        raw: Map([['123', Immutable.fromJS({ uid: 123, test: '123' })], ['234', Immutable.fromJS({ uid: 234, test: '234' })]]),
         pending: {
-          remove: [234]
+          remove: ['234']
         },
         instances: {
           test1: {
-            data: [123,234]
+            data: ['123','234']
           },
           test2: {
-            data: [234,123]
+            data: ['234','123']
           },
           test3: {
-            data: [123]
+            data: ['123']
           }
         }
       })
@@ -117,20 +117,20 @@ describe('Reducers::Remove', () => {
 
       const expectedResult = {
         raw: {
-          123: { uid: 123, test: '123' }
+          '123': { uid: 123, test: '123' }
         },
         pending: {
           remove: []
         },
         instances: {
           test1: {
-            data: [123]
+            data: ['123']
           },
           test2: {
-            data: [123]
+            data: ['123']
           },
           test3: {
-            data: [123]
+            data: ['123']
           }
         }
       }
@@ -144,19 +144,19 @@ describe('Reducers::Remove', () => {
 
     beforeEach(() => {
       previousState = Immutable.fromJS({
-        raw: Map([[123, Immutable.fromJS({ uid: 123, test: '123' })], [234, Immutable.fromJS({ uid: 234, test: '234' })]]),
+        raw: Map([['123', Immutable.fromJS({ uid: 123, test: '123' })], ['234', Immutable.fromJS({ uid: 234, test: '234' })]]),
         pending: {
-          remove: [234]
+          remove: ['234']
         },
         instances: {
           test1: {
-            data: [123,234]
+            data: ['123','234']
           },
           test2: {
-            data: [234,123]
+            data: ['234','123']
           },
           test3: {
-            data: [123]
+            data: ['123']
           }
         }
       })
@@ -170,21 +170,21 @@ describe('Reducers::Remove', () => {
 
       const expectedResult = {
         raw: {
-          123: { uid: 123, test: '123' },
-          234: { uid: 234, test: '234' }
+          '123': { uid: 123, test: '123' },
+          '234': { uid: 234, test: '234' }
         },
         pending: {
           remove: []
         },
         instances: {
           test1: {
-            data: [123,234]
+            data: ['123','234']
           },
           test2: {
-            data: [234,123]
+            data: ['234','123']
           },
           test3: {
-            data: [123]
+            data: ['123']
           }
         }
       }
