@@ -22,8 +22,13 @@ export const datasetSelector = (config, state, instance) => {
     return Map({})
   }
 
+  // Get pending items
+  const pendingCreate = baseState.getIn(['pending', 'create'], List())
+  const pendingUpdate = baseState.getIn(['pending', 'update'], List())
+  const pendingRemove = baseState.getIn(['pending', 'remove'], List())
+
   // Remove the pending.create items from the instance
-  instanceData = instanceData.filter(uid => baseState.getIn(['pending', 'create'], List()).indexOf(uid) === -1)
+  instanceData = instanceData.filter(uid => pendingCreate.indexOf(uid) === -1)
 
   // Re-compute data
   const computedData = instanceData.map(uid => {
@@ -31,13 +36,11 @@ export const datasetSelector = (config, state, instance) => {
 
     item = item.withMutations(map => {
       // Check pending.update and add the pendingUpdate prop if necessary
-      const pendingUpdate = baseState.getIn(['pending', 'update'], List()).indexOf(uid) > -1
-      if (pendingUpdate) {
+      if (pendingUpdate.indexOf(uid) > -1) {
         map.set('pendingUpdate', true)
       }
       // Check pending.remove and add the pendingRemove prop if necessary
-      const pendingRemove = baseState.getIn(['pending', 'remove'], List()).indexOf(uid) > -1
-      if (pendingRemove) {
+      if (pendingRemove.indexOf(uid) > -1) {
         map.set('pendingRemove', true)
       }
     })
@@ -74,8 +77,13 @@ export const datasetOptimisticSelector = (config, state, instance) => {
     return Map({})
   }
 
+  // Get pending items
+  const pendingCreate = baseState.getIn(['pending', 'create'], List())
+  const pendingUpdate = baseState.getIn(['pending', 'update'], List())
+  const pendingRemove = baseState.getIn(['pending', 'remove'], List())
+
   // Remove the pending.remove items
-  instanceData = instanceData.filter(uid => baseState.getIn(['pending', 'remove'], List()).indexOf(uid) === -1)
+  instanceData = instanceData.filter(uid => pendingRemove.indexOf(uid) === -1)
 
   // Merge with pendingRaw to account for updated items
   rawData = rawData.mergeDeep(baseState.get('pendingRaw'))
@@ -86,13 +94,11 @@ export const datasetOptimisticSelector = (config, state, instance) => {
 
     item = item.withMutations(map => {
       // Check pending.create and add the pendingCreate prop if necessary
-      const pendingCreate = baseState.getIn(['pending', 'create'], List()).indexOf(uid) > -1
-      if (pendingCreate) {
+      if (pendingCreate.indexOf(uid) > -1) {
         map.set('pendingCreate', true)
       }
       // Check pending.update and add the pendingUpdate prop if necessary
-      const pendingUpdate = baseState.getIn(['pending', 'update'], List()).indexOf(uid) > -1
-      if (pendingUpdate) {
+      if (pendingUpdate.indexOf(uid) > -1) {
         map.set('pendingUpdate', true)
       }
     })
