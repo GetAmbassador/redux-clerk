@@ -13,10 +13,13 @@ export const recordSelector = (config, state, uid) => {
   // Get redux-clerk data from store
   const baseState = config.baseSelector(state)
 
+  // Convert provided uid to string since we normalize raw with string keys
+  const uidString = uid.toString()
+
   // Return the property
   // We try the provided value as well as the value cast to integer
   // This allows string or integer uids to work
-  return baseState.getIn(['raw', uid]) || baseState.getIn(['raw', +uid])
+  return baseState.getIn(['raw', uidString])
 }
 
 /**
@@ -32,11 +35,14 @@ export const recordOptimisticSelector = (config, state, uid) => {
   // Get redux-clerk data from store
   const baseState = config.baseSelector(state)
 
+  // Convert provided uid to string since we normalize raw with string keys
+  const uidString = uid.toString()
+
   // Return the property with pending updates
   // We try the provided value as well as the value cast to integer
   // This allows string or integer uids to work
-  const rawItem = baseState.getIn(['raw', uid]) || baseState.getIn(['raw', +uid])
-  const pendingRawItem = baseState.getIn(['pendingRaw', uid]) || baseState.getIn(['pendingRaw', +uid])
+  const rawItem = baseState.getIn(['raw', uidString])
+  const pendingRawItem = baseState.getIn(['pendingRaw', uidString])
 
   return rawItem && rawItem.merge(pendingRawItem)
 }
@@ -54,9 +60,12 @@ export const recordStateSelector = (config, state, uid) => {
   // Get redux-clerk data from store
   const baseState = config.baseSelector(state)
 
+  // Convert provided uid to string since we normalize raw with string keys
+  const uidString = uid.toString()
+
   return Map({
-    pendingCreate: baseState.getIn(['pending', 'create'], List()).indexOf(uid) > -1,
-    pendingUpdate: baseState.getIn(['pending', 'update'], List()).indexOf(uid) > -1,
-    pendingRemove: baseState.getIn(['pending', 'remove'], List()).indexOf(uid) > -1
+    pendingCreate: baseState.getIn(['pending', 'create'], List()).indexOf(uidString) > -1,
+    pendingUpdate: baseState.getIn(['pending', 'update'], List()).indexOf(uidString) > -1,
+    pendingRemove: baseState.getIn(['pending', 'remove'], List()).indexOf(uidString) > -1
   })
 }

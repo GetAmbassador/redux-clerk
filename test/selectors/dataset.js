@@ -9,21 +9,21 @@ describe('Selectors', () => {
       const currentState = {
         companies: Immutable.fromJS({
           raw:  Map([
-            [123, Immutable.fromJS({ uid: 123, name: 'test 123' })],
-            [234, Immutable.fromJS({ uid: 234, name: 'test 234' })],
-            [345, Immutable.fromJS({ uid: 345, name: 'test 345' })]
+            ['123', Immutable.fromJS({ uid: 123, name: 'test 123' })],
+            ['234', Immutable.fromJS({ uid: 234, name: 'test 234' })],
+            ['345', Immutable.fromJS({ uid: 345, name: 'test 345' })]
           ]),
           pendingRaw: Map([
-            [234, Immutable.fromJS({ uid: 234, name: 'test 234 updated' })]
+            ['234', Immutable.fromJS({ uid: 234, name: 'test 234 updated' })]
           ]),
           pending: {
-            create: [123],
-            update: [234],
-            remove: [345]
+            create: ['123'],
+            update: ['234'],
+            remove: ['345']
           },
           instances: {
             test1: {
-              data: [234,123,345]
+              data: ['234','123','345']
             }
           }
         })
@@ -66,9 +66,9 @@ describe('Selectors', () => {
       const currentState = {
         companies: Immutable.fromJS({
           raw:  Map([
-            [123, Immutable.fromJS({ uid: 123, name: 'test 123' })],
-            [234, Immutable.fromJS({ uid: 234, name: 'test 234' })],
-            [345, Immutable.fromJS({ uid: 345, name: 'test 345' })]
+            ['123', Immutable.fromJS({ uid: 123, name: 'test 123' })],
+            ['234', Immutable.fromJS({ uid: 234, name: 'test 234' })],
+            ['345', Immutable.fromJS({ uid: 345, name: 'test 345' })]
           ]),
           pending: {
             create: [],
@@ -77,7 +77,7 @@ describe('Selectors', () => {
           },
           instances: {
             test1: {
-              data: [234,123,345],
+              data: ['234','123','345'],
               additionalData: {
                 totalCount: 3
               }
@@ -109,21 +109,21 @@ describe('Selectors', () => {
       const currentState = {
         companies: Immutable.fromJS({
           raw:  Map([
-            [123, Immutable.fromJS({ uid: 123, name: 'test 123' })],
-            [234, Immutable.fromJS({ uid: 234, name: 'test 234' })],
-            [345, Immutable.fromJS({ uid: 345, name: 'test 345' })]
+            ['123', Immutable.fromJS({ uid: 123, name: 'test 123' })],
+            ['234', Immutable.fromJS({ uid: 234, name: 'test 234' })],
+            ['345', Immutable.fromJS({ uid: 345, name: 'test 345' })]
           ]),
           pendingRaw: Map([
-            [234, Immutable.fromJS({ uid: 234, name: 'test 234 updated' })]
+            ['234', Immutable.fromJS({ uid: 234, name: 'test 234 updated' })]
           ]),
           pending: {
-            create: [123],
-            update: [234],
-            remove: [345]
+            create: ['123'],
+            update: ['234'],
+            remove: ['345']
           },
           instances: {
             test1: {
-              data: [234,123,345]
+              data: ['234','123','345']
             }
           }
         })
@@ -166,9 +166,9 @@ describe('Selectors', () => {
       const currentState = {
         companies: Immutable.fromJS({
           raw:  Map([
-            [123, Immutable.fromJS({ uid: 123, name: 'test 123' })],
-            [234, Immutable.fromJS({ uid: 234, name: 'test 234' })],
-            [345, Immutable.fromJS({ uid: 345, name: 'test 345' })]
+            ['123', Immutable.fromJS({ uid: 123, name: 'test 123' })],
+            ['234', Immutable.fromJS({ uid: 234, name: 'test 234' })],
+            ['345', Immutable.fromJS({ uid: 345, name: 'test 345' })]
           ]),
           pending: {
             create: [],
@@ -177,7 +177,7 @@ describe('Selectors', () => {
           },
           instances: {
             test1: {
-              data: [234,123,345],
+              data: ['234','123','345'],
               additionalData: {
                 totalCount: 3
               }
@@ -209,16 +209,16 @@ describe('Selectors', () => {
       const currentState = {
         companies: Immutable.fromJS({
           raw:  Map([
-            [123, Immutable.fromJS({ uid: 123, name: 'test 123' })],
-            [234, Immutable.fromJS({ uid: 234, name: 'test 234' })],
-            [345, Immutable.fromJS({ uid: 345, name: 'test 345' })]
+            ['123', Immutable.fromJS({ uid: 123, name: 'test 123' })],
+            ['234', Immutable.fromJS({ uid: 234, name: 'test 234' })],
+            ['345', Immutable.fromJS({ uid: 345, name: 'test 345' })]
           ]),
           instances: {
             test1: {
               additionalData: {
                 totalCount: 42
               },
-              data: [234,123,345]
+              data: ['234','123','345']
             }
           }
         })
