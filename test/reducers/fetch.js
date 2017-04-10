@@ -10,15 +10,15 @@ describe('Reducers::Fetch', () => {
 
     beforeEach(() => {
       previousState = Map({
-        raw: Map([[123, Immutable.fromJS({ uid: 123, test: '123' })], [234, Immutable.fromJS({ uid: 234, test: '234' })]])
+        raw: Map([['123', Immutable.fromJS({ uid: 123, test: '123' })], ['234', Immutable.fromJS({ uid: 234, test: '234' })]])
       })
     })
 
     it('should return existing state', () => {
       const expectedResult = {
         raw: {
-          123: { uid: 123, test: '123' },
-          234: { uid: 234, test: '234' }
+          '123': { uid: 123, test: '123' },
+          '234': { uid: 234, test: '234' }
         }
       }
 
@@ -36,8 +36,8 @@ describe('Reducers::Fetch', () => {
 
       const expectedResult = {
         raw: {
-          123: { uid: 123, test: '123' },
-          234: { uid: 234, test: '234' }
+          '123': { uid: 123, test: '123' },
+          '234': { uid: 234, test: '234' }
         },
         instances: {
           test1: {
@@ -58,12 +58,12 @@ describe('Reducers::Fetch', () => {
     beforeEach(() => {
       previousState = Map({
         raw: Map([
-          [123, Map({ uid: 123, test: '123', field_old: 'test' })],
-          [234, Map({ uid: 234, test: '234' })]
+          ['123', Map({ uid: 123, test: '123', field_old: 'test' })],
+          ['234', Map({ uid: 234, test: '234' })]
         ]),
         instances: Immutable.fromJS({
           test1: {
-            data: [123, 234]
+            data: ['123', '234']
           }
         })
       })
@@ -82,13 +82,13 @@ describe('Reducers::Fetch', () => {
 
       const expectedResult = {
         raw: {
-          123: { uid: 123, test: 'name', field_old: 'test', field_new: 'test' },
-          234: { uid: 234, test: '234' },
-          345: { uid: 345, test: '345' }
+          '123': { uid: 123, test: 'name', field_old: 'test', field_new: 'test' },
+          '234': { uid: 234, test: '234' },
+          '345': { uid: 345, test: '345' }
         },
         instances: {
           test1: {
-            data: [123, 345]
+            data: ['123', '345']
           }
         }
       }
@@ -106,12 +106,12 @@ describe('Reducers::Fetch', () => {
 
       const expectedResult = {
         raw: {
-          123: { uid: 123, test: 'name', field_old: 'test' },
-          234: { uid: 234, test: '234' }
+          '123': { uid: 123, test: 'name', field_old: 'test' },
+          '234': { uid: 234, test: '234' }
         },
         instances: {
           test1: {
-            data: [123]
+            data: ['123']
           }
         }
       }
@@ -134,14 +134,14 @@ describe('Reducers::Fetch', () => {
 
       const expectedResult = {
         raw: {
-          123: { uid: 123, test: '123', field_old: 'test' },
-          234: { uid: 234, test: '234' },
-          345: { uid: 345, test: '345' },
-          456: { uid: 456, test: '456' }
+          '123': { uid: 123, test: '123', field_old: 'test' },
+          '234': { uid: 234, test: '234' },
+          '345': { uid: 345, test: '345' },
+          '456': { uid: 456, test: '456' }
         },
         instances: {
           test1: {
-            data: [123, 234, 456, 345]
+            data: ['123', '234', '456', '345']
           }
         }
       }
@@ -165,14 +165,14 @@ describe('Reducers::Fetch', () => {
 
       const expectedResult = {
         raw: {
-          123: { uid: 123, test: '123', field_old: 'test' },
-          234: { uid: 234, test: '234' },
-          345: { uid: 345, test: '345' },
-          456: { uid: 456, test: '456' }
+          '123': { uid: 123, test: '123', field_old: 'test' },
+          '234': { uid: 234, test: '234' },
+          '345': { uid: 345, test: '345' },
+          '456': { uid: 456, test: '456' }
         },
         instances: {
           test1: {
-            data: [456, 345],
+            data: ['456', '345'],
             additionalData: {
               totalCount: 2
             }
@@ -188,10 +188,10 @@ describe('Reducers::Fetch', () => {
     let previousState
 
     previousState = Immutable.fromJS({
-      raw: Map([[123, Immutable.fromJS({ uid: 123, test: '123' })], [234, Immutable.fromJS({ uid: 234, test: '234' })]]),
+      raw: Map([['123', Immutable.fromJS({ uid: 123, test: '123' })], ['234', Immutable.fromJS({ uid: 234, test: '234' })]]),
       instances: {
         test1: {
-          data: [123, 234]
+          data: ['123', '234']
         }
       }
     })
@@ -199,12 +199,12 @@ describe('Reducers::Fetch', () => {
     it('should return existing state', () => {
       const expectedResult = {
         raw: {
-          123: { uid: 123, test: '123' },
-          234: { uid: 234, test: '234' }
+          '123': { uid: 123, test: '123' },
+          '234': { uid: 234, test: '234' }
         },
         instances: {
           test1: {
-            data: [123, 234]
+            data: ['123', '234']
           }
         }
       }
@@ -223,12 +223,12 @@ describe('Reducers::Fetch', () => {
 
       const expectedResult = {
         raw: {
-          123: { uid: 123, test: '123' },
-          234: { uid: 234, test: '234' }
+          '123': { uid: 123, test: '123' },
+          '234': { uid: 234, test: '234' }
         },
         instances: {
           test1: {
-            data: [123, 234],
+            data: ['123', '234'],
             additionalData: {
               totalCount: 2
             }

@@ -15,7 +15,10 @@ describe('Selectors', () => {
       baseSelector: state => state.companies
     })
     expect(generatedSelectors.dataset).to.be.a('function')
+    expect(generatedSelectors.datasetOptimistic).to.be.a('function')
     expect(generatedSelectors.datasetProperty).to.be.a('function')
     expect(generatedSelectors.record).to.be.a('function')
+    expect(generatedSelectors.recordOptimistic).to.be.a('function')
+    expect(generatedSelectors.recordState).to.be.a('function')
   })
 })

@@ -4,23 +4,28 @@ import { start, success, error } from '../../src/reducers/update'
 
 describe('Reducers::Update', () => {
   describe('start', () => {
-    it('should update data in state and store previous version in pendingUpdate', () => {
-      const previousState = Map({
-        raw: Map([[123, Immutable.fromJS({ uid: 123, test: '123' })]]),
-        pendingUpdate: Map({})
+    it('should update data in state', () => {
+      const previousState = Immutable.fromJS({
+        raw: Map([['123', Immutable.fromJS({ uid: 123, test: '123' })]]),
+        pendingRaw: {},
+        pending: {
+          update: []
+        }
       })
 
       const action = {
         record: Immutable.fromJS({ uid: 123, test: 'name' }),
-        uidField: 'uid'
+        uidField: 'uid',
+        isAsync: false
       }
 
       const expectedResult = {
         raw: {
-          123: { uid: 123, test: 'name' }
+          '123': { uid: 123, test: 'name' }
         },
-        pendingUpdate: {
-          123: { uid: 123, test: '123' }
+        pendingRaw: {},
+        pending: {
+          update: []
         }
       }
 
@@ -29,22 +34,27 @@ describe('Reducers::Update', () => {
 
 
     it('should merge partial changes with existing data', () => {
-      const previousState = Map({
-        raw: Map([[123, Immutable.fromJS({ uid: 123, test: '123', company: 'Acme' })]]),
-        pendingUpdate: Map({})
+      const previousState = Immutable.fromJS({
+        raw: Map([['123', Immutable.fromJS({ uid: 123, test: '123', company: 'Acme' })]]),
+        pendingRaw: {},
+        pending: {
+          update: []
+        }
       })
 
       const action = {
         record: Immutable.fromJS({ uid: 123, test: 'name' }),
-        uidField: 'uid'
+        uidField: 'uid',
+        isAsync: false
       }
 
       const expectedResult = {
         raw: {
-          123: { uid: 123, test: 'name', company: 'Acme' }
+          '123': { uid: 123, test: 'name', company: 'Acme' }
         },
-        pendingUpdate: {
-          123: { uid: 123, test: '123', company: 'Acme' }
+        pendingRaw: {},
+        pending: {
+          update: []
         }
       }
 
@@ -54,44 +64,87 @@ describe('Reducers::Update', () => {
     it('should add new record to raw if not already in state', () => {
       const previousState = Immutable.fromJS({
         raw: {},
-        pendingUpdate: {}
+        pendingRaw: {},
+        pending: {
+          update: []
+        }
       })
 
       const action = {
         record: Immutable.fromJS({ uid: 123, test: 'name' }),
-        uidField: 'uid'
+        uidField: 'uid',
+        isAsync: false
       }
 
       const expectedResult = {
         raw: {
-          123: { uid: 123, test: 'name' }
+          '123': { uid: 123, test: 'name' }
         },
-        pendingUpdate: {}
+        pendingRaw: {},
+        pending: {
+          update: []
+        }
       }
 
       expect(start(previousState, action).toJS()).to.deep.equal(expectedResult)
     })
 
-  })
-
-  describe('success', () => {
-    it('should remove the previous version from pendingUpdate', () => {
-      const previousState = Map({
-        raw: Map([[123, Immutable.fromJS({ uid: 123, test: '123' })], [234, Immutable.fromJS({ uid: 234, test: '234' })]]),
-        pendingUpdate: Map([[123, Immutable.fromJS({ uid: 123, test: '123' })]])
+    it('should add the updated item to pendingRaw and the uid to pending.update', () => {
+      const previousState = Immutable.fromJS({
+        raw: Map([['123', Immutable.fromJS({ uid: 123, test: '123' })]]),
+        pendingRaw: {},
+        pending: {
+          update: []
+        }
       })
 
       const action = {
         record: Immutable.fromJS({ uid: 123, test: 'name' }),
-        uidField: 'uid'
+        uidField: 'uid',
+        isAsync: true
       }
 
       const expectedResult = {
         raw: {
-          123: { uid: 123, test: '123' },
-          234: { uid: 234, test: '234' }
+          '123': { uid: 123, test: '123' }
         },
-        pendingUpdate: {}
+        pendingRaw: {
+          '123': { uid: 123, test: 'name' }
+        },
+        pending: {
+          update: ['123']
+        }
+      }
+
+      expect(start(previousState, action).toJS()).to.deep.equal(expectedResult)
+    })
+  })
+
+  describe('success', () => {
+    it('should update the item in raw, remove the item from pendingRaw, and remove the uid from pending.update', () => {
+      const previousState = Immutable.fromJS({
+        raw: Map([['123', Immutable.fromJS({ uid: 123, test: '123' })], ['234', Immutable.fromJS({ uid: 234, test: '234' })]]),
+        pendingRaw: Map([['123', Immutable.fromJS({ uid: 123, test: 'name' })]]),
+        pending: {
+          update: ['123']
+        }
+      })
+
+      const action = {
+        record: Immutable.fromJS({ uid: 123, test: 'name' }),
+        uidField: 'uid',
+        isAsync: true
+      }
+
+      const expectedResult = {
+        raw: {
+          '123': { uid: 123, test: 'name' },
+          '234': { uid: 234, test: '234' }
+        },
+        pendingRaw: {},
+        pending: {
+          update: []
+        }
       }
 
       expect(success(previousState, action).toJS()).to.deep.equal(expectedResult)
@@ -99,23 +152,30 @@ describe('Reducers::Update', () => {
   })
 
   describe('error', () => {
-    it('should revert the update', () => {
-      const previousState = Map({
-        raw: Map([[123, Immutable.fromJS({ uid: 123, test: 'name' })], [234, Immutable.fromJS({ uid: 234, test: '234' })]]),
-        pendingUpdate: Map([[123, Immutable.fromJS({ uid: 123, test: '123' })]])
+    it('should remove the item from pendingRaw and remove the uid from pending.update', () => {
+      const previousState = Immutable.fromJS({
+        raw: Map([['123', Immutable.fromJS({ uid: 123, test: '123' })], ['234', Immutable.fromJS({ uid: 234, test: '234' })]]),
+        pendingRaw: Map([['123', Immutable.fromJS({ uid: 123, test: 'name' })]]),
+        pending: {
+          update: ['123']
+        }
       })
 
       const action = {
-        record: Immutable.fromJS({ uid: 123, test: '123' }),
-        uidField: 'uid'
+        record: Immutable.fromJS({ uid: 123, test: 'name' }),
+        uidField: 'uid',
+        isAsync: true
       }
 
       const expectedResult = {
         raw: {
-          123: { uid: 123, test: '123' },
-          234: { uid: 234, test: '234' }
+          '123': { uid: 123, test: '123' },
+          '234': { uid: 234, test: '234' }
         },
-        pendingUpdate: {}
+        pendingRaw: {},
+        pending: {
+          update: []
+        }
       }
 
       expect(error(previousState, action).toJS()).to.deep.equal(expectedResult)
@@ -123,20 +183,28 @@ describe('Reducers::Update', () => {
 
     it('should remove the record from raw if not previously added', () => {
       const previousState = Immutable.fromJS({
-        raw: Map([[123, Immutable.fromJS({ uid: 123, test: 'name' })], [234, Immutable.fromJS({ uid: 234, test: '234' })]]),
-        pendingUpdate: {}
+        raw: Map([['123', Immutable.fromJS({ uid: 123, test: '123' })], ['234', Immutable.fromJS({ uid: 234, test: '234' })]]),
+        pendingRaw: {},
+        pending: {
+          update: []
+        }
       })
 
       const action = {
-        record: Immutable.fromJS({ uid: 123, test: '123' }),
-        uidField: 'uid'
+        record: Immutable.fromJS({ uid: 123, test: 'name' }),
+        uidField: 'uid',
+        isAsync: true
       }
 
       const expectedResult = {
         raw: {
-          234: { uid: 234, test: '234' }
+          '123': { uid: 123, test: '123' },
+          '234': { uid: 234, test: '234' }
         },
-        pendingUpdate: {}
+        pendingRaw: {},
+        pending: {
+          update: []
+        }
       }
 
       expect(error(previousState, action).toJS()).to.deep.equal(expectedResult)

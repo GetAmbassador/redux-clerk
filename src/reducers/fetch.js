@@ -50,7 +50,7 @@ export const success = (state, action) => {
     }
 
     // Update instance array with new data
-    const instanceData = Immutable.fromJS(responseData.map(i => i[action.uidField]))
+    const instanceData = Immutable.fromJS(responseData.map(i => i[action.uidField].toString()))
 
     // Append if options.appendResponse is true
     if(action.options.appendResponse) {
