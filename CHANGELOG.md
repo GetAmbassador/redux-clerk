@@ -1,3 +1,12 @@
+## 1.0.0-rc.3
+###### _April 10, 2017_
+
+- Cast all raw ids to strings ([#44](https://github.com/GetAmbassador/redux-clerk/pull/44))
+- Update selectors to handle optional optimism ([#43](https://github.com/GetAmbassador/redux-clerk/pull/43))
+- Make optimistic updates optional ([#41](https://github.com/GetAmbassador/redux-clerk/pull/41))
+
+- Added pre action hooks ([#38](https://github.com/GetAmbassador/redux-clerk/pull/38))
+
 ## 1.0.0-rc.2
 ###### _March 23, 2017_
 
