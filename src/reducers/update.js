@@ -9,7 +9,7 @@ import { Map, List } from 'immutable'
  */
 export const start = (state, action) => {
 
-  const uid = action.record.get(action.uidField)
+  const uid = action.record.get(action.uidField).toString()
 
   // Get previous record
   const previousRecord = state.getIn(['raw', uid])
@@ -45,7 +45,7 @@ export const start = (state, action) => {
  */
  export const success = (state, action) => {
 
-   const uid = action.record.get(action.uidField)
+   const uid = action.record.get(action.uidField).toString()
 
    return state.withMutations(map => {
     // Update the record in raw
@@ -73,7 +73,7 @@ export const start = (state, action) => {
  */
 export const error = (state, action) => {
 
-  const uid = action.record.get(action.uidField)
+  const uid = action.record.get(action.uidField).toString()
 
   return state.withMutations(map => {
     // Remove the item from pendingRaw

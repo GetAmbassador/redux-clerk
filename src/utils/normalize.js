@@ -9,7 +9,7 @@ import Immutable from 'immutable'
  * @return {Immutable.Map} - Map of normalized data
  */
 const normalize = (uidField, data) => {
-  return Immutable.Map(data.map(i => [i.get(uidField), i]))
+  return Immutable.Map(data.map(i => [i.get(uidField).toString(), i]))
 }
 
 export default normalize

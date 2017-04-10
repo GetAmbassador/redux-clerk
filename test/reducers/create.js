@@ -6,13 +6,13 @@ describe('Reducers::Create', () => {
   describe('start', () => {
     it('should update data in state', () => {
       const previousState = Immutable.fromJS({
-        raw: Map([[123, Immutable.fromJS({ uid: 123, test: '123' })]]),
+        raw: Map([['123', Immutable.fromJS({ uid: 123, test: '123' })]]),
         pending: {
           create: []
         },
         instances: {
           test1: {
-            data: [123],
+            data: ['123'],
             additionalData: {
               totalCount: 1
             }
@@ -32,15 +32,15 @@ describe('Reducers::Create', () => {
 
       const expectedResult = {
         raw: {
-          123: { uid: 123, test: '123' },
-          234: { uid: 234, test: '234' }
+          '123': { uid: 123, test: '123' },
+          '234': { uid: 234, test: '234' }
         },
         pending: {
           create: []
         },
         instances: {
           test1: {
-            data: [234, 123],
+            data: ['234', '123'],
             additionalData: {
               totalCount: 2
             }
@@ -65,10 +65,10 @@ describe('Reducers::Create', () => {
 
       const expectedResult = {
         raw: {
-          123: { uid: 123, test: '123' }
+          '123': { uid: 123, test: '123' }
         },
         instances: {
-          test1: { data: [123] }
+          test1: { data: ['123'] }
         }
       }
 
@@ -77,13 +77,13 @@ describe('Reducers::Create', () => {
 
     it('should update data in state when creator is provided', () => {
       const previousState = Immutable.fromJS({
-        raw: Map([[123, Immutable.fromJS({ uid: 123, test: '123' })]]),
+        raw: Map([['123', Immutable.fromJS({ uid: 123, test: '123' })]]),
         pending: {
           create: []
         },
         instances: {
           test1: {
-            data: [123],
+            data: ['123'],
             additionalData: {
               totalCount: 1
             }
@@ -103,15 +103,15 @@ describe('Reducers::Create', () => {
 
       const expectedResult = {
         raw: {
-          123: { uid: 123, test: '123' },
-          234: { uid: 234, test: '234' }
+          '123': { uid: 123, test: '123' },
+          '234': { uid: 234, test: '234' }
         },
         pending: {
-          create: [234],
+          create: ['234'],
         },
         instances: {
           test1: {
-            data: [234,123],
+            data: ['234','123'],
             additionalData: {
               totalCount: 2
             }
@@ -128,13 +128,13 @@ describe('Reducers::Create', () => {
 
     beforeEach(() => {
       previousState = Immutable.fromJS({
-        raw: Map([['temp123', Immutable.fromJS({ uid: 'temp123', test: '123' })], [234, Immutable.fromJS({ uid: 234, test: '234' })]]),
+        raw: Map([['temp123', Immutable.fromJS({ uid: 'temp123', test: '123' })], ['234', Immutable.fromJS({ uid: 234, test: '234' })]]),
         pending: {
           create: ['temp123'],
         },
         instances: {
           test1: {
-            data: ['temp123', 234]
+            data: ['temp123', '234']
           }
         }
       })
@@ -151,15 +151,15 @@ describe('Reducers::Create', () => {
 
       const expectedResult = {
         raw: {
-          123: { uid: 123, test: '123' },
-          234: { uid: 234, test: '234' }
+          '123': { uid: 123, test: '123' },
+          '234': { uid: 234, test: '234' }
         },
         pending: {
           create: []
         },
         instances: {
           test1: {
-            data: [123, 234]
+            data: ['123', '234']
           }
         }
       }
@@ -181,15 +181,15 @@ describe('Reducers::Create', () => {
 
       const expectedResult = {
         raw: {
-          123: { uid: 123, test: '123' },
-          234: { uid: 234, test: '234' }
+          '123': { uid: 123, test: '123' },
+          '234': { uid: 234, test: '234' }
         },
         pending: {
           create: []
         },
         instances: {
           test1: {
-            data: [123, 234],
+            data: ['123', '234'],
             additionalData: {
               totalCount: 2
             }
@@ -206,13 +206,13 @@ describe('Reducers::Create', () => {
 
     beforeEach(() => {
       previousState = Immutable.fromJS({
-        raw: Map([['temp123', Immutable.fromJS({ uid: 'temp123', test: '123' })], [234, Immutable.fromJS({ uid: 234, test: '234' })]]),
+        raw: Map([['temp123', Immutable.fromJS({ uid: 'temp123', test: '123' })], ['234', Immutable.fromJS({ uid: 234, test: '234' })]]),
         pending: {
           create: ['temp123'],
         },
         instances: {
           test1: {
-            data: ['temp123', 234]
+            data: ['temp123', '234']
           }
         }
       })
@@ -228,14 +228,14 @@ describe('Reducers::Create', () => {
 
       const expectedResult = {
         raw: {
-          234: { uid: 234, test: '234' }
+          '234': { uid: 234, test: '234' }
         },
         pending: {
           create: []
         },
         instances: {
           test1: {
-            data: [234]
+            data: ['234']
           }
         }
       }
@@ -256,14 +256,14 @@ describe('Reducers::Create', () => {
 
       const expectedResult = {
         raw: {
-          234: { uid: 234, test: '234' }
+          '234': { uid: 234, test: '234' }
         },
         pending: {
           create: []
         },
         instances: {
           test1: {
-            data: [234],
+            data: ['234'],
             additionalData: {
               totalCount: 1
             }

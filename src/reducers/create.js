@@ -10,7 +10,7 @@ import Immutable, { Map, List } from 'immutable'
 export const start = (state, action) => {
 
   // Get temporary uid from new record
-  const uid = action.record.get(action.uidField)
+  const uid = action.record.get(action.uidField).toString()
 
   // Create new record tuple
   // We have to create a tuple here in order to preserve the Integer typed keys
@@ -52,15 +52,15 @@ export const success = (state, action) => {
   return state.withMutations(map => {
 
     // Add new record to raw using permanent uid
-    const permanentUid = action.responseData[action.uidField]
-    const newRecord = Map([[permanentUid, action.record.set(action.uidField, permanentUid)]])
+    const permanentUid = action.responseData[action.uidField].toString()
+    const newRecord = Map([[permanentUid, action.responseData]])
     map.set('raw', state.get('raw').merge(newRecord))
 
     // Add new record to instance array using permanent uid
     map.setIn(['instances', action.instance, 'data'], map.getIn(['instances', action.instance, 'data']).insert(0, permanentUid))
 
     // Remove temporary record from raw
-    const temporaryUid = action.record.get(action.uidField)
+    const temporaryUid = action.record.get(action.uidField).toString()
     map.removeIn(['raw', temporaryUid])
 
     // Remove temporary uid from provided instance
@@ -93,7 +93,7 @@ export const error = (state, action) => {
   return state.withMutations(map => {
 
     // Remove the added record on error because the request failed
-    const temporaryUid = action.record.get(action.uidField)
+    const temporaryUid = action.record.get(action.uidField).toString()
     map.removeIn(['raw', temporaryUid])
 
     // Remove temporary uid from provided instance
