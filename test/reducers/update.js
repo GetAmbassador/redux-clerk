@@ -149,6 +149,36 @@ describe('Reducers::Update', () => {
 
       expect(success(previousState, action).toJS()).to.deep.equal(expectedResult)
     })
+
+    it('should update the item in raw using the responseData if provided', () => {
+      const previousState = Immutable.fromJS({
+        raw: Map([['123', Immutable.fromJS({ uid: 123, test: '123' })], ['234', Immutable.fromJS({ uid: 234, test: '234' })]]),
+        pendingRaw: Map([['123', Immutable.fromJS({ uid: 123, test: 'name' })]]),
+        pending: {
+          update: ['123']
+        }
+      })
+
+      const action = {
+        record: Immutable.fromJS({ uid: '123', test: 'name' }),
+        responseData: { uid: 123, test: 'name', another_test: 'full name' },
+        uidField: 'uid',
+        isAsync: true
+      }
+
+      const expectedResult = {
+        raw: {
+          '123': { uid: 123, test: 'name', another_test: 'full name' },
+          '234': { uid: 234, test: '234' }
+        },
+        pendingRaw: {},
+        pending: {
+          update: []
+        }
+      }
+
+      expect(success(previousState, action).toJS()).to.deep.equal(expectedResult)
+    })
   })
 
   describe('error', () => {

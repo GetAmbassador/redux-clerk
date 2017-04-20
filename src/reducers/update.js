@@ -53,6 +53,13 @@ export const start = (state, action) => {
     const updatedRecordTuple = Map([[uid, updatedRecord]])
     map.set('raw', state.get('raw').merge(updatedRecordTuple))
 
+    // Update the record in raw with the responseData if provided
+    if (action.responseData) {
+      const responseData = Map(action.responseData)
+      const responseDataTuple = Map([[uid, responseData]])
+      map.set('raw', map.get('raw').merge(responseDataTuple))
+    }
+
     // Remove the item from pendingRaw
     map.removeIn(['pendingRaw', uid])
 
