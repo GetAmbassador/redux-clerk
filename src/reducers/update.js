@@ -48,17 +48,17 @@ export const start = (state, action) => {
    const uid = action.record.get(action.uidField).toString()
 
    return state.withMutations(map => {
-    // Update the record in raw
+    // Get the pending record
     const updatedRecord = map.getIn(['pendingRaw', uid], Map())
-    const updatedRecordTuple = Map([[uid, updatedRecord]])
-    map.set('raw', state.get('raw').merge(updatedRecordTuple))
+    // Get the response data
+    const responseData = action.responseData ? Map(action.responseData) : Map()
 
-    // Update the record in raw with the responseData if provided
-    if (action.responseData) {
-      const responseData = Map(action.responseData)
-      const responseDataTuple = Map([[uid, responseData]])
-      map.set('raw', map.get('raw').merge(responseDataTuple))
-    }
+    // Merge the new data with the data from the store
+    const record = map.getIn(['raw', uid], Map()).merge(updatedRecord, responseData)
+
+    // Update the record in raw
+    const updatedRecordTuple = Map([[uid, record]])
+    map.set('raw', state.get('raw').merge(updatedRecordTuple))
 
     // Remove the item from pendingRaw
     map.removeIn(['pendingRaw', uid])
