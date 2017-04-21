@@ -152,23 +152,23 @@ describe('Reducers::Update', () => {
 
     it('should update the item in raw using the responseData if provided', () => {
       const previousState = Immutable.fromJS({
-        raw: Map([['123', Immutable.fromJS({ uid: 123, test: '123' })], ['234', Immutable.fromJS({ uid: 234, test: '234' })]]),
-        pendingRaw: Map([['123', Immutable.fromJS({ uid: 123, test: 'name' })]]),
+        raw: Map([['123', Immutable.fromJS({ uid: 123, test: 'one', test_two: 'two' })], ['234', Immutable.fromJS({ uid: 234, test: '234' })]]),
+        pendingRaw: Map([['123', Immutable.fromJS({ uid: 123, test: 'oneone', test_three: 'three' })]]),
         pending: {
           update: ['123']
         }
       })
 
       const action = {
-        record: Immutable.fromJS({ uid: '123', test: 'name' }),
-        responseData: { uid: 123, test: 'name', another_test: 'full name' },
+        record: Immutable.fromJS({ uid: '123', test: 'oneone', test_three: 'three' }),
+        responseData: { uid: 123, test: 'oneoneone', test_two: 'two', test_three: 'three' },
         uidField: 'uid',
         isAsync: true
       }
 
       const expectedResult = {
         raw: {
-          '123': { uid: 123, test: 'name', another_test: 'full name' },
+          '123': { uid: 123, test: 'oneoneone', test_two: 'two', test_three: 'three' },
           '234': { uid: 234, test: '234' }
         },
         pendingRaw: {},

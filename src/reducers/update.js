@@ -54,7 +54,7 @@ export const start = (state, action) => {
     const responseData = action.responseData ? Map(action.responseData) : Map()
 
     // Merge the new data with the data from the store
-    const record = map.getIn(['raw', uid], Map()).merge(updatedRecord, responseData)
+    const record = map.getIn(['raw', uid], Map()).merge(updatedRecord).merge(responseData)
 
     // Update the record in raw
     const updatedRecordTuple = Map([[uid, record]])
