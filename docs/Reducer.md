@@ -13,7 +13,7 @@ export default todos
 ```
 
 ### Usage
-Once the reducer is configured, it will need added to the root reducer.
+Once the reducer is configured, it will need to be added to the root reducer.
 
 ```
 import todos from './reducers/todos'
