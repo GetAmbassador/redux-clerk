@@ -5,11 +5,11 @@
 
 Redux Clerk handles the async CRUD in your Redux App.
 
-* Provides a set of action creators for both async and synchronous actions.
-* Provides an extendable reducer.
-* Handles derived datasets and provides selectors for computing derived data.
+* Provides a [set of action creators](docs/ActionsCreators.md) for both asynchronous and synchronous actions.
+* Provides an [extendable reducer](docs/Reducer.md).
+* Handles derived datasets and provides [selectors](docs/Selectors.md) for computing derived data.
 * Stores minimum possible state.
-* Handles optimistic updates to the store.
+* Optionally handles optimistic updates to the store.
 * State is managed and stored as an [Immutable.js](https://facebook.github.io/immutable-js/) data structure.
 
 ```
@@ -18,16 +18,16 @@ Redux Clerk handles the async CRUD in your Redux App.
 
   // Full data objects are only stored once and never duplicated.
   raw: {
-    123: { uid: 123, name: 'Apple' },
-    234: { uid: 234, name: 'Banana' },
-    345: { uid: 345, name: 'Peach' }
+    '123': { uid: 123, name: 'Apple' },
+    '234': { uid: 234, name: 'Banana' },
+    '345': { uid: 345, name: 'Peach' }
   },
 
   // Redux Clerk stores derived datasets as Lists of UIDs.
   instances: {
-    myTypeaheadDataset: [234, 123],
-    myTableDataset: [345, 234],
-    myListDataset: [123, 234, 345]
+    myTypeaheadDataset: ['234', '123'],
+    myTableDataset: ['345', '234'],
+    myListDataset: ['123', '234', '345']
   }
 }
 ```
@@ -36,355 +36,13 @@ Redux Clerk handles the async CRUD in your Redux App.
 
 `npm install redux-clerk --save`
 
-## Usage
-
-### Action Creators
-Redux Clerk provides action creators for handling CRUD operations.
-
-```
-import { actions } from 'redux-clerk'
-import axios from 'axios'
-
-const todosActions = actions({
-  actionPrefix: 'TODOS',
-  uidField: 'id',
-  fetcher: (params, handleSuccess, handleError) => {
-    return axios.get('todos', { params })
-    .then(response => handleSuccess(response.data))
-    .catch(response => handleError())
-  },
-  creator: (data, handleSuccess, handleError) => {
-    return axios.post('todos', data)
-    .then(response => handleSuccess(response.data))
-    .catch(response => handleError())
-  },
-  updater: (data, handleSuccess, handleError) => {
-    return axios.patch(`todos/${data.id}`, data)
-    .then(response => handleSuccess(response.data))
-    .catch(response => handleError())
-  },
-  remover: (id, handleSuccess, handleError) => {
-    return axios.delete(`todos/${id}`, data)
-    .then(response => handleSuccess())
-    .catch(response => handleError())
-  }
-})
-
-export default todosActions
-```
-
-#### Configuration Options
-
-###### actionPrefix
-Prefix for all dispatched actions.
-
-Type: `string` _(must be A-Za-z_0-9)_  
-Required: yes
-
-###### uidField
-Name of property where the record's unique identifier can be found.
-
-Type: `string` _(must be A-Za-z_0-9)_  
-Required: yes
-
-###### fetcher
-Used for making async request when fetch action is called. The `fetcher` will be provided three args: `params`, `handleSuccess`, and  `handleError`.
-
-Type: `function`  
-Required: no  
-Provided Args:
-  - `params` - params provided when the `fetch` action is called
-  - `handleSuccess` - function to call when async request is complete. Array of fetched items should be passed as the first argument. A single object is also acceptable.
-  - `handleError` - function to call when async request fails.
-
-###### creator
-Used for making async request when create action is called. The `creator` will be provided three args: `record`, `handleSuccess`, and  `handleError`.
-
-Type: `function`  
-Required: no  
-Provided Args:
-  - `record` - the newly created record.
-  - `handleSuccess` - function to call when async request is complete. Saved record can be optionally passed as the first argument while calling `handleSuccess`.
-  - `handleError` - function to call when async request fails.
-
-###### updater
-Used for making async request when update action is called. The `updater` will be provided three args: `record`, `handleSuccess`, and  `handleError`.
-
-Type: `function`  
-Required: no  
-Provided Args:
-  - `record` - the updated record.
-  - `handleSuccess` - function to call when async request is complete. Saved record can be optionally passed as the first argument while calling `handleSuccess`.
-  - `handleError` - function to call when async request fails.
-
-###### remover
-Used for making async request when remove action is called. The `remover` will be provided three args: `id`, `handleSuccess`, and  `handleError`.
-
-Type: `function`  
-Required: no  
-Provided Args:
-  - `id` - the id of the record to be removed.
-  - `handleSuccess` - function to call when async request is complete.
-  - `handleError` - function to call when async request fails.
-
-#### Provided Action Creators
-
-##### fetch(datasetKey, params, options)
-###### datasetKey
-The name of the dataset where the fetched records should be applied.
-
-Type: `string` _(must be A-Za-z_0-9)_    
-Required: yes
-
-###### params
-The params to be passed to the fetcher.
-
-Type: `object`
-
-###### options
-The options for the fetch action.
-
-Type: `object`    
-Available options:
-* `appendResponse` - By default the dataset is replaced with the response data. Set this to `false` to have the response data appended.
-
-##### create(datasetKey, record)
-###### datasetKey
-The name of the dataset where created record should be applied.
-
-Type: `string` _(must be A-Za-z_0-9)_    
-Required: yes
-
-###### record
-The record to be created. Must contain a temporary UID in the configured `uidField`.
-
-Type: `object`    
-Required: yes
-
-##### update(record)
-###### record
-The record to be updated. Must contain the UID to be updated in the configured `uidField`.
-
-Type: `object`    
-Required: yes
-
-##### remove(uid)
-###### uid
-The UID of the record to be removed.
-
-Type: `number`    
-Required: yes
-
-##### createDataset(datasetKey)
-###### datasetKey
-The name of the dataset to be created.
-
-Type: `string` _(must be A-Za-z_0-9)_    
-Required: yes
-
-### Reducer
-The reducer will handle all actions dispatched by the action creators noted above.
-
-```
-import { reducer } from 'redux-clerk'
-
-const todosReducer = reducer({
-  actionPrefix: 'TODOS'
-})
-
-export default todosReducer
-```
-
-### Selectors
-
-```
-import { selectors } from 'redux-clerk'
-
-const todosSelectors = selectors({
-
-  // Tell us where to find the base state for the related redux-clerk reducer.
-  baseSelector: state => state.todos
-})
-
-export default todosSelectors
-```
-
-#### Provided Selectors
-
-##### dataset(state, datasetKey)
-The dataset selector recomputes the derived data for the specified dataset.
-
-###### state
-The Redux state provided in `mapStateToProps`
-
-Type: `object`
-
-###### datasetKey
-The name of the dataset that should be used for computing the derived data.
-
-Type: `string` _(must be A-Za-z_0-9)_
-Required: yes
-
-##### datasetProperty(state, datasetKey, propertyKey)
-The datasetProperty selector retrieves an individual property from an instance's additional data.
-
-###### state
-The Redux state provided in `mapStateToProps`
-
-Type: `object`
-
-###### datasetKey
-The name of the dataset that should be used for computing the derived data.
-
-Type: `string` _(must be A-Za-z_0-9)_
-Required: yes
-
-###### propertyKey
-The name of the property that should be retrieved.
-
-Type: `string` _(must be A-Za-z_0-9)_
-Required: yes
-
-##### record(state, uid)
-The record selector retrieves an individual record by its uid.
-
-###### state
-The Redux state provided in `mapStateToProps`
-
-Type: `object`
-
-###### uid
-The unique id for the record.
-
-Type: `number` or `string`
-Required: yes
-
-## Extending an existing reducer
-If you need to handle additional updates to the raw/instance data it is possible to extend the provided reducer with [reduce-reducers](https://www.npmjs.com/package/reduce-reducers).
-
-```
-import reduceReducers from 'reduce-reducers'
-import { selectors } from 'redux-clerk'
-
-// Configure the Redux Clerk reducer normally
-const reduxClerkReducer = reducer({
-  actionPrefix: 'TODOS'
-})
-
-// Create a reducer to handle any additional actions
-const myReducer = (state, action) => {
-  case 'MY_OTHER_ACTION':
-    return state.setIn(['raw', 123, 'name'], 'New Name')
-  default: return state
-}
-
-const reducer = reduceReducers(reduxClerkReducer, myReducer)
-
-export default reducer
-```
-
-If you need to make additional updates to the store before or after any of the CRUD actions, Redux Clerk will dispatch a pre/post action for each CRUD operation. You can add cases for these actions in your reducer and update the store as needed.
-
-Below is a list of all additional actions that are dispatched. Each each will contain relevant data for the action type.
-
-```
-{prefix}_CREATE_PRE
-{prefix}_CREATE_POST
-{prefix}_CREATE_SUCCESS_PRE
-{prefix}_CREATE_SUCCESS_POST
-{prefix}_CREATE_ERROR_PRE
-{prefix}_CREATE_ERROR_POST
-{prefix}_FETCH_SUCCESS_PRE
-{prefix}_FETCH_SUCCESS_POST
-{prefix}_FETCH_ERROR_PRE
-{prefix}_FETCH_ERROR_POST
-{prefix}_UPDATE_PRE
-{prefix}_UPDATE_POST
-{prefix}_UPDATE_SUCCESS_PRE
-{prefix}_UPDATE_SUCCESS_POST
-{prefix}_UPDATE_ERROR_PRE
-{prefix}_UPDATE_ERROR_POST
-{prefix}_REMOVE_PRE
-{prefix}_REMOVE_POST
-{prefix}_REMOVE_SUCCESS_PRE
-{prefix}_REMOVE_SUCCESS_POST
-{prefix}_REMOVE_ERROR_PRE
-{prefix}_REMOVE_ERROR_POST
-```
-
-## Normalization and Derived Datasets
-In order to maintain minimum possible state redux-clerk will normalize the data returned from the fetcher and allow subsets of that data to be created.
-
-### How does redux-clerk know how to normalize my data?
-Redux-clerk builds key/value pairs using the configured `uidField` as the key and the data object as the value.
-
-For example, your fetch response may be an array in the following format:
-```
-[
-  { uid: 11, name: 'Test 1' },
-  { uid: 22, name: 'Test 2' },
-  { uid: 33, name: 'Test 3' }
-]
-```
-
-The array will be normalized into the following format:
-```
-{
-  11: { uid: 11, name: 'Test 1' },
-  22: { uid: 22, name: 'Test 2' },
-  33: { uid: 33, name: 'Test 3' }
-}
-```
-
-### How do I maintain the sort order of the fetch response?
-The fetch action creator requires a dataset key to be provided. Ex: `fetch('companyTypeahead')`
-
-Redux-clerk will store an array of UIDs from the fetch response. Your state would then look like this:
-
-```
-{
-  // Normalized source data
-  raw: {
-    11: { uid: 11, name: 'Test 1' },
-    22: { uid: 22, name: 'Test 2' },
-    33: { uid: 33, name: 'Test 3' }
-  },
-
-  // companyTypeahead dataset
-  companyTypeahead: [22,11,33]
-}
-```
-
-### How do I recompute the derived companyTypeahead dataset?
-Redux-clerk provides a selector which will provide the computed data.
-
-For example the TodosSelectors above will provide a `dataset` selector which takes a dataset key and returns the computed data.
-```
-mapStateToProps = state => {
-  return {
-    companyTypeaheadData: dataset(state, 'companyTypeahead')
-  }
-}
-
-// props.companyTypeaheadData will then be set to:
-[
-  { uid: 22, name: 'Test 2' },
-  { uid: 11, name: 'Test 1' },
-  { uid: 33, name: 'Test 3' }
-]
-
-```
-
-## Running Tests
-```
-git clone git@github.com:GetAmbassador/redux-clerk.git
-cd redux-clerk
-npm install
-npm test
-```
+## Configuration & Docs
+  - [Action Creators](docs/ActionsCreators.md)
+  - [Reducer](docs/Reducer.md)
+  - [Selectors](docs/Selectors.md)
 
 ## Example
-An example TodoMVC using Redux Clerk is available in the `example` directory. To run the example:
+An example TodoMVC using Redux Clerk is available in the [example](/example) directory. To run the example:
 
 ```
 git clone git@github.com:GetAmbassador/redux-clerk.git
@@ -396,6 +54,12 @@ npm install react-scripts -g
 npm install
 npm start
 ```
+
+## [FAQ](docs/FAQ.md)
+  - [How can I extend the reducer provided by Redux Clerk?](docs/FAQ.md#how-can-i-extend-the-reducer-provided-by-redux-clerk)
+  - [How does redux-clerk know how to normalize my data?](docs/FAQ.md#how-does-redux-clerk-know-how-to-normalize-my-data)
+  - [How do I maintain the sort order of the fetch response?](docs/FAQ.md#how-do-i-maintain-the-sort-order-of-the-fetch-response)
+  - [How do I recompute the derived companyTypeahead dataset?](docs/FAQ.md#how-do-i-recompute-the-derived-companytypeahead-dataset)
 
 ## License
 MIT
