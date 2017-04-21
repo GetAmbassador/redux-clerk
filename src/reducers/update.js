@@ -53,7 +53,8 @@ export const start = (state, action) => {
     // Get the response data
     const responseData = action.responseData ? Map(action.responseData) : Map()
 
-    // Merge the new data with the data from the store
+    // Success responseData should take precedence over all other changes so we
+    // merge that into the updated record, then we merge the updatedRecord into existing raw data
     const record = map.getIn(['raw', uid], Map()).merge(updatedRecord).merge(responseData)
 
     // Update the record in raw
