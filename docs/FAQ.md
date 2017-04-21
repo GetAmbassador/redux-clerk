@@ -68,9 +68,9 @@ For example, your fetch response may be an array in the following format:
 The array will be normalized into the following format:
 ```
 {
-  11: { uid: 11, name: 'Test 1' },
-  22: { uid: 22, name: 'Test 2' },
-  33: { uid: 33, name: 'Test 3' }
+  '11': { uid: 11, name: 'Test 1' },
+  '22': { uid: 22, name: 'Test 2' },
+  '33': { uid: 33, name: 'Test 3' }
 }
 ```
 
@@ -83,13 +83,13 @@ Redux-clerk will store an array of UIDs from the fetch response. Your state woul
 {
   // Normalized source data
   raw: {
-    11: { uid: 11, name: 'Test 1' },
-    22: { uid: 22, name: 'Test 2' },
-    33: { uid: 33, name: 'Test 3' }
+    '11': { uid: 11, name: 'Test 1' },
+    '22': { uid: 22, name: 'Test 2' },
+    '33': { uid: 33, name: 'Test 3' }
   },
 
   // companyTypeahead dataset
-  companyTypeahead: [22,11,33]
+  companyTypeahead: ['22', '11', '33']
 }
 ```
 
