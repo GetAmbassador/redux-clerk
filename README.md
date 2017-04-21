@@ -18,16 +18,16 @@ Redux Clerk handles the async CRUD in your Redux App.
 
   // Full data objects are only stored once and never duplicated.
   raw: {
-    123: { uid: 123, name: 'Apple' },
-    234: { uid: 234, name: 'Banana' },
-    345: { uid: 345, name: 'Peach' }
+    '123': { uid: 123, name: 'Apple' },
+    '234': { uid: 234, name: 'Banana' },
+    '345': { uid: 345, name: 'Peach' }
   },
 
   // Redux Clerk stores derived datasets as Lists of UIDs.
   instances: {
-    myTypeaheadDataset: [234, 123],
-    myTableDataset: [345, 234],
-    myListDataset: [123, 234, 345]
+    myTypeaheadDataset: ['234', '123'],
+    myTableDataset: ['345', '234'],
+    myListDataset: ['123', '234', '345']
   }
 }
 ```
