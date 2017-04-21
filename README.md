@@ -5,7 +5,7 @@
 
 Redux Clerk handles the async CRUD in your Redux App.
 
-* Provides a [set of action creators](docs/ActionsCreators.md) for both async and synchronous actions.
+* Provides a [set of action creators](docs/ActionsCreators.md) for both asynchronous and synchronous actions.
 * Provides an [extendable reducer](docs/Reducer.md).
 * Handles derived datasets and provides [selectors](docs/Selectors.md) for computing derived data.
 * Stores minimum possible state.
