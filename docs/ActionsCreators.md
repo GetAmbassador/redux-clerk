@@ -1,5 +1,5 @@
 ## Action Creators
-Once configured, Redux Clerk provides a set of action creators for handling CRUD operations.
+Once [configured](#configuration), Redux Clerk provides a set of action creators for handling CRUD operations.
 
 #### create(datasetKey, record)
 ###### datasetKey

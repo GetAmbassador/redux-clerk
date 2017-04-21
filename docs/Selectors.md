@@ -1,20 +1,5 @@
 ## Selectors
-Redux Clerk provides a set of selectors to easily access your data.
-
-### Example Configuration
-```
-import { selectors } from 'redux-clerk'
-
-const todosSelectors = selectors({
-
-  // Tell us where to find the base state for the related redux-clerk reducer.
-  baseSelector: state => state.todos
-})
-
-export default todosSelectors
-```
-
-### Provided Selectors
+Once [configured](#configuration), Redux Clerk provides a set of selectors to easily access your data.
 
 #### dataset(state, datasetKey)
 The dataset selector recomputes the derived data for the specified dataset. The dataset selector does not include optimistic updates to the store.
@@ -79,7 +64,7 @@ Type: `number` or `string`
 Required: yes
 
 #### recordOptimistic(state, uid)
-Similar to the `record` selector but includes optimistic updates to the store. 
+Similar to the `record` selector but includes optimistic updates to the store.
 
 ###### state
 The Redux state provided in `mapStateToProps`
@@ -91,3 +76,16 @@ The unique id for the record.
 
 Type: `number` or `string`
 Required: yes
+
+### Configuration
+```
+import { selectors } from 'redux-clerk'
+
+const todosSelectors = selectors({
+
+  // Tell us where to find the base state for the related redux-clerk reducer.
+  baseSelector: state => state.todos
+})
+
+export default todosSelectors
+```
