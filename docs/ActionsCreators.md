@@ -1,32 +1,50 @@
 ## Action Creators
 Once configured, Redux Clerk provides a set of action creators for handling CRUD operations.
 
-### Provided Action Creators
 #### create(datasetKey, record)
 ###### datasetKey
 The name of the dataset where created record should be applied.
 
-Type: `string` _(must be A-Za-z_0-9)_    
+Type: `string` _(must be A-Za-z_0-9)_  
 Required: yes
 
 ###### record
 The record to be created. Must contain a temporary UID in the configured `uidField`.
 
-Type: `object`
+Type: `object`  
 Required: yes
+
+#### fetch(datasetKey, params, options)
+###### datasetKey
+The name of the dataset where the fetched records should be applied.
+
+Type: `string` _(must be A-Za-z_0-9)_  
+Required: yes
+
+###### params
+The params to be passed to the fetcher.
+
+Type: `object`
+
+###### options
+The options for the fetch action.
+
+Type: `object`  
+Available options:
+* `appendResponse` - By default the dataset is replaced with the response data. Set this to `false` to have the response data appended.
 
 #### update(record)
 ###### record
 The record to be updated. Must contain the UID to be updated in the configured `uidField`.
 
-Type: `object`
+Type: `object`  
 Required: yes
 
 #### remove(uid)
 ###### uid
 The UID of the record to be removed.
 
-Type: `number`
+Type: `number`  
 Required: yes
 
 ### Configuration
@@ -67,21 +85,21 @@ export default todosActions
 ###### actionPrefix
 Prefix for all dispatched actions.
 
-Type: `string` _(must be A-Za-z_0-9)_
+Type: `string` _(must be A-Za-z_0-9)_  
 Required: yes
 
 ###### uidField
 Name of property where the record's unique identifier can be found.
 
-Type: `string` _(must be A-Za-z_0-9)_
+Type: `string` _(must be A-Za-z_0-9)_  
 Required: yes
 
 ###### fetcher
 Used for making async request when fetch action is called. The `fetcher` will be provided three args: `params`, `handleSuccess`, and  `handleError`.
 
-Type: `function`
-Required: no
-Provided Args:
+Type: `function`  
+Required: no  
+Provided Args:  
   - `params` - params provided when the `fetch` action is called
   - `handleSuccess` - function to call when async request is complete. Array of fetched items should be passed as the first argument. A single object is also acceptable.
   - `handleError` - function to call when async request fails.
@@ -89,9 +107,9 @@ Provided Args:
 ###### creator
 Used for making async request when create action is called. The `creator` will be provided three args: `record`, `handleSuccess`, and  `handleError`.
 
-Type: `function`
-Required: no
-Provided Args:
+Type: `function`  
+Required: no  
+Provided Args:  
   - `record` - the newly created record.
   - `handleSuccess` - function to call when async request is complete. Saved record can be optionally passed as the first argument while calling `handleSuccess`.
   - `handleError` - function to call when async request fails.
@@ -101,7 +119,7 @@ Used for making async request when update action is called. The `updater` will b
 
 Type: `function`  
 Required: no  
-Provided Args:
+Provided Args:  
   - `record` - the updated record.
   - `handleSuccess` - function to call when async request is complete. Saved record can be optionally passed as the first argument while calling `handleSuccess`.
   - `handleError` - function to call when async request fails.
@@ -115,22 +133,3 @@ Provided Args:
   - `id` - the id of the record to be removed.
   - `handleSuccess` - function to call when async request is complete.
   - `handleError` - function to call when async request fails.
-
-#### fetch(datasetKey, params, options)
-###### datasetKey
-The name of the dataset where the fetched records should be applied.
-
-Type: `string` _(must be A-Za-z_0-9)_
-Required: yes
-
-###### params
-The params to be passed to the fetcher.
-
-Type: `object`
-
-###### options
-The options for the fetch action.
-
-Type: `object`
-Available options:
-* `appendResponse` - By default the dataset is replaced with the response data. Set this to `false` to have the response data appended.
