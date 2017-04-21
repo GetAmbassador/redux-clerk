@@ -36,13 +36,26 @@ Redux Clerk handles the async CRUD in your Redux App.
 
 `npm install redux-clerk --save`
 
-## Documentation
-### Configuration & Usage
+## Configuration & Docs
   - [Action Creators](docs/ActionsCreators.md)
   - [Reducer](docs/Reducer.md)
   - [Selectors](docs/Selectors.md)
-### [Example](docs/example.md)
-### [FAQ](docs/FAQ.md)
+
+## Example
+An example TodoMVC using Redux Clerk is available in the [example](/example) directory. To run the example:
+
+```
+git clone git@github.com:GetAmbassador/redux-clerk.git
+cd redux-clerk
+npm install
+npm run build
+cd example
+npm install react-scripts -g
+npm install
+npm start
+```
+
+## [FAQ](docs/FAQ.md)
   - [How can I extend the reducer provided by Redux Clerk?](docs/FAQ.md#TODO)
   - [How does redux-clerk know how to normalize my data?](docs/FAQ.md#TODO)
   - [How do I maintain the sort order of the fetch response?](docs/FAQ.md#TODO)
