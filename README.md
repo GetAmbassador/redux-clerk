@@ -37,12 +37,12 @@ Redux Clerk handles the async CRUD in your Redux App.
 `npm install redux-clerk --save`
 
 ## Documentation
-- ### Configuration & Usage
+### Configuration & Usage
   - [Action Creators](docs/ActionsCreators.md)
   - [Reducer](docs/Reducer.md)
   - [Selectors](docs/Selectors.md)
-- ### [Example](docs/example.md)
-- ### [FAQ](docs/FAQ.md)
+### [Example](docs/example.md)
+### [FAQ](docs/FAQ.md)
   - [How can I extend the reducer provided by Redux Clerk?](docs/FAQ.md#TODO)
   - [How does redux-clerk know how to normalize my data?](docs/FAQ.md#TODO)
   - [How do I maintain the sort order of the fetch response?](docs/FAQ.md#TODO)
