@@ -56,10 +56,10 @@ npm start
 ```
 
 ## [FAQ](docs/FAQ.md)
-  - [How can I extend the reducer provided by Redux Clerk?](docs/FAQ.md#TODO)
-  - [How does redux-clerk know how to normalize my data?](docs/FAQ.md#TODO)
-  - [How do I maintain the sort order of the fetch response?](docs/FAQ.md#TODO)
-  - [How do I recompute the derived companyTypeahead dataset?](docs/FAQ.md#TODO)
+  - [How can I extend the reducer provided by Redux Clerk?](docs/FAQ.md#how-can-i-extend-the-reducer-provided-by-redux-clerk)
+  - [How does redux-clerk know how to normalize my data?](docs/FAQ.md#how-does-redux-clerk-know-how-to-normalize-my-data)
+  - [How do I maintain the sort order of the fetch response?](docs/FAQ.md#how-do-i-maintain-the-sort-order-of-the-fetch-response)
+  - [How do I recompute the derived companyTypeahead dataset?](docs/FAQ.md#how-do-i-recompute-the-derived-companytypeahead-dataset)
 
 ## License
 MIT
