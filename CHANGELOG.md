@@ -1,3 +1,9 @@
+## 1.0.0-rc.4
+###### _May 2, 2017_
+
+- Accept responseData in handleSuccess for the update action ([#48](https://github.com/GetAmbassador/redux-clerk/pull/48))
+- Update docs to reflect optional optimism ([#47](https://github.com/GetAmbassador/redux-clerk/pull/47))
+
 ## 1.0.0-rc.3
 ###### _April 10, 2017_
 
