@@ -53,7 +53,7 @@ export const success = (state, action) => {
 
     // Add new record to raw using permanent uid
     const permanentUid = action.responseData[action.uidField].toString()
-    const newRecord = Map([[permanentUid, action.responseData]])
+    const newRecord = Map([[permanentUid, Immutable.fromJS(action.responseData)]])
     map.set('raw', state.get('raw').merge(newRecord))
 
     // Add new record to instance array using permanent uid

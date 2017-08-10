@@ -1,4 +1,4 @@
-import { Map, List } from 'immutable'
+import Immutable, { Map, List } from 'immutable'
 
 /**
  * The start action for the update reducer
@@ -51,7 +51,7 @@ export const start = (state, action) => {
     // Get the pending record
     const updatedRecord = map.getIn(['pendingRaw', uid], Map())
     // Get the response data
-    const responseData = action.responseData ? Map(action.responseData) : Map()
+    const responseData = action.responseData ? Immutable.fromJS(action.responseData) : Map()
 
     // Success responseData should take precedence over all other changes so we
     // merge that into the updated record, then we merge the updatedRecord into existing raw data

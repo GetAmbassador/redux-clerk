@@ -161,23 +161,23 @@ describe('Reducers::Update', () => {
 
       const action = {
         record: Immutable.fromJS({ uid: '123', test: 'oneone', test_three: 'three' }),
-        responseData: { uid: 123, test: 'oneoneone', test_two: 'two', test_three: 'three' },
+        responseData: { uid: 123, test: 'oneoneone', test_two: 'two', test_three: 'three', test_uid: { test: true } },
         uidField: 'uid',
         isAsync: true
       }
 
-      const expectedResult = {
+      const expectedResult = Immutable.fromJS({
         raw: {
-          '123': { uid: 123, test: 'oneoneone', test_two: 'two', test_three: 'three' },
+          '123': { uid: 123, test: 'oneoneone', test_two: 'two', test_three: 'three', test_uid: { test: true } },
           '234': { uid: 234, test: '234' }
         },
         pendingRaw: {},
         pending: {
           update: []
         }
-      }
+      })
 
-      expect(success(previousState, action).toJS()).to.deep.equal(expectedResult)
+      expect(Immutable.is(success(previousState, action), expectedResult)).to.be.true
     })
   })
 
