@@ -1,3 +1,8 @@
+## 1.0.0
+###### _August 10, 2017_
+
+- Convert responseData to Immutable data structure before adding to store ([#51](https://github.com/GetAmbassador/redux-clerk/pull/51))
+
 ## 1.0.0-rc.4
 ###### _May 2, 2017_
 
