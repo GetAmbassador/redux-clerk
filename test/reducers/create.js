@@ -143,15 +143,15 @@ describe('Reducers::Create', () => {
     it('should replace the temporary uid with the permanent uid', () => {
       const action = {
         record: Immutable.fromJS({ uid: 'temp123', test: '123' }),
-        responseData: { uid: 123, test: '123' },
+        responseData: { uid: 123, test: '123', test_uid: { test: true } },
         instance: 'test1',
         uidField: 'uid',
         isAsync: true
       }
 
-      const expectedResult = {
+      const expectedResult = Immutable.fromJS({
         raw: {
-          '123': { uid: 123, test: '123' },
+          '123': { uid: 123, test: '123', test_uid: { test: true } },
           '234': { uid: 234, test: '234' }
         },
         pending: {
@@ -162,9 +162,9 @@ describe('Reducers::Create', () => {
             data: ['123', '234']
           }
         }
-      }
+      })
 
-      expect(success(previousState, action).toJS()).to.deep.equal(expectedResult)
+      expect(Immutable.is(success(previousState, action), expectedResult)).to.be.true
     })
 
     it('should set additional data in state if provided', () => {
