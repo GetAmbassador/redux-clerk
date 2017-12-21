@@ -4,7 +4,7 @@ import { Remove } from '../../src/actions/Remove'
 
 describe('Actions::Remove', () => {
 
-  let dispatchSpy
+  let dispatchSpy, configDispatch
 
   const configBase = {
     actionPrefix: 'test',
@@ -26,11 +26,21 @@ describe('Actions::Remove', () => {
   })
 
   const configSpy = Object.assign({}, configBase, {
-    remover: sinon.spy()
+    remover: sinon.stub().returns(Promise.resolve())
   })
 
   beforeEach(() => {
     dispatchSpy = sinon.spy()
+
+    configDispatch = Object.assign({}, configBase, {
+      remover: (data, success, error) => {
+        return (dispatch) => {
+          error({ error: 'test' })
+          dispatch('test')
+          return Promise.resolve()
+        }
+      }
+    })
   })
 
   describe('do', () => {
@@ -122,6 +132,15 @@ describe('Actions::Remove', () => {
           responseData: { error: 'test' },
           isAsync: true
         })).to.be.true
+        done()
+      })
+    })
+
+    it('should handle thunk', done => {
+      const action = new Remove(configDispatch)
+      action.do(123)(dispatchSpy).then(() => {
+        expect(dispatchSpy.callCount).to.equal(7)
+        expect(dispatchSpy.calledWithExactly('test')).to.be.true
         done()
       })
     })

@@ -1,5 +1,6 @@
 import Immutable from 'immutable'
 import BaseAction from './BaseAction'
+import { isPromise } from '../utils/is'
 
 /**
  * Class representing a fetch action.
@@ -50,14 +51,17 @@ export class Fetch extends BaseAction {
       this.start(dispatch, data)
 
       // If config.fetcher is provided, call it
-      if(typeof this.config.fetcher === 'function') {
+      if (typeof this.config.fetcher === 'function') {
         // Prepare BaseAction.success and BaseAction.error handlers
         // by currying with dispatch
         const success = this.success.bind(this, dispatch, data)
         const error = this.error.bind(this, dispatch, data)
 
         // Call fetcher
-        return this.config.fetcher(params, success, error)
+        const fetcherAction = this.config.fetcher(params, success, error)
+
+        // Return the action promise
+        return isPromise(fetcherAction) ? fetcherAction : fetcherAction(dispatch)
       }
     }
   }

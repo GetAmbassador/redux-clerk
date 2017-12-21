@@ -1,4 +1,5 @@
 import BaseAction from './BaseAction'
+import { isPromise } from '../utils/is'
 
 /**
  * Class representing a remove action.
@@ -31,14 +32,17 @@ export class Remove extends BaseAction {
       this.start(dispatch, data)
 
       // If config.remover is provided, call it
-      if(isAsync) {
+      if (isAsync) {
         // Prepare BaseAction.success and BaseAction.error handlers
         // by currying with dispatch
         const success = this.success.bind(this, dispatch, data)
         const error = this.error.bind(this, dispatch, data)
 
         // Call remover
-        return remover(uid, success, error)
+        const removerAction = remover(uid, success, error)
+
+        // Return the action promise
+        return isPromise(removerAction) ? removerAction : removerAction(dispatch)
       }
     }
   }

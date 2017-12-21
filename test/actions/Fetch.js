@@ -5,7 +5,7 @@ import { Fetch } from '../../src/actions/Fetch'
 
 describe('Actions::Fetch', () => {
 
-  let dispatchSpy
+  let dispatchSpy, configDispatch
 
   const configBase = {
     actionPrefix: 'test',
@@ -27,11 +27,21 @@ describe('Actions::Fetch', () => {
   })
 
   const configSpy = Object.assign({}, configBase, {
-    fetcher: sinon.spy()
+    fetcher: sinon.stub().returns(Promise.resolve())
   })
 
   beforeEach(() => {
     dispatchSpy = sinon.spy()
+
+    configDispatch = Object.assign({}, configBase, {
+      fetcher: (params, success) => {
+        return (dispatch) => {
+          success([{ uid: 123, name: 'test' }])
+          dispatch('test')
+          return Promise.resolve()
+        }
+      }
+    })
   })
 
   describe('do', () => {
@@ -134,6 +144,15 @@ describe('Actions::Fetch', () => {
           responseData: { error: 'test' },
           options: {}
         })).to.be.true
+        done()
+      })
+    })
+
+    it('should handle thunk', done => {
+      const action = new Fetch(configDispatch)
+      action.do('users')(dispatchSpy).then(() => {
+        expect(dispatchSpy.callCount).to.equal(7)
+        expect(dispatchSpy.calledWithExactly('test')).to.be.true
         done()
       })
     })

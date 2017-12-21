@@ -1,5 +1,6 @@
 import Immutable from 'immutable'
 import BaseAction from './BaseAction'
+import { isPromise } from '../utils/is'
 
 /**
  * Class representing a update action.
@@ -36,14 +37,17 @@ export class Update extends BaseAction {
       this.start(dispatch, data)
 
       // If config.updater is provided, call it
-      if(isAsync) {
+      if (isAsync) {
         // Prepare BaseAction.success and BaseAction.error handlers
         // by currying with dispatch
         const success = this.success.bind(this, dispatch, data)
         const error = this.error.bind(this, dispatch, data)
 
         // Call updater
-        return updater(record, success, error)
+        const updaterAction = updater(record, success, error)
+
+        // Return the action promise
+        return isPromise(updaterAction) ? updaterAction : updaterAction(dispatch)
       }
     }
   }
