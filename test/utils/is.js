@@ -1,5 +1,6 @@
 import { expect } from 'chai'
-import { isObject } from '../../src/utils/is'
+import sinon from 'sinon'
+import { isObject, isPromise } from '../../src/utils/is'
 
 describe('Utils::Is', () => {
   describe('isObject', () => {
@@ -14,6 +15,16 @@ describe('Utils::Is', () => {
       expect(isObject([])).to.be.false
       expect(isObject(1)).to.be.false
       expect(isObject('test')).to.be.false
+    })
+  })
+
+  describe('isPromise', () => {
+    it('should return true if provided value is a promise', () => {
+      expect(isPromise(new Promise(sinon.spy()))).to.be.true
+    })
+
+    it('should return false if provided value is not a promise', () => {
+      expect(isPromise(sinon.spy())).to.be.false
     })
   })
 })
