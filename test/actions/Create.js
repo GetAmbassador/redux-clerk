@@ -5,7 +5,7 @@ import { Create } from '../../src/actions/Create'
 
 describe('Actions::Create', () => {
 
-  let dispatchSpy
+  let dispatchSpy, configDispatch
 
   const configBase = {
     actionPrefix: 'test',
@@ -27,11 +27,21 @@ describe('Actions::Create', () => {
   })
 
   const configSpy = Object.assign({}, configBase, {
-    creator: sinon.spy()
+    creator: sinon.stub().returns(Promise.resolve())
   })
 
   beforeEach(() => {
     dispatchSpy = sinon.spy()
+
+    configDispatch = Object.assign({}, configBase, {
+      creator: (data, success) => {
+        return (dispatch) => {
+          success({ uid: 123, name: 'test' })
+          dispatch('test')
+          return Promise.resolve()
+        }
+      }
+    })
   })
 
   describe('do', () => {
@@ -146,6 +156,16 @@ describe('Actions::Create', () => {
           responseData: { error: 'test' },
           isAsync: true
         })).to.be.true
+        done()
+      })
+    })
+
+    it('should handle thunk', done => {
+      const action = new Create(configDispatch)
+      const data = Map({ uid: 'new', name: 'test' })
+      action.do('users', data)(dispatchSpy).then(() => {
+        expect(dispatchSpy.callCount).to.equal(7)
+        expect(dispatchSpy.calledWithExactly('test')).to.be.true
         done()
       })
     })

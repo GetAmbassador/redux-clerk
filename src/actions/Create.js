@@ -1,5 +1,6 @@
 import Immutable from 'immutable'
 import BaseAction from './BaseAction'
+import { isPromise } from '../utils/is'
 
 /**
  * Class representing a create action.
@@ -40,14 +41,17 @@ export class Create extends BaseAction {
       this.start(dispatch, data)
 
       // If config.creator is provided, call it
-      if(isAsync) {
+      if (isAsync) {
         // Prepare BaseAction.success and BaseAction.error handlers
         // by currying with dispatch and action data
         const success = this.success.bind(this, dispatch, data)
         const error = this.error.bind(this, dispatch, data)
 
         // Call creator
-        return creator(record, success, error)
+        const creatorAction = creator(record, success, error)
+
+        // Return the action promise
+        return isPromise(creatorAction) ? creatorAction : creatorAction(dispatch)
       }
     }
   }
