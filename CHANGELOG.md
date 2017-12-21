@@ -1,3 +1,8 @@
+## 1.1.0
+###### _December 21, 2017_
+
+- Pass dispatch to async handlers via thunk ([#53](https://github.com/GetAmbassador/redux-clerk/pull/53))
+
 ## 1.0.0
 ###### _August 10, 2017_
 
