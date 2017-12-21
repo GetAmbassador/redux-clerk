@@ -1,6 +1,6 @@
 {
   "name": "redux-clerk",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Redux Clerk handles the async CRUD in your Redux App.",
   "main": "lib/index.js",
   "files": [
