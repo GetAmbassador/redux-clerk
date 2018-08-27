@@ -42,7 +42,7 @@ jobs:
     # This is based on your 1.0 configuration file or project settings
     - run:
         working_directory: ~/GetAmbassador/redux-clerk
-        command: 'echo ''America/New_York'' | sudo tee -a /etc/timezone; sudo dpkg-reconfigure
+        command: 'echo ''America/New_York'' | sudo tee /etc/timezone; sudo dpkg-reconfigure
           -f noninteractive tzdata; sudo service mysql restart; sudo service postgresql
           restart; '
     - run:
