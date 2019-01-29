@@ -71,7 +71,7 @@ const todosActions = actions({
     .catch(response => handleError())
   },
   remover: (id, handleSuccess, handleError) => {
-    return axios.delete(`todos/${id}`, data)
+    return axios.delete(`todos/${id}`)
     .then(response => handleSuccess())
     .catch(response => handleError())
   }
