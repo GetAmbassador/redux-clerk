@@ -1,3 +1,8 @@
+## 1.1.1
+###### _January 17, 2020_
+
+- Fix deep merge with immutable lists ([#57](https://github.com/GetAmbassador/redux-clerk/pull/57))
+
 ## 1.1.0
 ###### _December 21, 2017_
 
