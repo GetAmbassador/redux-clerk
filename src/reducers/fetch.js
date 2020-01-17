@@ -1,5 +1,6 @@
 import normalize from '../utils/normalize'
 import { isObject } from '../utils/is'
+import { mergeDeepOverwriteLists } from '../utils/mergeDeepOverwriteLists'
 import Immutable from 'immutable'
 
 /**
@@ -46,7 +47,7 @@ export const success = (state, action) => {
 
       // Merge new raw data with existing raw data
       const normalizedData = normalize(action.uidField, Immutable.fromJS(responseData))
-      map.set('raw', map.get('raw').mergeDeep(normalizedData))
+      map.set('raw', mergeDeepOverwriteLists(map.get('raw'), normalizedData))
     }
 
     // Update instance array with new data
